@@ -1,11 +1,10 @@
-package com.alvarado.backpack.ui.components
+package com.alvarado.backpack.ui.components.report
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,7 +24,8 @@ import androidx.compose.ui.unit.sp
 import com.alvarado.backpack.R
 
 @Composable
-fun ReportInfo(cycleInfo: String, date: String, documentTitle: String) {
+fun ReportInfo(documentCycle: String, documentDate: String, documentTitle: String) {
+
     Column(
         modifier = Modifier
             .size(width = 387.dp, height = 234.dp)
@@ -56,15 +56,10 @@ fun ReportInfo(cycleInfo: String, date: String, documentTitle: String) {
                     contentDescription = "Email icon",
                     modifier = Modifier
                         .padding(top = 10.dp)
-                        .size(40.dp )
+                        .size(40.dp)
                 )
-
             }
-
         }
-
-
-
         Box(
             modifier = Modifier
         ) {
@@ -87,14 +82,14 @@ fun ReportInfo(cycleInfo: String, date: String, documentTitle: String) {
             )
         )
         Text(
-            text = cycleInfo,
+            text = documentCycle,
             modifier = Modifier.padding(start = 25.dp, top = 10.dp, bottom = 10.dp),
             fontFamily = FontFamily(Font(R.font.poppins_bold)),
             fontSize = 13.sp,
             color = Color.White
         )
         Text(
-            text = date,
+            text = documentDate,
             modifier = Modifier.padding(start = 25.dp, top = 10.dp, bottom = 10.dp),
             fontFamily = FontFamily(Font(R.font.poppins_bold)),
             fontSize = 13.sp,
@@ -114,8 +109,8 @@ fun ReportInfo(cycleInfo: String, date: String, documentTitle: String) {
 @Preview(showBackground = true)
 private fun ReportInfoPreview() {
     ReportInfo(
-        cycleInfo = "Cycle Information",
-        date = "2023-03-01",
-        documentTitle = "Document Title"
+        documentCycle = "Ciclo 02/2023",
+        documentDate = "2023-03-01",
+        documentTitle = "[PRESENTACION] - Matrices y Vectores"
     )
 }
