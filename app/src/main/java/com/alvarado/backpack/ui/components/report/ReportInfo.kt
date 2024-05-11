@@ -24,11 +24,16 @@ import androidx.compose.ui.unit.sp
 import com.alvarado.backpack.R
 
 @Composable
-fun ReportInfo(documentCycle: String, documentDate: String, documentTitle: String) {
+fun ReportInfo(
+    modifier: Modifier,
+    documentCycle: String,
+    documentDate: String,
+    documentTitle: String
+) {
 
     Column(
         modifier = Modifier
-            .size(width = 387.dp, height = 234.dp)
+            .size(width = 380.dp, height = 230.dp)
             .clip(RoundedCornerShape(30.dp))
             .background(Color(0xFF4C72F5))
     ) {
@@ -79,7 +84,8 @@ fun ReportInfo(documentCycle: String, documentDate: String, documentTitle: Strin
                 end = 25.dp,
                 top = 10.dp,
                 bottom = 10.dp
-            )
+            ),
+            thickness = 2.dp
         )
         Text(
             text = documentCycle,
@@ -109,6 +115,7 @@ fun ReportInfo(documentCycle: String, documentDate: String, documentTitle: Strin
 @Preview(showBackground = true)
 private fun ReportInfoPreview() {
     ReportInfo(
+        modifier = Modifier,
         documentCycle = "Ciclo 02/2023",
         documentDate = "2023-03-01",
         documentTitle = "[PRESENTACION] - Matrices y Vectores"

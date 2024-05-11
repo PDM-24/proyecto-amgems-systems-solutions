@@ -1,5 +1,6 @@
 package com.alvarado.backpack.ui.components.report
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -22,12 +23,15 @@ import androidx.compose.ui.unit.sp
 import com.alvarado.backpack.R
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 
+@SuppressLint("MutableCollectionMutableState")
 @Composable
-fun ReportReasons() {
+fun ReportReasons(modifier: Modifier) {
     val reasons = listOf(
         "Contenido perjudicial",
         "Spam",
@@ -37,34 +41,56 @@ fun ReportReasons() {
         "Plagio",
         "Violación de privacidad"
     )
-    val selectedReason = remember { mutableStateOf("") }
+    val selectedReasons = remember { mutableStateOf(listOf<String>()) }
+    val submittedReasons = remember { mutableStateOf(listOf<String>()) } // keep reasons selected
 
     Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally
     ) {
         reasons.forEach { reason ->
-            Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = if (selectedReason.value == reason) Color(0xFF0E0B24) else Color.White
-                ),
-                border = BorderStroke(1.dp,Color.Gray),
+            Card(colors = CardDefaults.cardColors(
+                containerColor = if (selectedReasons.value.contains(reason)) Color(0xFF0E0B24) else Color.White
+            ),
+                border = BorderStroke(1.dp, Color.Gray),
                 modifier = Modifier
                     .padding(8.dp)
-                    .size(344.dp, 47.dp)
-                    .clickable { selectedReason.value = reason }
+                    .size(330.dp, 47.dp)
                     .shadow(10.dp)
-            ) {
+                    .clickable {
+                        if (selectedReasons.value.contains(reason)) {
+                            selectedReasons.value -= reason // creates new list without reasons
+                        } else {
+                            selectedReasons.value += reason // creates new list with reasons
+                        }
+                    }) {
                 Box(contentAlignment = Alignment.Center) {
                     Text(
                         text = reason,
                         modifier = Modifier.padding(12.dp),
                         fontFamily = FontFamily(Font(R.font.poppins_regular)),
                         fontSize = 15.sp,
-                        color = if (selectedReason.value == reason) Color.White else Color.Black
+                        color = if (selectedReasons.value.contains(reason)) Color.White else Color.Black
                     )
                 }
+            }
+        }
+        // buttom
+        Box() {
+            Button(
+                onClick = {
+                    submittedReasons.value = selectedReasons.value
+                },
+                modifier = Modifier
+                    .size(330.dp, 60.dp),
+                colors = ButtonDefaults.buttonColors(Color(0xFF4C72F5)),
+                shape = RoundedCornerShape(15.dp)
+            ) {
+                Text(
+                    text = "Send",
+                    color = Color.White,
+                    fontFamily = FontFamily(Font(R.font.poppins_semibold)),
+                    fontSize = 20.sp
+                )
             }
         }
     }
@@ -73,5 +99,5 @@ fun ReportReasons() {
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
 fun PreviewReportReasons() {
-    ReportReasons()
+    ReportReasons(modifier = Modifier)
 }
