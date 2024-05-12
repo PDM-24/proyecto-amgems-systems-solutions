@@ -5,6 +5,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -45,7 +46,10 @@ fun ReportReasons(modifier: Modifier) {
     val submittedReasons = remember { mutableStateOf(listOf<String>()) } // keep reasons selected
 
     Column(
-        modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 5.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         reasons.forEach { reason ->
             Card(colors = CardDefaults.cardColors(
@@ -74,6 +78,7 @@ fun ReportReasons(modifier: Modifier) {
                 }
             }
         }
+        Spacer(modifier = Modifier.padding(3.dp))
         // buttom
         Box() {
             Button(
