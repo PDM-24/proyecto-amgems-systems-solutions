@@ -30,7 +30,6 @@ fun ReportInfo(
     documentDate: String,
     documentTitle: String
 ) {
-
     Column(
         modifier = Modifier
             .size(width = 380.dp, height = 230.dp)
