@@ -36,6 +36,7 @@ fun ReportInfo(
             .size(width = 380.dp, height = 230.dp)
             .clip(RoundedCornerShape(30.dp))
             .background(Color(0xFF4C72F5))
+
     ) {
         Row {
             Box(modifier = Modifier.weight(1f)) {
@@ -52,13 +53,13 @@ fun ReportInfo(
             Box {
                 Image(
                     painter = painterResource(id = R.drawable.ic_white_bg),
-                    contentDescription = "Email icon",
+                    contentDescription = "Fondo Blanco",
                     modifier = Modifier
                         .padding(top = 10.dp, end = 10.dp)
                 )
                 Image(
                     painter = painterResource(id = R.drawable.ic_exclamacion),
-                    contentDescription = "Email icon",
+                    contentDescription = "Advertencia",
                     modifier = Modifier
                         .padding(top = 10.dp)
                         .size(40.dp)
