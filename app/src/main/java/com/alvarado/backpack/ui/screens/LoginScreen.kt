@@ -30,6 +30,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.alvarado.backpack.R
+import com.alvarado.backpack.navigate.AppScreens
 import com.alvarado.backpack.ui.components.LoginForm
 import com.google.android.gms.maps.model.Circle
 
@@ -64,7 +65,7 @@ fun LoginScreen(navController: NavController) {
                             .height(70.dp),
                         shape = CircleShape,
                         onClick = {
-
+                            navController.navigate(AppScreens.RememberScreen.route)
                         }) {
                         Image(painter = painterResource(id = R.drawable.ic_arrow_back), contentDescription = "Back", modifier = Modifier.fillMaxSize())
                     }

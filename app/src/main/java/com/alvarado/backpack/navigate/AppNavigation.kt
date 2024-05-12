@@ -10,6 +10,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.alvarado.backpack.ui.screens.LoginScreen
 import com.alvarado.backpack.ui.screens.RegisterScreen
+import com.alvarado.backpack.ui.screens.RememberScreen
+import com.alvarado.backpack.ui.screens.WelcomeScreen
 
 @Composable
 fun AppNavigation(modifier: Modifier = Modifier){
@@ -18,7 +20,30 @@ fun AppNavigation(modifier: Modifier = Modifier){
     Box(
         modifier = modifier
     ) {
-        NavHost(navController = navController, startDestination = AppScreens.LoginScreen.route) {
+        NavHost(navController = navController, startDestination = AppScreens.WelcomeScreen.route) {
+            composable(
+                route = AppScreens.WelcomeScreen.route,
+                enterTransition = {
+                    slideIntoContainer(towards = AnimatedContentTransitionScope.SlideDirection.Start, animationSpec = tween(500))
+                },
+                exitTransition = {
+                    slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.End, animationSpec = tween(500))
+                }
+            ){
+                WelcomeScreen(navController)
+            }
+
+            composable(
+                route = AppScreens.RememberScreen.route,
+                enterTransition = {
+                    slideIntoContainer(towards = AnimatedContentTransitionScope.SlideDirection.Start, animationSpec = tween(500))
+                },
+                exitTransition = {
+                    slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.End, animationSpec = tween(500))
+                }
+            ){
+                RememberScreen(navController)
+            }
             composable(
                 route = AppScreens.LoginScreen.route,
                 enterTransition = {

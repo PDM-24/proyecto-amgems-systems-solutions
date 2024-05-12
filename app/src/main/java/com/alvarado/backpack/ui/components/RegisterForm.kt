@@ -59,7 +59,7 @@ fun RegisterForm(navController: NavController){
             .clip(RoundedCornerShape(20.dp))
             .background(Color.White)
             .height(650.dp)
-            .width(300.dp)
+            .width(350.dp)
             .padding(30.dp)
     ) {
         Column(

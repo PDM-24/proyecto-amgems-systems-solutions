@@ -162,7 +162,9 @@ fun LoginForm(navController: NavController){
                             .widthIn(100.dp),
                         shape = RoundedCornerShape(10.dp),
                         colors = ButtonDefaults.buttonColors(Color(0xFF4C72F5)),
-                        onClick = {}
+                        onClick = {
+
+                        }
                     ) {
                         Image(painter = painterResource(id = R.drawable.ic_next_log), contentDescription = "Login")
                     }

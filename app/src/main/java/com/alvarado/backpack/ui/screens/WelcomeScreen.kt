@@ -28,15 +28,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.alvarado.backpack.R
+import com.alvarado.backpack.navigate.AppScreens
 
 @Composable
-fun WelcomeScreen(modifier: Modifier = Modifier){
+fun WelcomeScreen(navController: NavController){
 
-    Column(        modifier = modifier
-        .fillMaxSize()
-        .fillMaxHeight()
-        .background(Color(0xFFF2F2F2)),
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .fillMaxHeight()
+            .background(Color(0xFFF2F2F2)),
         ) {
 
             Box(modifier = Modifier
@@ -53,16 +56,20 @@ fun WelcomeScreen(modifier: Modifier = Modifier){
             }
 
         Text(
-            text = "Welcome to BackPack",
+            text = "Welcome to",
             fontWeight = FontWeight.Bold,
             fontSize = 40.sp,
-            color = Color.Black,
+            color = Color(0xFF333333),
             modifier = Modifier
-                .padding(top = 32.dp, bottom = 8.dp)
+                .padding(top = 32.dp, bottom = 0.dp)
                 .align(Alignment.CenterHorizontally),
             textAlign = TextAlign.Center
 
         )
+
+        Spacer(modifier = Modifier.padding(2.dp))
+
+        Text(text = "BackPack",color = Color(0xFF333333), fontWeight = FontWeight.Bold, fontSize = 40.sp, modifier = Modifier.align(Alignment.CenterHorizontally))
 
         Spacer(modifier = Modifier.padding(5.dp))
 
@@ -81,7 +88,9 @@ fun WelcomeScreen(modifier: Modifier = Modifier){
 
         // Button at the bottom
         Button(
-            onClick = { /* TODO: Handle click */ },
+            onClick = {
+                navController.navigate(AppScreens.RememberScreen.route)
+            },
             modifier = Modifier
                 .padding(20.dp)
                 .widthIn(500.dp)
@@ -95,9 +104,4 @@ fun WelcomeScreen(modifier: Modifier = Modifier){
         }
         }
 
-}
-@Preview(showSystemUi = true)
-@Composable
-fun WelcomeScreenPreview() {
-    WelcomeScreen()
 }

@@ -1,5 +1,6 @@
 package com.alvarado.backpack.ui.screens
 
+import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -28,10 +29,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.alvarado.backpack.R
+import com.alvarado.backpack.navigate.AppScreens
 
 @Composable
-fun RememberScreen() {
+fun RememberScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -49,10 +52,12 @@ fun RememberScreen() {
                 text = "Remember",
                 fontWeight = FontWeight.Bold,
                 fontSize = 40.sp,
-                color = Color.Black,
+                color = Color(0xFF333333),
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
             )
+            
+            Spacer(modifier = Modifier.padding(10.dp))
 
             Text(text = "Lorem ipsum dolor sit amet,\n" +
                     "consectetur adipiscing elit, sed do\n" +
@@ -83,7 +88,9 @@ fun RememberScreen() {
                 )
 
                 Button(
-                    onClick = { /* TODO: Handle click */ },
+                    onClick = {
+                              navController.navigate(AppScreens.LoginScreen.route)
+                    },
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
                         .padding(20.dp)
@@ -100,10 +107,4 @@ fun RememberScreen() {
             }
         }
     }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun RememberScreenPreview() {
-        RememberScreen()
 }
