@@ -35,26 +35,30 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.alvarado.backpack.R
 import com.alvarado.backpack.navigate.AppScreens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginForm(navController: NavController){
+fun RegisterForm(navController: NavController){
 
     val emailState: MutableState<String> = remember { mutableStateOf("") }
     val passwordState: MutableState<String> = remember { mutableStateOf("") }
+    val nameState: MutableState<String> = remember { mutableStateOf("") }
+    val lastNameState: MutableState<String> = remember { mutableStateOf("") }
+    val careerState: MutableState<String> = remember { mutableStateOf("") }
+
 
     Box(
         modifier = Modifier
             .shadow(elevation = 50.dp)
             .clip(RoundedCornerShape(20.dp))
             .background(Color.White)
-            .height(500.dp)
+            .height(650.dp)
             .width(300.dp)
             .padding(30.dp)
     ) {
@@ -62,15 +66,7 @@ fun LoginForm(navController: NavController){
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(),
-            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(painter = painterResource(id = R.drawable.logo), contentDescription = "BackPack")
-            Text(
-                text = "BACKPACK",
-                fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                fontSize = 30.sp,
-                color = Color(0xFF333333)
-            )
 
             Spacer(modifier = Modifier.padding(5.dp))
 
@@ -79,17 +75,126 @@ fun LoginForm(navController: NavController){
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.Start
             ) {
+
+                Text(
+                    text = "Name :",
+                    fontFamily = FontFamily(Font(R.font.poppins_light)),
+                    fontSize = 17.sp
+                )
+
+                TextField(
+                    value = nameState.value,
+                    onValueChange = { nameState.value = it},
+                    modifier = Modifier
+                        .padding(top = 20.dp)
+                        .background(Color(0xFFF7F7F8)),
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        imeAction = ImeAction.None
+                    ),
+                    singleLine = true,
+                    leadingIcon = {
+                        Image(painter = painterResource(id =  R.drawable.ic_person), contentDescription = "Email icon")
+                            },
+                    colors = TextFieldDefaults.textFieldColors(
+                        unfocusedLabelColor = Color(0xFF333333),
+                        focusedLabelColor = Color(0xFF333333),
+                        cursorColor = Color(0xFF333333),
+                        focusedLeadingIconColor = Color(0xFF333333),
+                        unfocusedLeadingIconColor = Color(0xFF333333),
+                        focusedTrailingIconColor = Color(0xFF333333),
+                        unfocusedTrailingIconColor = Color(0xFF333333),
+                        focusedIndicatorColor = Color.Transparent,
+                        containerColor = Color(0xFFF7F7F8),
+                        focusedTextColor = Color(0xFF333333),
+                        unfocusedIndicatorColor = Color.Transparent),
+                        shape = RoundedCornerShape(10.dp)
+                        )
+                Spacer(modifier = Modifier.padding(5.dp))
+
+
+                Text(
+                    text = "Last Name :",
+                    fontFamily = FontFamily(Font(R.font.poppins_light)),
+                    fontSize = 17.sp
+                )
+
+                TextField(
+                    value = lastNameState.value,
+                    onValueChange = { lastNameState.value = it},
+                    modifier = Modifier
+                        .padding(top = 5.dp)
+                        .background(Color(0xFFF7F7F8)),
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        imeAction = ImeAction.None
+                    ),
+                    singleLine = true,
+                    leadingIcon = {
+                        Image(painter = painterResource(id =  R.drawable.ic_person), contentDescription = "Email icon")
+                    },
+                    colors = TextFieldDefaults.textFieldColors(
+                        unfocusedLabelColor = Color(0xFF333333),
+                        focusedLabelColor = Color(0xFF333333),
+                        cursorColor = Color(0xFF333333),
+                        focusedLeadingIconColor = Color(0xFF333333),
+                        unfocusedLeadingIconColor = Color(0xFF333333),
+                        focusedTrailingIconColor = Color(0xFF333333),
+                        unfocusedTrailingIconColor = Color(0xFF333333),
+                        focusedIndicatorColor = Color.Transparent,
+                        containerColor = Color(0xFFF7F7F8),
+                        focusedTextColor = Color(0xFF333333),
+                        unfocusedIndicatorColor = Color.Transparent),
+                    shape = RoundedCornerShape(10.dp)
+                )
+
+                Spacer(modifier = Modifier.padding(5.dp))
+
+                Text(
+                    text = "Career :",
+                    fontFamily = FontFamily(Font(R.font.poppins_light)),
+                    fontSize = 17.sp
+                )
+
+                TextField(
+                    value = careerState.value,
+                    onValueChange = { careerState.value = it},
+                    modifier = Modifier
+                        .padding(top = 10.dp)
+                        .background(Color(0xFFF7F7F8)),
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        imeAction = ImeAction.None
+                    ),
+                    singleLine = true,
+                    leadingIcon = {
+                        Image(painter = painterResource(id =  R.drawable.ic_career), contentDescription = "Email icon")
+                    },
+                    colors = TextFieldDefaults.textFieldColors(
+                        unfocusedLabelColor = Color(0xFF333333),
+                        focusedLabelColor = Color(0xFF333333),
+                        cursorColor = Color(0xFF333333),
+                        focusedLeadingIconColor = Color(0xFF333333),
+                        unfocusedLeadingIconColor = Color(0xFF333333),
+                        focusedTrailingIconColor = Color(0xFF333333),
+                        unfocusedTrailingIconColor = Color(0xFF333333),
+                        focusedIndicatorColor = Color.Transparent,
+                        containerColor = Color(0xFFF7F7F8),
+                        focusedTextColor = Color(0xFF333333),
+                        unfocusedIndicatorColor = Color.Transparent),
+                    shape = RoundedCornerShape(10.dp)
+                )
+
+                Spacer(modifier = Modifier.padding(5.dp))
+
                 Text(
                     text = "Email :",
                     fontFamily = FontFamily(Font(R.font.poppins_light)),
-                    fontSize = 23.sp
+                    fontSize = 17.sp
                 )
 
                 TextField(
                     value = emailState.value,
                     onValueChange = { emailState.value = it},
                     modifier = Modifier
-                        .padding(top = 20.dp)
+                        .padding(top = 5.dp)
                         .background(Color(0xFFF7F7F8)),
                     keyboardOptions = KeyboardOptions.Default.copy(
                         imeAction = ImeAction.None
@@ -113,19 +218,19 @@ fun LoginForm(navController: NavController){
                     shape = RoundedCornerShape(10.dp)
                 )
 
-                Spacer(modifier = Modifier.padding(10.dp))
+                Spacer(modifier = Modifier.padding(5.dp))
 
                 Text(
                     text = "Password :",
                     fontFamily = FontFamily(Font(R.font.poppins_light)),
-                    fontSize = 23.sp
+                    fontSize = 17.sp
                 )
 
                 TextField(
                     value = passwordState.value,
                     onValueChange = { passwordState.value = it},
                     modifier = Modifier
-                        .padding(top = 20.dp)
+                        .padding(top = 5.dp)
                         .background(Color(0xFFF7F7F8)),
                     keyboardOptions = KeyboardOptions.Default.copy(
                         imeAction = ImeAction.None
@@ -162,9 +267,11 @@ fun LoginForm(navController: NavController){
                             .widthIn(100.dp),
                         shape = RoundedCornerShape(10.dp),
                         colors = ButtonDefaults.buttonColors(Color(0xFF4C72F5)),
-                        onClick = {}
+                        onClick = {
+                            navController.navigate(AppScreens.LoginScreen.route)
+                        }
                     ) {
-                        Image(painter = painterResource(id = R.drawable.ic_next_log), contentDescription = "Login")
+                        Image(painter = painterResource(id = R.drawable.ic_add), contentDescription = "Login")
                     }
 
                     Button(
@@ -174,10 +281,14 @@ fun LoginForm(navController: NavController){
                         shape = RoundedCornerShape(10.dp),
                         colors = ButtonDefaults.buttonColors(Color(0xFF3F2AC5)),
                         onClick = {
-                            navController.navigate(AppScreens.RegisterScreen.route)
+                            nameState.value = ""
+                            lastNameState.value = ""
+                            emailState.value = ""
+                            careerState.value = ""
+                            passwordState.value = ""
                         }
                     ) {
-                        Image(painter = painterResource(id = R.drawable.ico_register), contentDescription = "Login")
+                        Image(painter = painterResource(id = R.drawable.ic_trash), contentDescription = "Login")
                     }
                 }
             }
