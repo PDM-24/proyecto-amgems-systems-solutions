@@ -33,7 +33,7 @@ fun PostComponent() {
 
     Surface (
         modifier = Modifier
-            .padding(8.dp)
+            .padding(vertical = 8.dp)
             .fillMaxWidth()
             .height(125.dp),
         shadowElevation = 4.dp,
@@ -43,7 +43,7 @@ fun PostComponent() {
         Row (
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 8.dp, horizontal = 4.dp),
+                .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column (
@@ -62,15 +62,18 @@ fun PostComponent() {
                 modifier = Modifier
                     .fillMaxHeight()
                     .padding(horizontal = 4.dp)
-                    .weight(11f),
+                    .weight(11f)
+                    .padding(end = 4.dp),
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Text (
                     text = "[CLASE] - Desarrollo de Integrales",
+                    maxLines = 2,
                     fontSize = 16.sp
                 )
                 Text(
                     text = "Desarrollo de la clase donde vemos intregales y....",
+                    maxLines = 3,
                     fontSize = 12.sp,
                     color = Color.Gray
                 )
@@ -126,6 +129,6 @@ fun PostComponent() {
 
 @Preview
 @Composable
-fun PostComponentPreview() {
+private fun PostComponentPreview() {
     PostComponent()
 }
