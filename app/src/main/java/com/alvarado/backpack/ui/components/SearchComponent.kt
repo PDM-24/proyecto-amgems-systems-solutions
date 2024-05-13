@@ -1,6 +1,7 @@
 package com.alvarado.backpack.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,9 +10,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -47,13 +55,32 @@ fun SearchComponent(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .padding(15.dp),
         ) {
-            Text(
-                text = "Programación de dispositivos móviles",
-                fontSize = 24.sp,
-                color = Color.White,
+            Row (
                 modifier = Modifier
                     .weight(4f)
-            )
+            ){
+                Text(
+                    text = "Programación de dispositivos móviles",
+                    fontSize = 24.sp,
+                    color = Color.White,
+                    modifier = Modifier
+                        .weight(4f)
+                )
+                Spacer(modifier = Modifier.weight(0.5f))
+                Button(
+                    onClick = {  },
+                    modifier = Modifier
+                        .height(40.dp)
+                        .width(40.dp),
+                    shape = CircleShape,
+                    colors = ButtonDefaults.buttonColors(
+                        contentColor = Color.White,
+                        containerColor = Color.White
+                    )
+                ) {
+                    Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = null)
+                }
+            }
             Spacer(modifier = Modifier.weight(1f))
             TextField(
                 value = search.value, 
