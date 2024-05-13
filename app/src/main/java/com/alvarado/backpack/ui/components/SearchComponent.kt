@@ -38,8 +38,7 @@ fun SearchComponent(modifier: Modifier = Modifier) {
     Surface (
         modifier = modifier
             .padding(vertical = 8.dp)
-            .fillMaxWidth()
-            .height(175.dp),
+            .fillMaxWidth(),
         shadowElevation = 4.dp,
         shape = RoundedCornerShape(20.dp),
         color = Color(0xFF4C72F5)
