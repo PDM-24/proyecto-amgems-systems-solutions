@@ -5,9 +5,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,51 +26,50 @@ import com.alvarado.backpack.R
 
 @Composable
 fun ContributionInfo(modifier: Modifier) {
-    Column(
-        modifier = Modifier
-            .size(width = 380.dp, height = 180.dp)
+    Surface (
+        modifier = modifier
+            .fillMaxWidth()
             .clip(RoundedCornerShape(30.dp))
             .background(Color(0xFF4C72F5))
     ) {
-        Row {
-            Box(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = "Contributioins",
-                    modifier = Modifier
-                        .align(Alignment.CenterStart)
-                        .padding(start = 25.dp, top = 10.dp),
-                    fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                    fontSize = 26.sp,
-                    color = Color.White
-                )
+        Column () {
+            Row {
+                Box(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = "Contributioins",
+                        modifier = Modifier
+                            .align(Alignment.CenterStart)
+                            .padding(start = 25.dp, top = 10.dp),
+                        fontFamily = FontFamily(Font(R.font.poppins_bold)),
+                        fontSize = 26.sp,
+                        color = Color.White
+                    )
+                }
+                // image
+                Box{
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_blue_bubble),
+                        contentDescription = "Fondo Azul",
+                        modifier = Modifier
+                            .padding(top = 10.dp, end = 10.dp)
+                    )
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_campanita),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .padding(top = 19.dp, start = 10.dp)
+                            .size(20.dp)
+                    )
+                }
             }
-            // image
-            Box{
-                Image(
-                    painter = painterResource(id = R.drawable.ic_blue_bubble),
-                    contentDescription = "Fondo Azul",
-                    modifier = Modifier
-                        .padding(top = 10.dp, end = 10.dp)
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.ic_campanita),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .padding(top = 19.dp, start = 10.dp)
-                        .size(20.dp)
-                )
-            }
+            Text(
+                text = "help others to help you",
+                modifier = Modifier.padding(start = 25.dp),
+                fontFamily = FontFamily(Font(R.font.poppins_light)),
+                fontSize = 13.sp,
+                color = Color.White
+            )
         }
-        // description
-        Text(
-            text = "help others to help you",
-            modifier = Modifier.padding(start = 25.dp),
-            fontFamily = FontFamily(Font(R.font.poppins_light)),
-            fontSize = 13.sp,
-            color = Color.White
-        )
-
-        // search bar
     }
 }
 

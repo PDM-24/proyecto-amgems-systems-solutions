@@ -1,8 +1,7 @@
 package com.alvarado.backpack.ui.components
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,19 +9,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -31,14 +26,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.alvarado.backpack.R
 
 @Composable
-fun SearchComponent(modifier: Modifier = Modifier) {
+fun SearchComponent(modifier: Modifier = Modifier, title: String) {
     val search = remember {
         mutableStateOf("")
     }
@@ -60,25 +56,21 @@ fun SearchComponent(modifier: Modifier = Modifier) {
                     .weight(4f)
             ){
                 Text(
-                    text = "Programación de dispositivos móviles",
+                    text = title,
                     fontSize = 24.sp,
                     color = Color.White,
                     modifier = Modifier
                         .weight(4f)
                 )
                 Spacer(modifier = Modifier.weight(0.5f))
-                Button(
-                    onClick = {  },
-                    modifier = Modifier
-                        .height(40.dp)
-                        .width(40.dp),
-                    shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(
-                        contentColor = Color.White,
-                        containerColor = Color.White
+                Box{
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_back_arrow),
+                        contentDescription = "Fondo Azul",
+                        modifier = Modifier
+                            .height(50.dp)
+                            .width(50.dp)
                     )
-                ) {
-                    Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = null)
                 }
             }
             Spacer(modifier = Modifier.weight(1f))
@@ -147,5 +139,5 @@ fun SearchComponent(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun SearchComponentPreview() {
-    SearchComponent()
+    SearchComponent(title="Programación de dispositivos móviles")
 }

@@ -23,11 +23,8 @@ fun MaterialScreen() {
     ) {
         SearchComponent (
             modifier = Modifier
-                .weight(3f)
-        )
-        Text(
-            text = "Contenido",
-            fontSize = 24.sp
+                .weight(3f),
+            title="Programación de dispositivos móviles"
         )
         LazyColumn (
             modifier = Modifier
