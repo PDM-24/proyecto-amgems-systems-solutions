@@ -138,7 +138,7 @@ fun AddMaterial() {
                 ),
                 // la sombra
                 modifier = Modifier
-                    .shadow(tat0.dp)
+                    .shadow(10.dp)
                     .height(48.dp)
                     .clip(RoundedCornerShape(10.dp))
             )
