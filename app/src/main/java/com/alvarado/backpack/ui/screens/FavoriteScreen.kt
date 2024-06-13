@@ -13,20 +13,20 @@ import com.alvarado.backpack.ui.components.PostComponent
 import com.alvarado.backpack.ui.components.SearchComponent
 
 @Composable
-fun ContributionScreen() {
-    Column(
+fun FavoriteScreen() {
+    Column (
         modifier = Modifier
             .fillMaxHeight()
             .padding(vertical = 10.dp, horizontal = 15.dp)
     ) {
-        SearchComponent(
+        SearchComponent (
             modifier = Modifier
                 .weight(3f),
-            title="Contribuciones"
+            title="Favorites"
         )
         LazyColumn (
             modifier = Modifier
-                .weight(9f)
+                .weight(8f)
         ) {
             itemsIndexed(listOf(1, 2, 3, 4,)) { index, item ->
                 PostComponent()
@@ -35,8 +35,8 @@ fun ContributionScreen() {
     }
 }
 
-@Composable
 @Preview(showSystemUi = true)
-private fun ContributionScreenPreview() {
-    ContributionScreen()
+@Composable
+private fun FavoriteScreenPreview() {
+    FavoriteScreen()
 }
