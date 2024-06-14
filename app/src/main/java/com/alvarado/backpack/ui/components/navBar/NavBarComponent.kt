@@ -90,7 +90,9 @@ fun NavBarComponent(navController: NavController){
                 }
 
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                              navController.navigate("profile")
+                    },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Transparent
                     )

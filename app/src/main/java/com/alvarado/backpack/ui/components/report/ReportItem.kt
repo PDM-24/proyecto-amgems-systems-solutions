@@ -55,7 +55,6 @@ fun ReportReasons(modifier: Modifier) {
             Card(colors = CardDefaults.cardColors(
                 containerColor = if (selectedReasons.value.contains(reason)) Color(0xFF0E0B24) else Color.White
             ),
-                border = BorderStroke(1.dp, Color.Gray),
                 modifier = Modifier
                     .padding(8.dp)
                     .size(330.dp, 47.dp)
@@ -99,6 +98,8 @@ fun ReportReasons(modifier: Modifier) {
             }
         }
     }
+
+    Spacer(modifier = Modifier.padding(10.dp))
 }
 
 @Composable

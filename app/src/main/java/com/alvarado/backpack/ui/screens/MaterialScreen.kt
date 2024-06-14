@@ -11,11 +11,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.alvarado.backpack.ui.components.PostComponent
 import com.alvarado.backpack.ui.components.SearchComponent
 
 @Composable
-fun MaterialScreen() {
+fun MaterialScreen(navController: NavController) {
     Column (
         modifier = Modifier
             .fillMaxHeight()
@@ -32,14 +33,8 @@ fun MaterialScreen() {
                 .weight(8f)
         ) {
             itemsIndexed(listOf(1, 2, 3, 4,)) { index, item ->
-                PostComponent()
+                PostComponent(navController = navController)
             }
         }
     }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-private fun MaterialScreenPreview() {
-    MaterialScreen()
 }

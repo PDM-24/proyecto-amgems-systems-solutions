@@ -7,9 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.alvarado.backpack.ui.screens.AddMaterialScreen
 import com.alvarado.backpack.ui.screens.ContributionScreen
 import com.alvarado.backpack.ui.screens.FavoriteScreen
 import com.alvarado.backpack.ui.screens.HomeScreen
+import com.alvarado.backpack.ui.screens.ProfileScreen
+import com.alvarado.backpack.ui.screens.ReportScreen
 
 @Composable
 fun NavBarNavigation(){
@@ -59,6 +62,42 @@ fun NavBarNavigation(){
                 }
             ){
                 FavoriteScreen(navController)
+            }
+
+            composable(
+                route = NavScreens.Profile.route,
+                enterTransition = {
+                    slideIntoContainer(towards = AnimatedContentTransitionScope.SlideDirection.Start, animationSpec = tween(500))
+                },
+                exitTransition = {
+                    slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.End, animationSpec = tween(500))
+                }
+            ){
+                ProfileScreen(navController)
+            }
+
+            composable(
+                route = NavScreens.Reporting.route,
+                enterTransition = {
+                    slideIntoContainer(towards = AnimatedContentTransitionScope.SlideDirection.Start, animationSpec = tween(500))
+                },
+                exitTransition = {
+                    slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.End, animationSpec = tween(500))
+                }
+            ){
+                ReportScreen(navController)
+            }
+
+            composable(
+                route = NavScreens.AddMaterial.route,
+                enterTransition = {
+                    slideIntoContainer(towards = AnimatedContentTransitionScope.SlideDirection.Start, animationSpec = tween(500))
+                },
+                exitTransition = {
+                    slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.End, animationSpec = tween(500))
+                }
+            ){
+                AddMaterialScreen(navController)
             }
 
         }
