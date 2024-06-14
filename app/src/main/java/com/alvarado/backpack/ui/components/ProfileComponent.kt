@@ -17,6 +17,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
@@ -59,8 +61,9 @@ fun ProfileScreen() {
                     "Profile",
                     color = Color.White,
                     fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily(Font(R.font.poppins_semibold)),
                     modifier = Modifier.padding(end = 128.dp)
+
                 )
             }
 
@@ -90,13 +93,14 @@ fun ProfileScreen() {
                     "Alicia Flores",
                     color = Color.White,
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
+                    fontFamily = FontFamily(Font(R.font.poppins_medium))
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     "Computing Student",
                     color = Color.White.copy(alpha = 0.7f),
-                    fontSize = 16.sp
+                    fontSize = 16.sp,
+                            fontFamily = FontFamily(Font(R.font.poppins_light))
                 )
             }
 
@@ -116,7 +120,8 @@ fun ProfileScreen() {
                         "Number of favorites",
                         color = Color.White,
                         fontSize = 10.sp,
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
+                        fontFamily = FontFamily(Font(R.font.poppins_bold))
                     )
                     Row(
                         verticalAlignment = Alignment.CenterVertically
@@ -131,7 +136,8 @@ fun ProfileScreen() {
                             "20",
                             color = Color.White,
                             fontSize = 15.sp,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
+                            fontFamily = FontFamily(Font(R.font.poppins_bold))
                         )
                     }
 
@@ -149,7 +155,8 @@ fun ProfileScreen() {
                         "Number of contributions",
                         color = Color.White,
                         fontSize = 10.sp,
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
+                        fontFamily = FontFamily(Font(R.font.poppins_bold))
                     )
                     Row(
                         verticalAlignment = Alignment.CenterVertically
@@ -164,7 +171,8 @@ fun ProfileScreen() {
                             "12",
                             color = Color.White,
                             fontSize = 15.sp,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
+                            fontFamily = FontFamily(Font(R.font.poppins_bold))
                         )
                     }
 
@@ -197,6 +205,7 @@ fun ProfileScreen() {
                                     }
                                 },
                                 textAlign = TextAlign.Left,
+                                fontFamily = FontFamily(Font(R.font.poppins_regular)),
                                 modifier = Modifier.padding(vertical = 0.dp)
                             )
                             Text(
@@ -206,6 +215,7 @@ fun ProfileScreen() {
                                     }
                                 },
                                 textAlign = TextAlign.Left,
+                                fontFamily = FontFamily(Font(R.font.poppins_regular)),
                                 modifier = Modifier.padding(top = 0.dp)
                             )
                         }
@@ -233,6 +243,7 @@ fun ProfileScreen() {
                                     }
                                 },
                                 textAlign = TextAlign.Left,
+                                fontFamily = FontFamily(Font(R.font.poppins_regular)),
                                 modifier = Modifier.padding(vertical = 0.dp)
                             )
                             Text(
@@ -242,6 +253,7 @@ fun ProfileScreen() {
                                     }
                                 },
                                 textAlign = TextAlign.Left,
+                                fontFamily = FontFamily(Font(R.font.poppins_regular)),
                                 modifier = Modifier.padding(top = 0.dp)
                             )
                         }
@@ -269,6 +281,7 @@ fun ProfileScreen() {
                                     }
                                 },
                                 textAlign = TextAlign.Left,
+                                fontFamily = FontFamily(Font(R.font.poppins_regular)),
                                 modifier = Modifier.padding(vertical = 0.dp)
                             )
                             Text(
@@ -278,6 +291,7 @@ fun ProfileScreen() {
                                     }
                                 },
                                 textAlign = TextAlign.Left,
+                                fontFamily = FontFamily(Font(R.font.poppins_regular)),
                                 modifier = Modifier.padding(top = 0.dp)
                             )
                         }
@@ -296,6 +310,7 @@ fun ProfileScreen() {
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
             ) {
                 Text("Log out", color = Color.White)
+
             }
         }
     }
