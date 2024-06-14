@@ -3,23 +3,10 @@ package com.alvarado.backpack.ui.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,204 +15,274 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.tooling.preview.Preview
 import com.alvarado.backpack.R
 
 @Composable
 fun ProfileScreen() {
-    val email = remember { mutableStateOf("") }
-    val career = remember { mutableStateOf("") }
-    val name = remember { mutableStateOf("") }
-
+    val email = remember { mutableStateOf("example@example.com") }
+    val career = remember { mutableStateOf("Computing Student") }
+    val name = remember { mutableStateOf("Alicia Flores") }
 
     Column(
         modifier = Modifier
             .padding(16.dp)
             .fillMaxSize()
-            .fillMaxHeight()
-            .background(Color(0xFFF2F2F2)),
+            .background(Color(0xFFF2F2F2))
     ) {
-        Spacer(modifier = Modifier.padding(12.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
         Column(
             modifier = Modifier
-                .clip(RoundedCornerShape(30.dp))//para bordear el colum papu
-                .background(Color(0xFF4C72F5)),
+                .clip(RoundedCornerShape(30.dp))
+                .background(Color(0xFF4C72F5))
+                .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
-        )
-        {
+        ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Button(
-                    onClick = {},
-                    modifier = Modifier
-                        .padding(12.dp)
-                        .size(48.dp)
-                        .clip(CircleShape)
-                        .background(Color.White)
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_back),
-                        contentDescription = "back icon",)
-                }
-                Spacer(modifier = Modifier.width(70.dp))
-                Column(
-                    verticalArrangement = Arrangement.Bottom,
-                    modifier = Modifier
-                        .height(85.dp)
-                ) {
 
-                    Text(
-                        "Profile",
-                        color = Color.White,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier
 
-                            .padding(bottom = 16.dp)
-                    )
-                }
+                Spacer(modifier = Modifier.weight(1f))
+                Text(
+                    "Profile",
+                    color = Color.White,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(end = 128.dp)
+                )
             }
 
+            Spacer(modifier = Modifier.height(16.dp))
 
-            Column {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_email),
-                    contentDescription = "Profile Image",
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Box(
                     modifier = Modifier
-                        .size(100.dp)
-                        .align(Alignment.CenterHorizontally)
-                        .border(2.dp, Color.White, CircleShape)
-                )
+                        .size(100.dp) // Tamaño del círculo
+                        .border(2.dp, Color.White, CircleShape) // Borde blanco circular
+                        .clip(CircleShape) // Recorte de la Box en forma circular
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_email), // Reemplaza con tu imagen
+                        contentDescription = "Profile Image",
+                        modifier = Modifier
+                            .size(100.dp) // Tamaño de la imagen
+                            .clip(CircleShape) // Recorte de la imagen en forma circular
+                    )
+                }
+
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     "Alicia Flores",
                     color = Color.White,
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                    fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     "Computing Student",
                     color = Color.White.copy(alpha = 0.7f),
-                    fontSize = 16.sp,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                    fontSize = 16.sp
                 )
             }
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-            Column {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 2.dp),
-                    horizontalArrangement = Arrangement.SpaceEvenly
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxHeight(0.1f)
+                    Text(
+                        "Number of favorites",
+                        color = Color.White,
+                        fontSize = 10.sp,
+                        textAlign = TextAlign.Center
+                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(
-                            "Number of favorites",
-                            color = Color.White,
-                            fontSize = 10.sp,
-                            modifier = Modifier.weight(1f)
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_like),
+                            contentDescription = "like icon",
+                            modifier = Modifier.size(18.dp)
                         )
-
+                        Spacer(modifier = Modifier.width(4.dp))
                         Text(
                             "20",
                             color = Color.White,
-                            modifier = Modifier.weight(1f),
-                            textAlign = TextAlign.Justify
+                            fontSize = 15.sp,
+                            textAlign = TextAlign.Center
                         )
                     }
-                    Divider(
+
+                }
+                Divider(
+                    color = Color.White,
+                    modifier = Modifier
+                        .height(56.dp)
+                        .width(1.dp)
+                )
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        "Number of contributions",
                         color = Color.White,
-                        modifier = Modifier
-                            .fillMaxHeight(0.1f)
-                            .width(1.dp)
+                        fontSize = 10.sp,
+                        textAlign = TextAlign.Center
                     )
-                    Column(
-                        modifier = Modifier
-                            .fillMaxHeight(0.1f)
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-
-                        Text(
-                            "Number of contributions",
-                            color = Color.White,
-                            fontSize = 10.sp,
-                            modifier = Modifier.weight(1f)
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_stats),
+                            contentDescription = "stats icon",
+                            modifier = Modifier.size(18.dp)
                         )
-
+                        Spacer(modifier = Modifier.width(4.dp))
                         Text(
                             "12",
                             color = Color.White,
-                            modifier = Modifier.weight(1f),
-                            textAlign = TextAlign.Justify
+                            fontSize = 15.sp,
+                            textAlign = TextAlign.Center
                         )
                     }
+
                 }
             }
         }
+
         Spacer(modifier = Modifier.height(36.dp))
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(),
-            horizontalAlignment = Alignment.Start
+                .padding(horizontal = 16.dp)
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_email_gray),
-                    contentDescription = "email icon",
-                    modifier = Modifier.padding(end = 8.dp)
-                )
-                Text(
-                    text = "Email: ${email.value}",
-                    modifier = Modifier.padding(vertical = 8.dp),
-                    textAlign = TextAlign.Left,
-                    color = Color.LightGray
-                )
+                Column(
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_email_gray),
+                            contentDescription = "email icon",
+                            modifier = Modifier.padding(end = 8.dp)
+                        )
+                        Column {
+                            Text(
+                                buildAnnotatedString {
+                                    withStyle(style = SpanStyle(color = Color.LightGray)) {
+                                        append("Email: ")
+                                    }
+                                },
+                                textAlign = TextAlign.Left,
+                                modifier = Modifier.padding(vertical = 0.dp)
+                            )
+                            Text(
+                                buildAnnotatedString {
+                                    withStyle(style = SpanStyle(color = Color.Black)) {
+                                        append("${email.value}")
+                                    }
+                                },
+                                textAlign = TextAlign.Left,
+                                modifier = Modifier.padding(top = 0.dp)
+                            )
+                        }
+                    }
+                }
             }
             Divider(color = Color.LightGray, thickness = 2.5.dp)
-            Spacer(modifier = Modifier.height(36.dp))
+            Spacer(modifier = Modifier.height(6.dp))
 
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_career),
-                    contentDescription = "career icon",
-                    modifier = Modifier.padding(end = 8.dp)
-                )
-                Text(
-                    text = "Career: ${career.value}",
-                    modifier = Modifier.padding(vertical = 8.dp),
-                    color = Color.LightGray
-                )
+                Column(
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_career),
+                            contentDescription = "career icon",
+                            modifier = Modifier.padding(end = 8.dp)
+                        )
+                        Column {
+                            Text(
+                                buildAnnotatedString {
+                                    withStyle(style = SpanStyle(color = Color.LightGray)) {
+                                        append("Career: ")
+                                    }
+                                },
+                                textAlign = TextAlign.Left,
+                                modifier = Modifier.padding(vertical = 0.dp)
+                            )
+                            Text(
+                                buildAnnotatedString {
+                                    withStyle(style = SpanStyle(color = Color.Black)) {
+                                        append(career.value)
+                                    }
+                                },
+                                textAlign = TextAlign.Left,
+                                modifier = Modifier.padding(top = 0.dp)
+                            )
+                        }
+                    }
+                }
             }
             Divider(color = Color.LightGray, thickness = 2.5.dp)
-            Spacer(modifier = Modifier.height(36.dp))
+            Spacer(modifier = Modifier.height(6.dp))
 
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_name),
-                    contentDescription = "name icon",
-                    modifier = Modifier.padding(end = 8.dp)
-                )
-                Text(
-                    text = "Name: ${name.value}",
-                    modifier = Modifier.padding(vertical = 8.dp),
-                    textAlign = TextAlign.Left,
-                    color = Color.LightGray
-                )
+                Column(
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_name),
+                            contentDescription = "name icon",
+                            modifier = Modifier.padding(end = 8.dp)
+                        )
+                        Column {
+                            Text(
+                                buildAnnotatedString {
+                                    withStyle(style = SpanStyle(color = Color.LightGray)) {
+                                        append("Name: ")
+                                    }
+                                },
+                                textAlign = TextAlign.Left,
+                                modifier = Modifier.padding(vertical = 0.dp)
+                            )
+                            Text(
+                                buildAnnotatedString {
+                                    withStyle(style = SpanStyle(color = Color.Black)) {
+                                        append("${name.value}")
+                                    }
+                                },
+                                textAlign = TextAlign.Left,
+                                modifier = Modifier.padding(top = 0.dp)
+                            )
+                        }
+                    }
+                }
             }
             Divider(color = Color.LightGray, thickness = 2.5.dp)
             Spacer(modifier = Modifier.height(36.dp))
@@ -233,23 +290,20 @@ fun ProfileScreen() {
             Button(
                 onClick = {},
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(48.dp),
+                    .height(48.dp)
+                    .width(400.dp),
                 shape = RoundedCornerShape(10.dp),
-
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
             ) {
                 Text("Log out", color = Color.White)
             }
         }
-
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
 fun PreviewProfileScreen() {
     ProfileScreen()
 }
-
-
-
