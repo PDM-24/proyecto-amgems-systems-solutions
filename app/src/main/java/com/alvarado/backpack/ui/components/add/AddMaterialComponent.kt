@@ -2,10 +2,10 @@ package com.alvarado.backpack.ui.components.add
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,45 +32,49 @@ fun AddMaterial() {
             .fillMaxSize()
             .background(Color(0xFFF2F2F2)),
     ) {
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
         Column(
             modifier = Modifier
                 .padding(10.dp)
-                .clip(RoundedCornerShape(30.dp))
+                .clip(RoundedCornerShape(20.dp))
                 .background(Color(0xFF4C72F5))
-                .padding(22.dp),
+                .padding(18.dp),
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 18.dp),
+                    .padding(top = 0.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     text = "Ready to share?",
                     color = Color.White,
                     fontFamily = FontFamily(Font(R.font.poppins_semibold)),
-                    fontSize = 28.sp
+                    fontSize = 24.sp
                 )
                 Spacer(modifier = Modifier.weight(1f))
-                Image(
-                    painter = painterResource(id = R.drawable.ic_addcircle),
-                    contentDescription = "Add icon",
-                    modifier = Modifier
-                        .size(24.dp)
-                        .align(Alignment.CenterVertically)
-                )
-            }
+
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_addcircle),
+                        contentDescription = "Add icon",
+                        modifier = Modifier
+                            .size(32.dp)
+                            .padding(top = 10.dp)
+                    )
+                }
+
             Text(
                 text = "Teach the world your knowledge",
                 color = Color.White,
                 fontFamily = FontFamily(Font(R.font.poppins_light)),
-                fontSize = 16.sp
+                fontSize = 16.sp,
+                modifier = Modifier.padding(top = 8.dp)
             )
         }
+
 
         Column(
             modifier = Modifier
@@ -110,7 +114,7 @@ fun AddMaterial() {
                     .height(44.dp)
                     .clip(RoundedCornerShape(10.dp))
             )
-            Spacer(modifier = Modifier.height(15.dp))
+            Spacer(modifier = Modifier.height(18.dp))
 
             TextField(
                 value = TextFieldValue(""),
@@ -142,7 +146,7 @@ fun AddMaterial() {
                     .height(48.dp)
                     .clip(RoundedCornerShape(10.dp))
             )
-            Spacer(modifier = Modifier.height(15.dp))
+            Spacer(modifier = Modifier.height(18.dp))
             TextField(
                 value = TextFieldValue(""),
                 onValueChange = {},
@@ -173,7 +177,7 @@ fun AddMaterial() {
                     .height(48.dp)
                     .clip(RoundedCornerShape(10.dp))
             )
-            Spacer(modifier = Modifier.height(15.dp))
+            Spacer(modifier = Modifier.height(18.dp))
             // description
             Box() {
                 Column {
@@ -183,12 +187,13 @@ fun AddMaterial() {
                     ) {
                         Row (
                             verticalAlignment = Alignment.CenterVertically
+
                         ){
                             Box(
                                 modifier = Modifier
-                                    .size(48.dp)
+                                    .size(50.dp)
                                     .fillMaxWidth()
-                                    .padding(5.dp)
+                                    .padding(15.dp)
                             ) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_description),
@@ -206,22 +211,30 @@ fun AddMaterial() {
                                 color = Color.White
                             )
                         }
+
                     }
                     TextField(
                         value = TextFieldValue(""),
                         onValueChange = {},
                         label = { Text("Add a description to the material...") },
                         modifier = Modifier.size(width = 280.dp, height = 120.dp),
-                        colors = TextFieldDefaults.colors(
-                            focusedContainerColor = Color.White, unfocusedContainerColor = Color.White
+                        colors = TextFieldDefaults.textFieldColors(
+                            containerColor = Color.White,
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent
                         )
 
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(4.dp))
-
+            Spacer(modifier = Modifier.height(14.dp))
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(34.dp))
+                    .padding(5.dp)
+            ) {
             Button(
                 onClick = {},
                 modifier = Modifier.fillMaxWidth(),
@@ -235,27 +248,34 @@ fun AddMaterial() {
                         modifier = Modifier.size(24.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text(text = "Select a file", color = Color.White,
-                    fontFamily = FontFamily(Font(R.font.poppins_regular))
+                    Text(
+                        text = "Select a file", color = Color.White,
+                        fontFamily = FontFamily(Font(R.font.poppins_regular))
                     )
-
+                }
                 }
             }
         }
-
-        Button(
-            onClick = {},
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp),
-            shape = RoundedCornerShape(12.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4C72F5))
+                .padding(16.dp)
+                .clip(RoundedCornerShape(34.dp))
+                .padding(16.dp)
         ) {
-            Text(
-                text = "Add", color = Color.White,
-                fontSize = 20.sp,
-                fontFamily = FontFamily(Font(R.font.poppins_semibold))
-            ) //para las fuentes que importo mi nv
+            Button(
+                onClick = {},
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp),
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4C72F5))
+            ) {
+                Text(
+                    text = "Add", color = Color.White,
+                    fontSize = 20.sp,
+                    fontFamily = FontFamily(Font(R.font.poppins_semibold))
+                ) //para las fuentes que importo mi nv
+}
         }
     }
 }
