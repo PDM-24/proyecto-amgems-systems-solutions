@@ -24,7 +24,8 @@ fun MaterialScreen() {
         SearchComponent (
             modifier = Modifier
                 .weight(3f),
-            title="Programación de dispositivos móviles"
+            title="Programación de dispositivos móviles",
+            subTitle = "Ciclo 01"
         )
         LazyColumn (
             modifier = Modifier

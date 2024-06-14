@@ -5,9 +5,11 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.alvarado.backpack.ui.screens.HomeScreen
 import com.alvarado.backpack.ui.screens.LoginScreen
 import com.alvarado.backpack.ui.screens.RegisterScreen
 import com.alvarado.backpack.ui.screens.RememberScreen
@@ -66,6 +68,20 @@ fun AppNavigation(modifier: Modifier = Modifier){
                 ){
                 RegisterScreen(navController)
             }
+
+            composable(
+                route = AppScreens.AppController.route,
+                enterTransition = {
+                    slideIntoContainer(towards = AnimatedContentTransitionScope.SlideDirection.Start, animationSpec = tween(500))
+                },
+                exitTransition = {
+                    slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.End, animationSpec = tween(500))
+                }
+            ){
+                NavBarNavigation()
+            }
+
+
         }
     }
 }

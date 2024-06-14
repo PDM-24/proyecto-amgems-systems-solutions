@@ -1,5 +1,8 @@
 package com.alvarado.backpack.ui.components
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -35,7 +38,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -44,7 +46,7 @@ import com.alvarado.backpack.navigate.AppScreens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginForm(navController: NavController){
+fun LoginForm(navController: NavController, context: Context){
 
     val emailState: MutableState<String> = remember { mutableStateOf("") }
     val passwordState: MutableState<String> = remember { mutableStateOf("") }
@@ -163,7 +165,7 @@ fun LoginForm(navController: NavController){
                         shape = RoundedCornerShape(10.dp),
                         colors = ButtonDefaults.buttonColors(Color(0xFF4C72F5)),
                         onClick = {
-
+                            navController.navigate(AppScreens.AppController.route)
                         }
                     ) {
                         Image(painter = painterResource(id = R.drawable.ic_next_log), contentDescription = "Login")
@@ -179,7 +181,7 @@ fun LoginForm(navController: NavController){
                             navController.navigate(AppScreens.RegisterScreen.route)
                         }
                     ) {
-                        Image(painter = painterResource(id = R.drawable.ico_register), contentDescription = "Login")
+                        Image(painter = painterResource(id = R.drawable.ico_register), contentDescription = "Register")
                     }
                 }
             }

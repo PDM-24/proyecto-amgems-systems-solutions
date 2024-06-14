@@ -28,13 +28,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.alvarado.backpack.R
 
 @Composable
-fun SearchComponent(modifier: Modifier = Modifier, title: String) {
+fun SearchComponent(modifier: Modifier = Modifier, title: String, subTitle: String) {
     val search = remember {
         mutableStateOf("")
     }
@@ -55,23 +56,25 @@ fun SearchComponent(modifier: Modifier = Modifier, title: String) {
                 modifier = Modifier
                     .weight(4f)
             ){
-                Text(
-                    text = title,
-                    fontSize = 24.sp,
-                    color = Color.White,
-                    modifier = Modifier
-                        .weight(4f)
-                )
-                Spacer(modifier = Modifier.weight(0.5f))
-                Box{
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_back_arrow),
-                        contentDescription = "Fondo Azul",
-                        modifier = Modifier
-                            .height(50.dp)
-                            .width(50.dp)
+
+                Column {
+                    Text(
+                        text = title,
+                        fontSize = 25.sp,
+                        color = Color.White,
+                        modifier = Modifier,
+                        fontWeight = FontWeight(700)
+                    )
+
+                    Text(
+                        text = subTitle,
+                        fontSize = 15.sp,
+                        color = Color.White,
+                        modifier = Modifier,
+                        fontWeight = FontWeight(300)
                     )
                 }
+                
             }
             Spacer(modifier = Modifier.weight(1f))
             TextField(
@@ -136,8 +139,4 @@ fun SearchComponent(modifier: Modifier = Modifier, title: String) {
     }
 }
 
-@Preview
-@Composable
-private fun SearchComponentPreview() {
-    SearchComponent(title="Programación de dispositivos móviles")
-}
+
