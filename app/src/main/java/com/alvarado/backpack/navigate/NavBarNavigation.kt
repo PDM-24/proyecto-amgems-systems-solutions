@@ -11,7 +11,11 @@ import com.alvarado.backpack.ui.screens.AddMaterialScreen
 import com.alvarado.backpack.ui.screens.ContributionScreen
 import com.alvarado.backpack.ui.screens.FavoriteScreen
 import com.alvarado.backpack.ui.screens.HomeScreen
+import com.alvarado.backpack.ui.screens.LoginScreen
+import com.alvarado.backpack.ui.screens.MaterialScreen
 import com.alvarado.backpack.ui.screens.ProfileScreen
+import com.alvarado.backpack.ui.screens.RegisterScreen
+import com.alvarado.backpack.ui.screens.RememberScreen
 import com.alvarado.backpack.ui.screens.ReportScreen
 
 @Composable
@@ -98,6 +102,66 @@ fun NavBarNavigation(){
                 }
             ){
                 AddMaterialScreen(navController)
+            }
+
+            composable(
+                route = NavScreens.Material.route,
+                enterTransition = {
+                    slideIntoContainer(towards = AnimatedContentTransitionScope.SlideDirection.Start, animationSpec = tween(500))
+                },
+                exitTransition = {
+                    slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.End, animationSpec = tween(500))
+                }
+            ){
+                MaterialScreen(navController)
+            }
+
+            composable(
+                route = AppScreens.LoginScreen.route,
+                enterTransition = {
+                    slideIntoContainer(
+                        towards = AnimatedContentTransitionScope.SlideDirection.Start,
+                        animationSpec = tween(500)
+                    )
+                },
+                exitTransition = {
+                    slideOutOfContainer(
+                        towards = AnimatedContentTransitionScope.SlideDirection.End,
+                        animationSpec = tween(500)
+                    )
+                }
+            ) {
+                LoginScreen(navController)
+            }
+
+            composable(
+                route = AppScreens.RegisterScreen.route,
+                enterTransition = {
+                    slideIntoContainer(
+                        towards = AnimatedContentTransitionScope.SlideDirection.Start,
+                        animationSpec = tween(500)
+                    )
+                },
+                exitTransition = {
+                    slideOutOfContainer(
+                        towards = AnimatedContentTransitionScope.SlideDirection.End,
+                        animationSpec = tween(500)
+                    )
+                }
+            ) {
+                RegisterScreen(navController)
+            }
+
+            composable(
+                route = AppScreens.RememberScreen.route,
+                enterTransition = {
+                    slideIntoContainer(towards = AnimatedContentTransitionScope.SlideDirection.Start, animationSpec = tween(500))
+                },
+                exitTransition = {
+                    slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.End, animationSpec = tween(500))
+                }
+            ){
+                RememberScreen(navController)
             }
 
         }

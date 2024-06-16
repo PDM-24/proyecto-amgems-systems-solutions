@@ -16,13 +16,16 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,13 +39,70 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.alvarado.backpack.R
 
 @Composable
-fun ProfileInfoComponent() {
+fun ProfileInfoComponent(navController: NavController) {
     val email = remember { mutableStateOf("example@example.com") }
     val career = remember { mutableStateOf("Computing Student") }
     val name = remember { mutableStateOf("Alicia Flores") }
+    var showDialog by remember { mutableStateOf(false) }
+
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = {
+                Text(
+                    text = "LOG OUT",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth(),
+                    fontFamily = FontFamily(Font(R.font.poppins_semibold)),
+                )
+            },
+            text = {
+                Text(
+                    "Are you sure you want to log out?",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth(),
+                    fontFamily = FontFamily(Font(R.font.poppins_semibold)),
+                )
+            },
+            confirmButton = {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Button(
+                        onClick = {
+                            showDialog = false
+                            navController.navigate("Login_Screen") {
+                                popUpTo("profile") { inclusive = true }
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(Color(0xFF4C72F5)),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Confirm", fontFamily = FontFamily(Font(R.font.poppins_semibold)))
+                    }
+                }
+            },
+            dismissButton = {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Button(
+                        onClick = { showDialog = false },
+                        colors = ButtonDefaults.buttonColors(Color(0xFF4C72F5)),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Cancel", fontFamily = FontFamily(Font(R.font.poppins_semibold)),)
+                    }
+                }
+            }
+        )
+    }
 
     Column(
         modifier = Modifier
@@ -64,8 +124,6 @@ fun ProfileInfoComponent() {
                     .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-
-
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
                     "Profile",
@@ -74,7 +132,6 @@ fun ProfileInfoComponent() {
                     fontSize = 24.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_semibold)),
                     modifier = Modifier.padding(end = 128.dp)
-
                 )
             }
 
@@ -153,14 +210,8 @@ fun ProfileInfoComponent() {
                             fontFamily = FontFamily(Font(R.font.poppins_bold))
                         )
                     }
-
                 }
-                Divider(
-                    color = Color.White,
-                    modifier = Modifier
-                        .height(56.dp)
-                        .width(1.dp)
-                )
+
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -189,7 +240,6 @@ fun ProfileInfoComponent() {
                             fontFamily = FontFamily(Font(R.font.poppins_bold))
                         )
                     }
-
                 }
             }
         }
@@ -238,7 +288,6 @@ fun ProfileInfoComponent() {
                     }
                 }
             }
-            Divider(color = Color.LightGray, thickness = 2.5.dp)
             Spacer(modifier = Modifier.height(6.dp))
 
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -278,7 +327,6 @@ fun ProfileInfoComponent() {
                     }
                 }
             }
-            Divider(color = Color.LightGray, thickness = 2.5.dp)
             Spacer(modifier = Modifier.height(6.dp))
 
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -320,11 +368,10 @@ fun ProfileInfoComponent() {
                     }
                 }
             }
-            Divider(color = Color.LightGray, thickness = 2.5.dp)
             Spacer(modifier = Modifier.height(36.dp))
 
             Button(
-                onClick = {},
+                onClick = { showDialog = true },
                 modifier = Modifier
                     .height(48.dp)
                     .width(400.dp),
@@ -332,11 +379,7 @@ fun ProfileInfoComponent() {
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
             ) {
                 Text("Log out", color = Color.White)
-
             }
-
-
         }
     }
-
 }

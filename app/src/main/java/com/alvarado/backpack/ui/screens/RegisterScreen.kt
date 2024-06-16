@@ -14,8 +14,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,7 +42,8 @@ fun RegisterScreen(navController: NavController) {
 
         Column(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .background(Color(0xFF3F2AC5)),
             horizontalAlignment = Alignment.Start
         ) {
             Row(
@@ -48,7 +52,7 @@ fun RegisterScreen(navController: NavController) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.End
             ) {
-                Box(modifier = Modifier.padding(start = 0.dp, end = 40.dp, top = 30.dp)){
+                Box(modifier = Modifier.padding(start = 0.dp, end = 10.dp, top = 20.dp, bottom = 20.dp)){
                     Button(
                         colors = ButtonDefaults.buttonColors(Color.White),
                         modifier = Modifier

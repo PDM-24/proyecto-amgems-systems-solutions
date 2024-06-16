@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.alvarado.backpack.ui.components.PostComponent
 import com.alvarado.backpack.ui.components.SearchComponent
+import com.alvarado.backpack.ui.components.navBar.NavBarComponent
 
 @Composable
 fun MaterialScreen(navController: NavController) {
@@ -26,7 +27,7 @@ fun MaterialScreen(navController: NavController) {
             modifier = Modifier
                 .weight(3f),
             title="Programación de dispositivos móviles",
-            subTitle = "Ciclo 01"
+            subTitle = ""
         )
         LazyColumn (
             modifier = Modifier
@@ -36,5 +37,7 @@ fun MaterialScreen(navController: NavController) {
                 PostComponent(navController = navController)
             }
         }
+        
+        NavBarComponent(navController = navController)
     }
 }

@@ -7,4 +7,6 @@ sealed class NavScreens(val route: String) {
     object Profile : NavScreens("profile")
     object Reporting : NavScreens("reporting")
     object AddMaterial : NavScreens("add_material")
+    object Material : NavScreens("material")
+
 }

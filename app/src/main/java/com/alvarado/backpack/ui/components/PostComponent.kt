@@ -36,7 +36,10 @@ fun PostComponent(navController: NavController) {
         modifier = Modifier
             .padding(vertical = 8.dp)
             .fillMaxWidth()
-            .height(125.dp),
+            .height(125.dp)
+            .clickable {
+                       navController.navigate("")
+            },
         shadowElevation = 4.dp,
         shape = RoundedCornerShape(8.dp),
         color = Color.White
