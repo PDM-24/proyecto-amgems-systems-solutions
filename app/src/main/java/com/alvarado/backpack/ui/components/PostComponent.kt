@@ -38,7 +38,7 @@ fun PostComponent(navController: NavController) {
             .fillMaxWidth()
             .height(125.dp)
             .clickable {
-                       navController.navigate("")
+                       navController.navigate("view_material")
             },
         shadowElevation = 4.dp,
         shape = RoundedCornerShape(8.dp),

@@ -5,6 +5,12 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,26 +24,36 @@ import com.alvarado.backpack.ui.components.navBar.NavBarComponent
 
 @Composable
 fun MaterialScreen(navController: NavController) {
-    Column (
-        modifier = Modifier
-            .fillMaxHeight()
-            .padding(vertical = 10.dp, horizontal = 15.dp)
-    ) {
-        SearchComponent (
-            modifier = Modifier
-                .weight(3f),
-            title="Programación de dispositivos móviles",
-            subTitle = ""
-        )
-        LazyColumn (
-            modifier = Modifier
-                .weight(8f)
-        ) {
-            itemsIndexed(listOf(1, 2, 3, 4,)) { index, item ->
-                PostComponent(navController = navController)
+
+    Scaffold(
+        bottomBar = {
+            BottomAppBar {
+                NavBarComponent(navController)
             }
         }
-        
-        NavBarComponent(navController = navController)
+    ) {  innerPadding ->
+        Column (
+            modifier = Modifier
+                .fillMaxHeight()
+                .padding(vertical = 10.dp, horizontal = 15.dp)
+        ) {
+            SearchComponent (
+                modifier = Modifier
+                    .weight(3f),
+                title="Programación de dispositivos móviles",
+                subTitle = "Ciclo 01 - 2024"
+            )
+            LazyColumn (
+                modifier = Modifier
+                    .weight(8f)
+                    .padding(innerPadding)
+            ) {
+                itemsIndexed(listOf(1, 2, 3, 4,)) { index, item ->
+                    PostComponent(navController = navController)
+                }
+            }
+
+        }
     }
+
 }

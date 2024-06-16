@@ -17,6 +17,7 @@ import com.alvarado.backpack.ui.screens.ProfileScreen
 import com.alvarado.backpack.ui.screens.RegisterScreen
 import com.alvarado.backpack.ui.screens.RememberScreen
 import com.alvarado.backpack.ui.screens.ReportScreen
+import com.alvarado.backpack.ui.screens.ViewMaterialScreen
 
 @Composable
 fun NavBarNavigation(){
@@ -114,6 +115,18 @@ fun NavBarNavigation(){
                 }
             ){
                 MaterialScreen(navController)
+            }
+
+            composable(
+                route = NavScreens.ViewMaterial.route,
+                enterTransition = {
+                    slideIntoContainer(towards = AnimatedContentTransitionScope.SlideDirection.Start, animationSpec = tween(500))
+                },
+                exitTransition = {
+                    slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.End, animationSpec = tween(500))
+                }
+            ){
+                ViewMaterialScreen(navController)
             }
 
             composable(
