@@ -24,12 +24,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.alvarado.backpack.MainViewModel
 import com.alvarado.backpack.R
 import com.alvarado.backpack.navigate.AppScreens
 import com.alvarado.backpack.ui.components.RegisterForm
 
 @Composable
-fun RegisterScreen(navController: NavController) {
+fun RegisterScreen(
+    navController: NavController,
+    viewModel : MainViewModel
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()

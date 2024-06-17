@@ -27,13 +27,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.alvarado.backpack.MainViewModel
 import com.alvarado.backpack.R
 import com.alvarado.backpack.navigate.AppScreens
 import com.alvarado.backpack.ui.components.LoginForm
 
 
 @Composable
-fun LoginScreen(navController: NavController) {
+fun LoginScreen(
+    navController : NavController,
+    viewModel : MainViewModel
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()

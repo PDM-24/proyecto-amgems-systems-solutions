@@ -5,9 +5,11 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.alvarado.backpack.MainViewModel
 import com.alvarado.backpack.ui.screens.LoginScreen
 import com.alvarado.backpack.ui.screens.RegisterScreen
 import com.alvarado.backpack.ui.screens.RememberScreen
@@ -16,6 +18,7 @@ import com.alvarado.backpack.ui.screens.WelcomeScreen
 @Composable
 fun AppNavigation(modifier: Modifier = Modifier){
     val navController = rememberNavController()
+    val viewModel : MainViewModel = hiltViewModel()
 
     Box(
         modifier = modifier
@@ -53,7 +56,7 @@ fun AppNavigation(modifier: Modifier = Modifier){
                     slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.End, animationSpec = tween(500))
                 }
             ){
-                LoginScreen(navController)
+                LoginScreen(navController, viewModel)
             }
             composable(
                 route = AppScreens.RegisterScreen.route,
@@ -64,7 +67,7 @@ fun AppNavigation(modifier: Modifier = Modifier){
                     slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.End, animationSpec = tween(500))
                 }
                 ){
-                RegisterScreen(navController)
+                RegisterScreen(navController, viewModel)
             }
         }
     }
