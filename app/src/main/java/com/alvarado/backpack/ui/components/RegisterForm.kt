@@ -14,11 +14,16 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -56,9 +61,10 @@ fun RegisterForm(navController: NavController){
     val nameState: MutableState<String> = remember { mutableStateOf("") }
     val lastNameState: MutableState<String> = remember { mutableStateOf("") }
     val careerState: MutableState<String> = remember { mutableStateOf("") }
+    val carnetState: MutableState<String> = remember { mutableStateOf("") }
+
 
     var passwordVisible by remember { mutableStateOf(false) }
-
 
     Box(
         modifier = Modifier
@@ -83,239 +89,279 @@ fun RegisterForm(navController: NavController){
                 horizontalAlignment = Alignment.Start
             ) {
 
-                Text(
-                    text = "Name :",
-                    fontFamily = FontFamily(Font(R.font.poppins_light)),
-                    fontSize = 17.sp
-                )
+                LazyColumn {
+                    this.itemsIndexed(listOf(1)){ index, item ->
+                        Text(
+                            text = "Carnet :",
+                            fontFamily = FontFamily(Font(R.font.poppins_light)),
+                            fontSize = 17.sp
+                        )
 
-                TextField(
-                    value = nameState.value,
-                    onValueChange = { nameState.value = it},
-                    modifier = Modifier
-                        .padding(top = 20.dp)
-                        .background(Color(0xFFF7F7F8)),
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        imeAction = ImeAction.None
-                    ),
-                    singleLine = true,
-                    leadingIcon = {
-                        Image(painter = painterResource(id =  R.drawable.ic_person), contentDescription = "Email icon")
+                        TextField(
+                            value = carnetState.value,
+                            onValueChange = { carnetState.value = it},
+                            modifier = Modifier
+                                .padding(top = 20.dp)
+                                .background(Color(0xFFF7F7F8)),
+                            keyboardOptions = KeyboardOptions.Default.copy(
+                                imeAction = ImeAction.None
+                            ),
+                            singleLine = true,
+                            leadingIcon = {
+                                Icon(imageVector = Icons.Default.AccountBox, contentDescription = "Carnet icon")
                             },
-                    colors = TextFieldDefaults.textFieldColors(
-                        unfocusedLabelColor = Color(0xFF333333),
-                        focusedLabelColor = Color(0xFF333333),
-                        cursorColor = Color(0xFF333333),
-                        focusedLeadingIconColor = Color(0xFF333333),
-                        unfocusedLeadingIconColor = Color(0xFF333333),
-                        focusedTrailingIconColor = Color(0xFF333333),
-                        unfocusedTrailingIconColor = Color(0xFF333333),
-                        focusedIndicatorColor = Color.Transparent,
-                        containerColor = Color(0xFFF7F7F8),
-                        focusedTextColor = Color(0xFF333333),
-                        unfocusedIndicatorColor = Color.Transparent),
-                        shape = RoundedCornerShape(10.dp)
+                            colors = TextFieldDefaults.textFieldColors(
+                                unfocusedLabelColor = Color(0xFF333333),
+                                focusedLabelColor = Color(0xFF333333),
+                                cursorColor = Color(0xFF333333),
+                                focusedLeadingIconColor = Color(0xFF333333),
+                                unfocusedLeadingIconColor = Color(0xFF333333),
+                                focusedTrailingIconColor = Color(0xFF333333),
+                                unfocusedTrailingIconColor = Color(0xFF333333),
+                                focusedIndicatorColor = Color.Transparent,
+                                containerColor = Color(0xFFF7F7F8),
+                                focusedTextColor = Color(0xFF333333),
+                                unfocusedIndicatorColor = Color.Transparent),
+                            shape = RoundedCornerShape(10.dp)
                         )
-                Spacer(modifier = Modifier.padding(5.dp))
+                        Spacer(modifier = Modifier.padding(5.dp))
 
-
-                Text(
-                    text = "Last Name :",
-                    fontFamily = FontFamily(Font(R.font.poppins_light)),
-                    fontSize = 17.sp
-                )
-
-                TextField(
-                    value = lastNameState.value,
-                    onValueChange = { lastNameState.value = it},
-                    modifier = Modifier
-                        .padding(top = 5.dp)
-                        .background(Color(0xFFF7F7F8)),
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        imeAction = ImeAction.None
-                    ),
-                    singleLine = true,
-                    leadingIcon = {
-                        Image(painter = painterResource(id =  R.drawable.ic_person), contentDescription = "Email icon")
-                    },
-                    colors = TextFieldDefaults.textFieldColors(
-                        unfocusedLabelColor = Color(0xFF333333),
-                        focusedLabelColor = Color(0xFF333333),
-                        cursorColor = Color(0xFF333333),
-                        focusedLeadingIconColor = Color(0xFF333333),
-                        unfocusedLeadingIconColor = Color(0xFF333333),
-                        focusedTrailingIconColor = Color(0xFF333333),
-                        unfocusedTrailingIconColor = Color(0xFF333333),
-                        focusedIndicatorColor = Color.Transparent,
-                        containerColor = Color(0xFFF7F7F8),
-                        focusedTextColor = Color(0xFF333333),
-                        unfocusedIndicatorColor = Color.Transparent),
-                    shape = RoundedCornerShape(10.dp)
-                )
-
-                Spacer(modifier = Modifier.padding(5.dp))
-
-                Text(
-                    text = "Career :",
-                    fontFamily = FontFamily(Font(R.font.poppins_light)),
-                    fontSize = 17.sp
-                )
-
-                TextField(
-                    value = careerState.value,
-                    onValueChange = { careerState.value = it},
-                    modifier = Modifier
-                        .padding(top = 10.dp)
-                        .background(Color(0xFFF7F7F8)),
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        imeAction = ImeAction.None
-                    ),
-                    singleLine = true,
-                    leadingIcon = {
-                        Image(painter = painterResource(id =  R.drawable.ic_career), contentDescription = "Email icon")
-                    },
-                    colors = TextFieldDefaults.textFieldColors(
-                        unfocusedLabelColor = Color(0xFF333333),
-                        focusedLabelColor = Color(0xFF333333),
-                        cursorColor = Color(0xFF333333),
-                        focusedLeadingIconColor = Color(0xFF333333),
-                        unfocusedLeadingIconColor = Color(0xFF333333),
-                        focusedTrailingIconColor = Color(0xFF333333),
-                        unfocusedTrailingIconColor = Color(0xFF333333),
-                        focusedIndicatorColor = Color.Transparent,
-                        containerColor = Color(0xFFF7F7F8),
-                        focusedTextColor = Color(0xFF333333),
-                        unfocusedIndicatorColor = Color.Transparent),
-                    shape = RoundedCornerShape(10.dp)
-                )
-
-                Spacer(modifier = Modifier.padding(5.dp))
-
-                Text(
-                    text = "Email :",
-                    fontFamily = FontFamily(Font(R.font.poppins_light)),
-                    fontSize = 17.sp
-                )
-
-                TextField(
-                    value = emailState.value,
-                    onValueChange = { emailState.value = it},
-                    modifier = Modifier
-                        .padding(top = 5.dp)
-                        .background(Color(0xFFF7F7F8)),
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        imeAction = ImeAction.None
-                    ),
-                    singleLine = true,
-                    leadingIcon = {
-                        Image(painter = painterResource(id =  R.drawable.ic_email), contentDescription = "Email icon")
-                    },
-                    colors = TextFieldDefaults.textFieldColors(
-                        unfocusedLabelColor = Color(0xFF333333),
-                        focusedLabelColor = Color(0xFF333333),
-                        cursorColor = Color(0xFF333333),
-                        focusedLeadingIconColor = Color(0xFF333333),
-                        unfocusedLeadingIconColor = Color(0xFF333333),
-                        focusedTrailingIconColor = Color(0xFF333333),
-                        unfocusedTrailingIconColor = Color(0xFF333333),
-                        focusedIndicatorColor = Color.Transparent,
-                        containerColor = Color(0xFFF7F7F8),
-                        focusedTextColor = Color(0xFF333333),
-                        unfocusedIndicatorColor = Color.Transparent),
-                    shape = RoundedCornerShape(10.dp)
-                )
-
-                Spacer(modifier = Modifier.padding(5.dp))
-
-                Text(
-                    text = "Password :",
-                    fontFamily = FontFamily(Font(R.font.poppins_light)),
-                    fontSize = 17.sp
-                )
-
-                TextField(
-                    value = passwordState.value,
-                    onValueChange = { passwordState.value = it },
-                    modifier = Modifier
-                        .padding(top = 20.dp)
-                        .background(Color(0xFFF7F7F8)),
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        imeAction = ImeAction.None
-                    ),
-                    singleLine = true,
-                    leadingIcon = {
-                        Image(
-                            painter = painterResource(id = R.drawable.ic_password),
-                            contentDescription = "Password icon"
+                        Text(
+                            text = "Name :",
+                            fontFamily = FontFamily(Font(R.font.poppins_light)),
+                            fontSize = 17.sp
                         )
-                    },
-                    trailingIcon = {
-                        val image = if (passwordVisible)
-                            painterResource(id = R.drawable.ic_visibility)
-                        else
-                            painterResource(id = R.drawable.ic_visibility_off)
 
-                        IconButton(onClick = {
-                            passwordVisible = !passwordVisible
-                        }) {
-                            Image(
-                                painter = image,
-                                contentDescription = "Toggle password visibility"
-                            )
+                        TextField(
+                            value = nameState.value,
+                            onValueChange = { nameState.value = it},
+                            modifier = Modifier
+                                .padding(top = 20.dp)
+                                .background(Color(0xFFF7F7F8)),
+                            keyboardOptions = KeyboardOptions.Default.copy(
+                                imeAction = ImeAction.None
+                            ),
+                            singleLine = true,
+                            leadingIcon = {
+                                Image(painter = painterResource(id =  R.drawable.ic_person), contentDescription = "Email icon")
+                            },
+                            colors = TextFieldDefaults.textFieldColors(
+                                unfocusedLabelColor = Color(0xFF333333),
+                                focusedLabelColor = Color(0xFF333333),
+                                cursorColor = Color(0xFF333333),
+                                focusedLeadingIconColor = Color(0xFF333333),
+                                unfocusedLeadingIconColor = Color(0xFF333333),
+                                focusedTrailingIconColor = Color(0xFF333333),
+                                unfocusedTrailingIconColor = Color(0xFF333333),
+                                focusedIndicatorColor = Color.Transparent,
+                                containerColor = Color(0xFFF7F7F8),
+                                focusedTextColor = Color(0xFF333333),
+                                unfocusedIndicatorColor = Color.Transparent),
+                            shape = RoundedCornerShape(10.dp)
+                        )
+                        Spacer(modifier = Modifier.padding(5.dp))
+
+
+                        Text(
+                            text = "Last Name :",
+                            fontFamily = FontFamily(Font(R.font.poppins_light)),
+                            fontSize = 17.sp
+                        )
+
+                        TextField(
+                            value = lastNameState.value,
+                            onValueChange = { lastNameState.value = it},
+                            modifier = Modifier
+                                .padding(top = 5.dp)
+                                .background(Color(0xFFF7F7F8)),
+                            keyboardOptions = KeyboardOptions.Default.copy(
+                                imeAction = ImeAction.None
+                            ),
+                            singleLine = true,
+                            leadingIcon = {
+                                Image(painter = painterResource(id =  R.drawable.ic_person), contentDescription = "Email icon")
+                            },
+                            colors = TextFieldDefaults.textFieldColors(
+                                unfocusedLabelColor = Color(0xFF333333),
+                                focusedLabelColor = Color(0xFF333333),
+                                cursorColor = Color(0xFF333333),
+                                focusedLeadingIconColor = Color(0xFF333333),
+                                unfocusedLeadingIconColor = Color(0xFF333333),
+                                focusedTrailingIconColor = Color(0xFF333333),
+                                unfocusedTrailingIconColor = Color(0xFF333333),
+                                focusedIndicatorColor = Color.Transparent,
+                                containerColor = Color(0xFFF7F7F8),
+                                focusedTextColor = Color(0xFF333333),
+                                unfocusedIndicatorColor = Color.Transparent),
+                            shape = RoundedCornerShape(10.dp)
+                        )
+
+                        Spacer(modifier = Modifier.padding(5.dp))
+
+                        Text(
+                            text = "Career :",
+                            fontFamily = FontFamily(Font(R.font.poppins_light)),
+                            fontSize = 17.sp
+                        )
+
+                        TextField(
+                            value = careerState.value,
+                            onValueChange = { careerState.value = it},
+                            modifier = Modifier
+                                .padding(top = 10.dp)
+                                .background(Color(0xFFF7F7F8)),
+                            keyboardOptions = KeyboardOptions.Default.copy(
+                                imeAction = ImeAction.None
+                            ),
+                            singleLine = true,
+                            leadingIcon = {
+                                Image(painter = painterResource(id =  R.drawable.ic_career), contentDescription = "Email icon")
+                            },
+                            colors = TextFieldDefaults.textFieldColors(
+                                unfocusedLabelColor = Color(0xFF333333),
+                                focusedLabelColor = Color(0xFF333333),
+                                cursorColor = Color(0xFF333333),
+                                focusedLeadingIconColor = Color(0xFF333333),
+                                unfocusedLeadingIconColor = Color(0xFF333333),
+                                focusedTrailingIconColor = Color(0xFF333333),
+                                unfocusedTrailingIconColor = Color(0xFF333333),
+                                focusedIndicatorColor = Color.Transparent,
+                                containerColor = Color(0xFFF7F7F8),
+                                focusedTextColor = Color(0xFF333333),
+                                unfocusedIndicatorColor = Color.Transparent),
+                            shape = RoundedCornerShape(10.dp)
+                        )
+
+                        Spacer(modifier = Modifier.padding(5.dp))
+
+                        Text(
+                            text = "Email :",
+                            fontFamily = FontFamily(Font(R.font.poppins_light)),
+                            fontSize = 17.sp
+                        )
+
+                        TextField(
+                            value = emailState.value,
+                            onValueChange = { emailState.value = it},
+                            modifier = Modifier
+                                .padding(top = 5.dp)
+                                .background(Color(0xFFF7F7F8)),
+                            keyboardOptions = KeyboardOptions.Default.copy(
+                                imeAction = ImeAction.None
+                            ),
+                            singleLine = true,
+                            leadingIcon = {
+                                Image(painter = painterResource(id =  R.drawable.ic_email), contentDescription = "Email icon")
+                            },
+                            colors = TextFieldDefaults.textFieldColors(
+                                unfocusedLabelColor = Color(0xFF333333),
+                                focusedLabelColor = Color(0xFF333333),
+                                cursorColor = Color(0xFF333333),
+                                focusedLeadingIconColor = Color(0xFF333333),
+                                unfocusedLeadingIconColor = Color(0xFF333333),
+                                focusedTrailingIconColor = Color(0xFF333333),
+                                unfocusedTrailingIconColor = Color(0xFF333333),
+                                focusedIndicatorColor = Color.Transparent,
+                                containerColor = Color(0xFFF7F7F8),
+                                focusedTextColor = Color(0xFF333333),
+                                unfocusedIndicatorColor = Color.Transparent),
+                            shape = RoundedCornerShape(10.dp)
+                        )
+
+                        Spacer(modifier = Modifier.padding(5.dp))
+
+                        Text(
+                            text = "Password :",
+                            fontFamily = FontFamily(Font(R.font.poppins_light)),
+                            fontSize = 17.sp
+                        )
+
+                        TextField(
+                            value = passwordState.value,
+                            onValueChange = { passwordState.value = it },
+                            modifier = Modifier
+                                .padding(top = 20.dp)
+                                .background(Color(0xFFF7F7F8)),
+                            keyboardOptions = KeyboardOptions.Default.copy(
+                                imeAction = ImeAction.None
+                            ),
+                            singleLine = true,
+                            leadingIcon = {
+                                Image(
+                                    painter = painterResource(id = R.drawable.ic_password),
+                                    contentDescription = "Password icon"
+                                )
+                            },
+                            trailingIcon = {
+                                val image = if (passwordVisible)
+                                    painterResource(id = R.drawable.ic_visibility)
+                                else
+                                    painterResource(id = R.drawable.ic_visibility_off)
+
+                                IconButton(onClick = {
+                                    passwordVisible = !passwordVisible
+                                }) {
+                                    Image(
+                                        painter = image,
+                                        contentDescription = "Toggle password visibility"
+                                    )
+                                }
+                            },
+                            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                            colors = TextFieldDefaults.textFieldColors(
+                                unfocusedLabelColor = Color(0xFF333333),
+                                focusedLabelColor = Color(0xFF333333),
+                                cursorColor = Color(0xFF333333),
+                                focusedLeadingIconColor = Color(0xFF333333),
+                                unfocusedLeadingIconColor = Color(0xFF333333),
+                                focusedTrailingIconColor = Color(0xFF333333),
+                                unfocusedTrailingIconColor = Color(0xFF333333),
+                                focusedIndicatorColor = Color.Transparent,
+                                containerColor = Color(0xFFF7F7F8),
+                                focusedTextColor = Color(0xFF333333),
+                                unfocusedIndicatorColor = Color.Transparent
+                            ),
+                            shape = RoundedCornerShape(20.dp)
+                        )
+
+
+                        Spacer(modifier = Modifier.padding(10.dp))
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Button(
+                                modifier = Modifier
+                                    .widthIn(100.dp),
+                                shape = RoundedCornerShape(10.dp),
+                                colors = ButtonDefaults.buttonColors(Color(0xFF4C72F5)),
+                                onClick = {
+                                    navController.navigate(AppScreens.LoginScreen.route)
+                                }
+                            ) {
+                                Image(painter = painterResource(id = R.drawable.ic_add), contentDescription = "Login")
+                            }
+
+                            Button(
+                                modifier = Modifier
+                                    .widthIn(100.dp)
+                                    .heightIn(max = 45.dp),
+                                shape = RoundedCornerShape(10.dp),
+                                colors = ButtonDefaults.buttonColors(Color(0xFF3F2AC5)),
+                                onClick = {
+                                    nameState.value = ""
+                                    lastNameState.value = ""
+                                    emailState.value = ""
+                                    careerState.value = ""
+                                    passwordState.value = ""
+                                }
+                            ) {
+                                Image(painter = painterResource(id = R.drawable.ic_trash), contentDescription = "Login")
+                            }
                         }
-                    },
-                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                    colors = TextFieldDefaults.textFieldColors(
-                        unfocusedLabelColor = Color(0xFF333333),
-                        focusedLabelColor = Color(0xFF333333),
-                        cursorColor = Color(0xFF333333),
-                        focusedLeadingIconColor = Color(0xFF333333),
-                        unfocusedLeadingIconColor = Color(0xFF333333),
-                        focusedTrailingIconColor = Color(0xFF333333),
-                        unfocusedTrailingIconColor = Color(0xFF333333),
-                        focusedIndicatorColor = Color.Transparent,
-                        containerColor = Color(0xFFF7F7F8),
-                        focusedTextColor = Color(0xFF333333),
-                        unfocusedIndicatorColor = Color.Transparent
-                    ),
-                    shape = RoundedCornerShape(20.dp)
-                )
-
-                Spacer(modifier = Modifier.padding(10.dp))
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Button(
-                        modifier = Modifier
-                            .widthIn(100.dp),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = ButtonDefaults.buttonColors(Color(0xFF4C72F5)),
-                        onClick = {
-                            navController.navigate(AppScreens.LoginScreen.route)
-                        }
-                    ) {
-                        Image(painter = painterResource(id = R.drawable.ic_add), contentDescription = "Login")
-                    }
-
-                    Button(
-                        modifier = Modifier
-                            .widthIn(100.dp)
-                            .heightIn(max = 45.dp),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = ButtonDefaults.buttonColors(Color(0xFF3F2AC5)),
-                        onClick = {
-                            nameState.value = ""
-                            lastNameState.value = ""
-                            emailState.value = ""
-                            careerState.value = ""
-                            passwordState.value = ""
-                        }
-                    ) {
-                        Image(painter = painterResource(id = R.drawable.ic_trash), contentDescription = "Login")
                     }
                 }
             }

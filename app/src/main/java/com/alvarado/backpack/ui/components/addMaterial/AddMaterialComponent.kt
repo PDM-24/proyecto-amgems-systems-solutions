@@ -7,6 +7,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,6 +29,11 @@ import kotlin.math.round
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddMaterial() {
+
+    val titleState: MutableState<String> = remember { mutableStateOf("") }
+    val dateState: MutableState<String> = remember { mutableStateOf("") }
+    val cicleState: MutableState<String> = remember { mutableStateOf("") }
+    val descriptionState: MutableState<String> = remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -84,8 +92,8 @@ fun AddMaterial() {
         ) {
             Spacer(modifier = Modifier.height(15.dp))
             TextField(
-                value = TextFieldValue(""),
-                onValueChange = {},
+                value = titleState.value,
+                onValueChange = {titleState.value = it},
                 label = { Text("Title for the material") },
                 leadingIcon = {
                     Box(
@@ -110,15 +118,15 @@ fun AddMaterial() {
                 // la sombra
                 modifier = Modifier
                     .shadow(10.dp)
-                    .height(44.dp)
+                    .height(55.dp)
                     .clip(RoundedCornerShape(10.dp))
             )
             Spacer(modifier = Modifier.height(18.dp))
 
             TextField(
-                value = TextFieldValue(""),
-                onValueChange = {},
-                label = { Text("Material date")},
+                value = dateState.value,
+                onValueChange = {dateState.value = it},
+                label = { Text("Material year")},
                 leadingIcon = {
                     Box(
                         modifier = Modifier
@@ -142,13 +150,13 @@ fun AddMaterial() {
                 // la sombra
                 modifier = Modifier
                     .shadow(10.dp)
-                    .height(48.dp)
+                    .height(55.dp)
                     .clip(RoundedCornerShape(10.dp))
             )
             Spacer(modifier = Modifier.height(18.dp))
             TextField(
-                value = TextFieldValue(""),
-                onValueChange = {},
+                value = cicleState.value,
+                onValueChange = {cicleState.value = it},
                 label = { Text("Material cycle") },
                 leadingIcon = {
                     Box(
@@ -173,7 +181,7 @@ fun AddMaterial() {
                 // la sombra
                 modifier = Modifier
                     .shadow(10.dp)
-                    .height(48.dp)
+                    .height(55.dp)
                     .clip(RoundedCornerShape(10.dp))
             )
             Spacer(modifier = Modifier.height(18.dp))
@@ -213,8 +221,8 @@ fun AddMaterial() {
 
                     }
                     TextField(
-                        value = TextFieldValue(""),
-                        onValueChange = {},
+                        value = descriptionState.value,
+                        onValueChange = {descriptionState.value = it},
                         label = { Text("Add a description to the material...") },
                         modifier = Modifier.size(width = 280.dp, height = 120.dp),
                         colors = TextFieldDefaults.textFieldColors(
