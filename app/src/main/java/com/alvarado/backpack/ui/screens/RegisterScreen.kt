@@ -94,7 +94,7 @@ fun RegisterScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            RegisterForm(navController)
+            RegisterForm(navController, viewModel)
         }
     }
 }

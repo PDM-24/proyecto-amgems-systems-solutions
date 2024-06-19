@@ -49,12 +49,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import com.alvarado.backpack.MainViewModel
 import com.alvarado.backpack.R
+import com.alvarado.backpack.domain.model.RegisterModel
 import com.alvarado.backpack.navigate.AppScreens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterForm(navController: NavController){
+fun RegisterForm(navController: NavController, viewModel: MainViewModel){
 
     val emailState: MutableState<String> = remember { mutableStateOf("") }
     val passwordState: MutableState<String> = remember { mutableStateOf("") }
@@ -339,10 +341,21 @@ fun RegisterForm(navController: NavController){
                                 shape = RoundedCornerShape(10.dp),
                                 colors = ButtonDefaults.buttonColors(Color(0xFF4C72F5)),
                                 onClick = {
+
+                                    val registerModel = RegisterModel(
+                                        carnetState.value,
+                                        nameState.value,
+                                        lastNameState.value,
+                                        emailState.value,
+                                        careerState.value,
+                                        passwordState.value
+                                    )
+                                    viewModel.register(registerModel)
+
                                     navController.navigate(AppScreens.LoginScreen.route)
                                 }
                             ) {
-                                Image(painter = painterResource(id = R.drawable.ic_add), contentDescription = "Login")
+                                Image(painter = painterResource(id = R.drawable.ic_add), contentDescription = "Register")
                             }
 
                             Button(
@@ -359,7 +372,7 @@ fun RegisterForm(navController: NavController){
                                     passwordState.value = ""
                                 }
                             ) {
-                                Image(painter = painterResource(id = R.drawable.ic_trash), contentDescription = "Login")
+                                Image(painter = painterResource(id = R.drawable.ic_trash), contentDescription = "Trash")
                             }
                         }
                     }

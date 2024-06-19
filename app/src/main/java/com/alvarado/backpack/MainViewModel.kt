@@ -42,8 +42,6 @@ class MainViewModel @Inject constructor(
     private val _postList = MutableStateFlow(listOf<PostModel>())
     val postList = _postList.asStateFlow()
 
-    val loginViewModel = LoginModel()
-    val registerViewModel = RegisterModel()
 
     fun setStateToReady() {
         _uiState.value = UiState.Ready

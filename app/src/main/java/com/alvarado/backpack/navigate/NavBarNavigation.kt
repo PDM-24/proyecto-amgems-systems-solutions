@@ -4,9 +4,11 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.alvarado.backpack.MainViewModel
 import com.alvarado.backpack.ui.screens.AddMaterialScreen
 import com.alvarado.backpack.ui.screens.ContributionScreen
 import com.alvarado.backpack.ui.screens.FavoriteScreen
@@ -22,6 +24,7 @@ import com.alvarado.backpack.ui.screens.ViewMaterialScreen
 @Composable
 fun NavBarNavigation(){
     val navController = rememberNavController()
+    val viewModel : MainViewModel = hiltViewModel()
 
     Box(
 
@@ -144,7 +147,7 @@ fun NavBarNavigation(){
                     )
                 }
             ) {
-                LoginScreen(navController)
+                LoginScreen(navController, viewModel)
             }
 
             composable(
@@ -162,7 +165,7 @@ fun NavBarNavigation(){
                     )
                 }
             ) {
-                RegisterScreen(navController)
+                RegisterScreen(navController, viewModel)
             }
 
             composable(
