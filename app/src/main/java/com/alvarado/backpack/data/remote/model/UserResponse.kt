@@ -3,7 +3,7 @@ package com.alvarado.backpack.data.remote.model
 import com.alvarado.backpack.di.ApiConstants
 import com.google.gson.annotations.SerializedName
 
-data class WhoamiResponse(
+data class UserResponse(
     @SerializedName(value = ApiConstants.WHOAMI_ID_PARAM)
     var id : String,
     @SerializedName(value = ApiConstants.WHOAMI_CARNET_PARAM)

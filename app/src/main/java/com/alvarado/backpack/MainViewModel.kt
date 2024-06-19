@@ -3,10 +3,15 @@ package com.alvarado.backpack
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.alvarado.backpack.domain.GetAllPostsUseCase
+import com.alvarado.backpack.domain.GetOwnPostsUseCase
+import com.alvarado.backpack.domain.GetPostsBySubjectUseCase
+import com.alvarado.backpack.domain.GetSavedPostsUseCase
 import com.alvarado.backpack.domain.LoginUseCase
 import com.alvarado.backpack.domain.RegisterUseCase
 import com.alvarado.backpack.domain.WhoamiUseCase
 import com.alvarado.backpack.domain.model.LoginModel
+import com.alvarado.backpack.domain.model.PostModel
 import com.alvarado.backpack.domain.model.RegisterModel
 import com.alvarado.backpack.domain.model.UserModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,8 +25,12 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val loginUseCase : LoginUseCase,
-    private val registerUseCase : RegisterUseCase
-    private val whoamiUseCase : WhoamiUseCase
+    private val registerUseCase : RegisterUseCase,
+    private val whoamiUseCase : WhoamiUseCase,
+    private val getAllPostsUseCase : GetAllPostsUseCase,
+    private val getOwnPostsUseCase : GetOwnPostsUseCase,
+    private val getSavedPostsUseCase : GetSavedPostsUseCase,
+    private val getPostsBySubject : GetPostsBySubjectUseCase,
 ) : ViewModel() {
 
     private val _user = MutableStateFlow(UserModel())
@@ -29,6 +38,9 @@ class MainViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow<UiState>(UiState.Ready)
     val uiState : StateFlow<UiState> = _uiState
+
+    private val _postList = MutableStateFlow(listOf<PostModel>())
+    val postList = _postList.asStateFlow()
 
     val loginViewModel = LoginModel()
     val registerViewModel = RegisterModel()
@@ -67,6 +79,58 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _user.value = whoamiUseCase.invoke(token)
+            } catch (e : HttpException) {
+                Log.d("viewModel", "Error! ${e.message()}")
+                _uiState.value = UiState.Error(e.code())
+            }
+        }
+    }
+
+    fun getAllPosts(token : String) {
+        viewModelScope.launch {
+            try {
+                _uiState.value = UiState.Loading
+                _postList.value = getAllPostsUseCase.invoke(token)
+                _uiState.value = UiState.Success(token)
+            } catch (e : HttpException) {
+                Log.d("viewModel", "Error! ${e.message()}")
+                _uiState.value = UiState.Error(e.code())
+            }
+        }
+    }
+
+    fun getSavedPosts(token : String) {
+        viewModelScope.launch {
+            try {
+                _uiState.value = UiState.Loading
+                _postList.value = getSavedPostsUseCase.invoke(token)
+                _uiState.value = UiState.Success(token)
+            } catch (e : HttpException) {
+                Log.d("viewModel", "Error! ${e.message()}")
+                _uiState.value = UiState.Error(e.code())
+            }
+        }
+    }
+
+    fun getOwnPosts(token : String) {
+        viewModelScope.launch {
+            try {
+                _uiState.value = UiState.Loading
+                _postList.value = getOwnPostsUseCase.invoke(token)
+                _uiState.value = UiState.Success(token)
+            } catch (e : HttpException) {
+                Log.d("viewModel", "Error! ${e.message()}")
+                _uiState.value = UiState.Error(e.code())
+            }
+        }
+    }
+
+    fun getPostBySubject(token : String, subjectId : String) {
+        viewModelScope.launch {
+            try {
+                _uiState.value = UiState.Loading
+                _postList.value = getPostsBySubject.invoke(token, subjectId)
+                _uiState.value = UiState.Success(token)
             } catch (e : HttpException) {
                 Log.d("viewModel", "Error! ${e.message()}")
                 _uiState.value = UiState.Error(e.code())

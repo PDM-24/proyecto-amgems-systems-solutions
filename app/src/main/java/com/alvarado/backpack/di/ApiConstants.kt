@@ -30,5 +30,27 @@ class ApiConstants {
         const val WHOAMI_DEGREE_PARAM = "degree"
         const val WHOAMI_ROLES_PARAM = "roles"
 
+        const val POST_SAVE_PATH = "/post"
+        const val POST_ALL_PATH = "/post"
+        const val POST_SUBJECT_PATH = "/post/subject"
+        const val POST_OWNER_PATH = "/post/own"
+        const val POST_SAVED_PATH = "/post/saved"
+
+        const val POST_ID_PARAM = "_id"
+        const val POST_TITLE_PARAM = "title"
+        const val POST_URL_PARAM = "url"
+        const val POST_PUBLICATION_YEAR_PARAM = "publication_year"
+        const val POST_PUBLICATION_CYCLE_PARAM = "publication_cycle"
+        const val POST_SUBJECT_PARAM = "subject"
+        const val POST_CATEGORY_PARAM = "category"
+        const val POST_HIDDEN_PARAM = "hidden"
+        const val POST_TOPICS_PARAM = "topics"
+        const val POST_AUTHOR_PARAM = "user"
+        const val POST_LIST_PARAM = "posts"
+
+        const val SUBJECT_PATH = "/subject"
+        const val SUBJECT_ID_PARAM = "_id"
+        const val SUBJECT_CODE_PARAM = "code"
+        const val SUBJECT_NAME_PARAM = "name"
     }
 }
