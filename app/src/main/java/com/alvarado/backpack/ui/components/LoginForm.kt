@@ -1,5 +1,8 @@
 package com.alvarado.backpack.ui.components
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -19,13 +22,16 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,7 +41,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -44,10 +51,12 @@ import com.alvarado.backpack.navigate.AppScreens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginForm(navController: NavController){
+fun LoginForm(navController: NavController, context: Context){
 
     val emailState: MutableState<String> = remember { mutableStateOf("") }
     val passwordState: MutableState<String> = remember { mutableStateOf("") }
+
+    var passwordVisible by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -123,7 +132,7 @@ fun LoginForm(navController: NavController){
 
                 TextField(
                     value = passwordState.value,
-                    onValueChange = { passwordState.value = it},
+                    onValueChange = { passwordState.value = it },
                     modifier = Modifier
                         .padding(top = 20.dp)
                         .background(Color(0xFFF7F7F8)),
@@ -132,8 +141,27 @@ fun LoginForm(navController: NavController){
                     ),
                     singleLine = true,
                     leadingIcon = {
-                        Image(painter = painterResource(id =  R.drawable.ic_password), contentDescription = "Email icon")
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_password),
+                            contentDescription = "Password icon"
+                        )
                     },
+                    trailingIcon = {
+                        val image = if (passwordVisible)
+                            painterResource(id = R.drawable.ic_visibility)
+                        else
+                            painterResource(id = R.drawable.ic_visibility_off)
+
+                        IconButton(onClick = {
+                            passwordVisible = !passwordVisible
+                        }) {
+                            Image(
+                                painter = image,
+                                contentDescription = "Toggle password visibility"
+                            )
+                        }
+                    },
+                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                     colors = TextFieldDefaults.textFieldColors(
                         unfocusedLabelColor = Color(0xFF333333),
                         focusedLabelColor = Color(0xFF333333),
@@ -145,7 +173,8 @@ fun LoginForm(navController: NavController){
                         focusedIndicatorColor = Color.Transparent,
                         containerColor = Color(0xFFF7F7F8),
                         focusedTextColor = Color(0xFF333333),
-                        unfocusedIndicatorColor = Color.Transparent),
+                        unfocusedIndicatorColor = Color.Transparent
+                    ),
                     shape = RoundedCornerShape(20.dp)
                 )
 
@@ -163,7 +192,7 @@ fun LoginForm(navController: NavController){
                         shape = RoundedCornerShape(10.dp),
                         colors = ButtonDefaults.buttonColors(Color(0xFF4C72F5)),
                         onClick = {
-
+                            navController.navigate(AppScreens.AppController.route)
                         }
                     ) {
                         Image(painter = painterResource(id = R.drawable.ic_next_log), contentDescription = "Login")
@@ -179,7 +208,7 @@ fun LoginForm(navController: NavController){
                             navController.navigate(AppScreens.RegisterScreen.route)
                         }
                     ) {
-                        Image(painter = painterResource(id = R.drawable.ico_register), contentDescription = "Login")
+                        Image(painter = painterResource(id = R.drawable.ico_register), contentDescription = "Register")
                     }
                 }
             }

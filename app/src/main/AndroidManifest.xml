@@ -16,7 +16,9 @@
             android:name=".ui.activitys.MainActivity"
             android:exported="false"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.BackPack" />
+            android:theme="@style/Theme.BackPack"
+            android:screenOrientation="portrait"
+            tools:ignore="DiscouragedApi" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
