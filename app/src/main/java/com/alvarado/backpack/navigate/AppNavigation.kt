@@ -18,6 +18,7 @@ import com.alvarado.backpack.ui.screens.WelcomeScreen
 @Composable
 fun AppNavigation(modifier: Modifier = Modifier){
     val navController = rememberNavController()
+    val viewModel : MainViewModel = hiltViewModel()
 
     Box(
         modifier = modifier
@@ -55,7 +56,7 @@ fun AppNavigation(modifier: Modifier = Modifier){
                     slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.End, animationSpec = tween(500))
                 }
             ){
-                LoginScreen(navController)
+                LoginScreen(navController, viewModel)
             }
             composable(
                 route = AppScreens.RegisterScreen.route,
@@ -66,7 +67,7 @@ fun AppNavigation(modifier: Modifier = Modifier){
                     slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.End, animationSpec = tween(500))
                 }
                 ){
-                RegisterScreen(navController)
+                RegisterScreen(navController, viewModel)
             }
 
             composable(
