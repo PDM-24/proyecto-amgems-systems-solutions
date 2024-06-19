@@ -75,7 +75,7 @@ fun WelcomeScreen(navController: NavController){
 
         // Description text
         Text(
-            text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt dolore magna aliqua",
+            text = "Welcome to BackPack! Your ideal learning companion. Explore, improve, and grow with us. Let's make learning exciting!",
             fontSize = 18.sp,
             color = Color.Gray,
             modifier = Modifier

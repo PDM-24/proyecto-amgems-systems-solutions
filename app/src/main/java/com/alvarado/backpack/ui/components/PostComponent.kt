@@ -25,17 +25,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.alvarado.backpack.R
 
 @Composable
-fun PostComponent() {
+fun PostComponent(navController: NavController) {
     val likeAPost = remember { mutableStateOf(false) }
 
     Surface (
         modifier = Modifier
             .padding(vertical = 8.dp)
             .fillMaxWidth()
-            .height(125.dp),
+            .height(125.dp)
+            .clickable {
+                       navController.navigate("view_material")
+            },
         shadowElevation = 4.dp,
         shape = RoundedCornerShape(8.dp),
         color = Color.White
@@ -118,17 +122,19 @@ fun PostComponent() {
                         )
                     }
                 }
-                Image (
-                    painter = painterResource(id = R.drawable.ic_denuncia_alert),
-                    contentDescription = "Denuncia alert"
-                )
+
+                Box(
+                    modifier = Modifier
+                        .clickable { navController.navigate("reporting") }
+                ){
+
+                    Image (
+                        painter = painterResource(id = R.drawable.ic_denuncia_alert),
+                        contentDescription = "Denuncia alert"
+                    )
+                }
             }
         }
     }
 }
 
-@Preview
-@Composable
-private fun PostComponentPreview() {
-    PostComponent()
-}

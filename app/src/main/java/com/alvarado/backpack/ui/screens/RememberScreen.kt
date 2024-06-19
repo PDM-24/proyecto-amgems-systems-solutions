@@ -59,10 +59,7 @@ fun RememberScreen(navController: NavController) {
             
             Spacer(modifier = Modifier.padding(10.dp))
 
-            Text(text = "Lorem ipsum dolor sit amet,\n" +
-                    "consectetur adipiscing elit, sed do\n" +
-                    "eisumod tempor incididunt dolore \n" +
-                    "magna aliqua",
+            Text(text = "Remember to be respectful, kind, and supportive in the BackPack community. Together, we create a positive learning environment for everyone.",
                 fontSize = 18.sp,
                 color = Color.Gray,
                 modifier = Modifier
