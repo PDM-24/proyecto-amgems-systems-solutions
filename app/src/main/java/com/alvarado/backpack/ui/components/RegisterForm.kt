@@ -350,7 +350,7 @@ fun RegisterForm(navController: NavController, viewModel: MainViewModel){
                                         careerState.value,
                                         passwordState.value
                                     )
-                                    viewModel.register(registerModel)
+//                                    viewModel.register(registerModel)
 
                                     navController.navigate(AppScreens.LoginScreen.route)
                                 }

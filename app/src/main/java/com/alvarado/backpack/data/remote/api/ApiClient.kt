@@ -3,7 +3,6 @@ package com.alvarado.backpack.data.remote.api
 import com.alvarado.backpack.data.remote.model.LoginData
 import com.alvarado.backpack.data.remote.model.LoginResponse
 import com.alvarado.backpack.data.remote.model.PostListResponse
-import com.alvarado.backpack.data.remote.model.PostResponse
 import com.alvarado.backpack.data.remote.model.RegisterData
 import com.alvarado.backpack.data.remote.model.RegisterResponse
 import com.alvarado.backpack.data.remote.model.UserResponse

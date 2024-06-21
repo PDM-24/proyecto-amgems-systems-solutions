@@ -17,7 +17,9 @@ import com.alvarado.backpack.navigate.AppNavigation
 import com.alvarado.backpack.ui.screens.LoginScreen
 import com.alvarado.backpack.ui.screens.RegisterScreen
 import com.alvarado.backpack.ui.theme.BackPackTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
