@@ -54,6 +54,10 @@ fun ProfileInfoComponent(navController: NavController, viewModel: MainViewModel)
 
     val user by viewModel.user.collectAsState()
 
+    LaunchedEffect(Unit) {
+        viewModel.whoami()
+    }
+
 
     if (showDialog) {
         AlertDialog(
@@ -165,14 +169,14 @@ fun ProfileInfoComponent(navController: NavController, viewModel: MainViewModel)
 
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    "Alicia Flores",
+                    "${user.name} ${user.lastname}",
                     color = Color.White,
                     fontSize = 20.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_medium))
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    "Computing Student",
+                    user.degree,
                     color = Color.White.copy(alpha = 0.7f),
                     fontSize = 16.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_light))

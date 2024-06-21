@@ -77,6 +77,9 @@ dependencies {
     // Hilt with navigation compose
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
+    // DataStore
+    implementation("androidx.datastore:datastore-preferences:1.1.0")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

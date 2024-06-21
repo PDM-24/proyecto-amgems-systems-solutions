@@ -1,6 +1,8 @@
 package com.alvarado.backpack
 
+import android.app.Application
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alvarado.backpack.domain.GetAllPostsUseCase
@@ -14,6 +16,7 @@ import com.alvarado.backpack.domain.model.LoginModel
 import com.alvarado.backpack.domain.model.PostModel
 import com.alvarado.backpack.domain.model.RegisterModel
 import com.alvarado.backpack.domain.model.UserModel
+import com.alvarado.backpack.util.TokenManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -31,6 +34,7 @@ class MainViewModel @Inject constructor(
     private val getOwnPostsUseCase : GetOwnPostsUseCase,
     private val getSavedPostsUseCase : GetSavedPostsUseCase,
     private val getPostsBySubject : GetPostsBySubjectUseCase,
+    private val tokenManager : TokenManager
 ) : ViewModel() {
 
     private val _user = MutableStateFlow(UserModel())
@@ -52,6 +56,7 @@ class MainViewModel @Inject constructor(
             try {
                 _uiState.value = UiState.Loading
                 val token = loginUseCase.invoke(loginModel)
+                tokenManager.saveToken(token)
                 _uiState.value = UiState.Success(token)
             } catch (e : HttpException) {
                 Log.d("viewModel", "Error! ${e.message()}")
@@ -78,10 +83,12 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun whoami(token : String) {
+    fun whoami() {
         viewModelScope.launch {
             try {
-                _user.value = whoamiUseCase.invoke(token)
+                tokenManager.token.collect { token ->
+                    _user.value = whoamiUseCase.invoke("Bearer $token")
+                }
             } catch (e : HttpException) {
                 Log.d("viewModel", "Error! ${e.message()}")
                 _uiState.value = UiState.Error(e.code())
