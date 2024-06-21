@@ -30,6 +30,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -65,8 +66,16 @@ fun RegisterForm(navController: NavController, viewModel: MainViewModel){
     val careerState: MutableState<String> = remember { mutableStateOf("") }
     val carnetState: MutableState<String> = remember { mutableStateOf("") }
 
-
     var passwordVisible by remember { mutableStateOf(false) }
+
+    val isFormValid by derivedStateOf {
+        emailState.value.isNotBlank() &&
+                passwordState.value.isNotBlank() &&
+                nameState.value.isNotBlank() &&
+                lastNameState.value.isNotBlank() &&
+                careerState.value.isNotBlank() &&
+                carnetState.value.isNotBlank()
+    }
 
     Box(
         modifier = Modifier
@@ -145,7 +154,7 @@ fun RegisterForm(navController: NavController, viewModel: MainViewModel){
                             ),
                             singleLine = true,
                             leadingIcon = {
-                                Image(painter = painterResource(id =  R.drawable.ic_person), contentDescription = "Email icon")
+                                Image(painter = painterResource(id =  R.drawable.ic_person), contentDescription = "Name icon")
                             },
                             colors = TextFieldDefaults.textFieldColors(
                                 unfocusedLabelColor = Color(0xFF333333),
@@ -162,7 +171,6 @@ fun RegisterForm(navController: NavController, viewModel: MainViewModel){
                             shape = RoundedCornerShape(10.dp)
                         )
                         Spacer(modifier = Modifier.padding(5.dp))
-
 
                         Text(
                             text = "Last Name :",
@@ -181,7 +189,7 @@ fun RegisterForm(navController: NavController, viewModel: MainViewModel){
                             ),
                             singleLine = true,
                             leadingIcon = {
-                                Image(painter = painterResource(id =  R.drawable.ic_person), contentDescription = "Email icon")
+                                Image(painter = painterResource(id =  R.drawable.ic_person), contentDescription = "Last Name icon")
                             },
                             colors = TextFieldDefaults.textFieldColors(
                                 unfocusedLabelColor = Color(0xFF333333),
@@ -217,7 +225,7 @@ fun RegisterForm(navController: NavController, viewModel: MainViewModel){
                             ),
                             singleLine = true,
                             leadingIcon = {
-                                Image(painter = painterResource(id =  R.drawable.ic_career), contentDescription = "Email icon")
+                                Image(painter = painterResource(id =  R.drawable.ic_career), contentDescription = "Career icon")
                             },
                             colors = TextFieldDefaults.textFieldColors(
                                 unfocusedLabelColor = Color(0xFF333333),
@@ -341,19 +349,19 @@ fun RegisterForm(navController: NavController, viewModel: MainViewModel){
                                 shape = RoundedCornerShape(10.dp),
                                 colors = ButtonDefaults.buttonColors(Color(0xFF4C72F5)),
                                 onClick = {
-
-                                    val registerModel = RegisterModel(
-                                        carnetState.value,
-                                        nameState.value,
-                                        lastNameState.value,
-                                        emailState.value,
-                                        careerState.value,
-                                        passwordState.value
-                                    )
-//                                    viewModel.register(registerModel)
-
-                                    navController.navigate(AppScreens.LoginScreen.route)
-                                }
+                                    if (isFormValid) {
+                                        val registerModel = RegisterModel(
+                                            carnetState.value,
+                                            nameState.value,
+                                            lastNameState.value,
+                                            emailState.value,
+                                            careerState.value,
+                                            passwordState.value
+                                        )
+                                        viewModel.register(registerModel)
+                                    }
+                                },
+                                enabled = isFormValid
                             ) {
                                 Image(painter = painterResource(id = R.drawable.ic_add), contentDescription = "Register")
                             }
@@ -370,6 +378,7 @@ fun RegisterForm(navController: NavController, viewModel: MainViewModel){
                                     emailState.value = ""
                                     careerState.value = ""
                                     passwordState.value = ""
+                                    carnetState.value = ""
                                 }
                             ) {
                                 Image(painter = painterResource(id = R.drawable.ic_trash), contentDescription = "Trash")
