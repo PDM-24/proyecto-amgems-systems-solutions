@@ -61,6 +61,11 @@ class MainViewModel @Inject constructor(
     }
 
     fun register(registerModel : RegisterModel) {
+        if (!validateRegisterModel(registerModel)) {
+            _uiState.value = UiState.Error(400)
+            return
+        }
+
         viewModelScope.launch {
             try {
                 _uiState.value = UiState.Loading
@@ -134,6 +139,15 @@ class MainViewModel @Inject constructor(
                 _uiState.value = UiState.Error(e.code())
             }
         }
+    }
+
+    private fun validateRegisterModel(registerModel: RegisterModel): Boolean {
+        return registerModel.carnet.isNotBlank() &&
+                registerModel.name.isNotBlank() &&
+                registerModel.lastname.isNotBlank() &&
+                registerModel.email.isNotBlank() && android.util.Patterns.EMAIL_ADDRESS.matcher(registerModel.email).matches() &&
+                registerModel.degree.isNotBlank() &&
+                registerModel.password.isNotBlank() && registerModel.password.length >= 8
     }
 
     fun resetUiState() {

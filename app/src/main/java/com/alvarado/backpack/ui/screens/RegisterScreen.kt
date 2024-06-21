@@ -46,7 +46,10 @@ fun RegisterScreen(
         }
         is UiState.Success -> {
             LaunchedEffect(Unit) {
-                navController.navigate(AppScreens.LoginScreen.route)
+                navController.navigate(AppScreens.LoginScreen.route) {
+                    popUpTo(AppScreens.RegisterScreen.route) { inclusive = true }
+                }
+                viewModel.resetUiState()
             }
         }
         is UiState.Error -> {
