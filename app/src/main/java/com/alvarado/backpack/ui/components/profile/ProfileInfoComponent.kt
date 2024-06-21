@@ -22,6 +22,8 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -49,6 +51,9 @@ fun ProfileInfoComponent(navController: NavController, viewModel: MainViewModel)
     val career = remember { mutableStateOf("Computing Student") }
     val name = remember { mutableStateOf("Alicia Flores") }
     var showDialog by remember { mutableStateOf(false) }
+
+    val user by viewModel.user.collectAsState()
+
 
     if (showDialog) {
         AlertDialog(
@@ -278,7 +283,7 @@ fun ProfileInfoComponent(navController: NavController, viewModel: MainViewModel)
                             Text(
                                 buildAnnotatedString {
                                     withStyle(style = SpanStyle(color = Color.Black)) {
-                                        append("${email.value}")
+                                        append(user.email)
                                     }
                                 },
                                 textAlign = TextAlign.Left,
@@ -317,7 +322,7 @@ fun ProfileInfoComponent(navController: NavController, viewModel: MainViewModel)
                             Text(
                                 buildAnnotatedString {
                                     withStyle(style = SpanStyle(color = Color.Black)) {
-                                        append(career.value)
+                                        append(user.degree)
                                     }
                                 },
                                 textAlign = TextAlign.Left,
@@ -358,7 +363,7 @@ fun ProfileInfoComponent(navController: NavController, viewModel: MainViewModel)
                             Text(
                                 buildAnnotatedString {
                                     withStyle(style = SpanStyle(color = Color.Black)) {
-                                        append("${name.value}")
+                                        append("${user.name} ${user.lastname}")
                                     }
                                 },
                                 textAlign = TextAlign.Left,

@@ -82,8 +82,8 @@ fun RegisterForm(navController: NavController, viewModel: MainViewModel){
             .shadow(elevation = 50.dp)
             .clip(RoundedCornerShape(20.dp))
             .background(Color.White)
-            .height(650.dp)
-            .width(350.dp)
+            .height(500.dp)
+            .width(300.dp)
             .padding(30.dp)
     ) {
         Column(

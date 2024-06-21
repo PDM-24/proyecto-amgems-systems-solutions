@@ -37,8 +37,7 @@ fun RegisterScreen(
         is UiState.Loading -> {
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color(0xFFF2F2F2)),
+                    .fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
                 CircularProgressIndicator()
@@ -53,7 +52,6 @@ fun RegisterScreen(
             }
         }
         is UiState.Error -> {
-            // Mostrar mensaje de error con botón para regresar al formulario de registro
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -105,8 +103,7 @@ fun RegisterScreen(
 
                 Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .background(Color(0xFF3F2AC5)),
+                        .fillMaxWidth(),
                     horizontalAlignment = Alignment.Start
                 ) {
                     Row(
@@ -115,15 +112,9 @@ fun RegisterScreen(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text(
-                            text = "REGISTER",
-                            fontFamily = FontFamily(Font(R.font.poppins_semibold)),
-                            modifier = Modifier
-                                .padding(start = 40.dp),
-                            color = Color.White,
-                            fontSize = 30.sp,
-                        )
-                        Box(modifier = Modifier.padding(start = 0.dp, end = 10.dp, top = 20.dp, bottom = 20.dp)) {
+                        Image(painter = painterResource(id = R.drawable.img_bubble_blue_top), contentDescription = "Bubble blue")
+
+                        Box(modifier = Modifier.padding(start = 0.dp, end = 30.dp)){
                             Button(
                                 colors = ButtonDefaults.buttonColors(Color.White),
                                 modifier = Modifier
@@ -148,6 +139,14 @@ fun RegisterScreen(
                     verticalArrangement = Arrangement.Center
                 ) {
                     RegisterForm(navController, viewModel)
+                }
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalAlignment = Alignment.End
+                ) {
+                    Image(painter = painterResource(id = R.drawable.img_bubble_blue_bottom), contentDescription = "Bubble blue")
                 }
             }
         }

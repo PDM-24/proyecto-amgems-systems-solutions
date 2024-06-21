@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -220,18 +221,49 @@ fun LoginForm(navController: NavController, viewModel: MainViewModel) {
                     }
                 }
 
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.padding(5.dp))
 
                 when (uiState) {
                     is UiState.Loading -> {
-                        CircularProgressIndicator()
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            CircularProgressIndicator()
+                        }
                     }
                     is UiState.Success -> {
-                        Text(text = "Login Successful!", color = Color.Green, textAlign = TextAlign.Center, fontWeight = FontWeight.Bold, modifier = Modifier.fillMaxWidth())
+                        Box(
+                            modifier = Modifier.background(Color(0xFF138535))
+                        ){
+                            Text(
+                                text = "Login Successful!",
+                                color = Color.White,
+                                textAlign = TextAlign.Center,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(5.dp)
+                            )
+                        }
                         navController.navigate(AppScreens.AppController.route)
                     }
                     is UiState.Error -> {
-                        Text(text = "Login Failed!", color = Color.Red, textAlign = TextAlign.Center, fontWeight = FontWeight.Bold, modifier = Modifier.fillMaxWidth())
+
+                        Box(
+                            modifier = Modifier.background(Color(0xFFD53036))
+                        ){
+                            Text(
+                                text = "Login Failed",
+                                color = Color.White,
+                                textAlign = TextAlign.Center,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(5.dp)
+                            )
+                        }
                     }
                     else -> {}
                 }
