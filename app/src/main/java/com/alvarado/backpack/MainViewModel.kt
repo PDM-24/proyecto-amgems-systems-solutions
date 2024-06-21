@@ -96,12 +96,14 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun getAllPosts(token : String) {
+    fun getAllPosts() {
         viewModelScope.launch {
             try {
                 _uiState.value = UiState.Loading
-                _postList.value = getAllPostsUseCase.invoke(token)
-                _uiState.value = UiState.Success(token)
+                tokenManager.token.collect { token ->
+                    _postList.value = getAllPostsUseCase.invoke("Bearer $token")
+                    _uiState.value = UiState.Success("Bearer $token")
+                }
             } catch (e : HttpException) {
                 Log.d("viewModel", "Error! ${e.message()}")
                 _uiState.value = UiState.Error(e.code())
@@ -113,8 +115,10 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _uiState.value = UiState.Loading
-                _postList.value = getSavedPostsUseCase.invoke(token)
-                _uiState.value = UiState.Success(token)
+                tokenManager.token.collect { token ->
+                    _postList.value = getSavedPostsUseCase.invoke("Bearer $token")
+                    _uiState.value = UiState.Success("Bearer $token")
+                }
             } catch (e : HttpException) {
                 Log.d("viewModel", "Error! ${e.message()}")
                 _uiState.value = UiState.Error(e.code())
@@ -126,8 +130,10 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _uiState.value = UiState.Loading
-                _postList.value = getOwnPostsUseCase.invoke(token)
-                _uiState.value = UiState.Success(token)
+                tokenManager.token.collect { token ->
+                    _postList.value = getOwnPostsUseCase.invoke("Bearer $token")
+                    _uiState.value = UiState.Success("Bearer $token")
+                }
             } catch (e : HttpException) {
                 Log.d("viewModel", "Error! ${e.message()}")
                 _uiState.value = UiState.Error(e.code())
@@ -135,12 +141,14 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun getPostBySubject(token : String, subjectId : String) {
+    fun getPostBySubject(subjectId : String) {
         viewModelScope.launch {
             try {
                 _uiState.value = UiState.Loading
-                _postList.value = getPostsBySubject.invoke(token, subjectId)
-                _uiState.value = UiState.Success(token)
+                tokenManager.token.collect { token ->
+                    _postList.value = getPostsBySubject.invoke("Bearer $token", subjectId)
+                    _uiState.value = UiState.Success("Bearer $token")
+                }
             } catch (e : HttpException) {
                 Log.d("viewModel", "Error! ${e.message()}")
                 _uiState.value = UiState.Error(e.code())
