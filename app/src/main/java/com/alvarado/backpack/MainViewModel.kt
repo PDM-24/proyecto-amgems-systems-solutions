@@ -153,6 +153,7 @@ class MainViewModel @Inject constructor(
     fun resetUiState() {
         _uiState.value = UiState.Idle
     }
+
 }
 
 sealed class UiState {

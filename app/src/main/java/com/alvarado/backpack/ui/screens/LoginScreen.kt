@@ -84,7 +84,7 @@ fun LoginScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            LoginForm(navController, context = LocalContext.current)
+            LoginForm(navController, viewModel = viewModel)
         }
 
         Column(

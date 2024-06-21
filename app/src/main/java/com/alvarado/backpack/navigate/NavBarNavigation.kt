@@ -81,7 +81,7 @@ fun NavBarNavigation(){
                     slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.End, animationSpec = tween(500))
                 }
             ){
-                ProfileScreen(navController)
+                ProfileScreen(navController, viewModel)
             }
 
             composable(

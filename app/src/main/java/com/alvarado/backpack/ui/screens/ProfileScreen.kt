@@ -12,11 +12,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.alvarado.backpack.MainViewModel
 import com.alvarado.backpack.ui.components.navBar.NavBarComponent
 import com.alvarado.backpack.ui.components.profile.ProfileInfoComponent
 
 @Composable
-fun ProfileScreen(navController: NavController) {
+fun ProfileScreen(navController: NavController, viewModel: MainViewModel) {
 
     Scaffold(
         topBar = {
@@ -38,7 +39,7 @@ fun ProfileScreen(navController: NavController) {
                     .padding(innerPadding)
             ) {
                 itemsIndexed(listOf(1)) { index, item ->
-                    ProfileInfoComponent(navController)
+                    ProfileInfoComponent(navController, viewModel)
                 }
             }
         }

@@ -13,6 +13,7 @@ material3Android = "1.2.1"
 navigationRuntimeKtx = "2.7.7"
 navigationCompose = "2.7.7"
 playServicesMaps = "18.2.0"
+benchmarkCommon = "1.2.4"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -34,6 +35,7 @@ androidx-material3-android = { group = "androidx.compose.material3", name = "mat
 androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
+androidx-benchmark-common = { group = "androidx.benchmark", name = "benchmark-common", version.ref = "benchmarkCommon" }
 
 
 [plugins]

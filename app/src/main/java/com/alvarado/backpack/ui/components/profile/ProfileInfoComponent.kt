@@ -40,10 +40,11 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.alvarado.backpack.MainViewModel
 import com.alvarado.backpack.R
 
 @Composable
-fun ProfileInfoComponent(navController: NavController) {
+fun ProfileInfoComponent(navController: NavController, viewModel: MainViewModel) {
     val email = remember { mutableStateOf("example@example.com") }
     val career = remember { mutableStateOf("Computing Student") }
     val name = remember { mutableStateOf("Alicia Flores") }
@@ -371,7 +372,10 @@ fun ProfileInfoComponent(navController: NavController) {
             Spacer(modifier = Modifier.height(36.dp))
 
             Button(
-                onClick = { showDialog = true },
+                onClick = {
+                    showDialog = true
+                    viewModel.resetUiState()
+                          },
                 modifier = Modifier
                     .height(48.dp)
                     .width(400.dp),

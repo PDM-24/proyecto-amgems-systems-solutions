@@ -21,6 +21,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -28,6 +29,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,30 +42,34 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.alvarado.backpack.MainViewModel
 import com.alvarado.backpack.R
+import com.alvarado.backpack.UiState
+import com.alvarado.backpack.domain.model.LoginModel
 import com.alvarado.backpack.navigate.AppScreens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginForm(navController: NavController, context: Context){
-
+fun LoginForm(navController: NavController, viewModel: MainViewModel) {
     val emailState: MutableState<String> = remember { mutableStateOf("") }
     val passwordState: MutableState<String> = remember { mutableStateOf("") }
-
     var passwordVisible by remember { mutableStateOf(false) }
+    val uiState by viewModel.uiState.collectAsState()
 
     Box(
         modifier = Modifier
             .shadow(elevation = 50.dp)
             .clip(RoundedCornerShape(20.dp))
             .background(Color.White)
-            .height(500.dp)
+            .height(530.dp)
             .width(300.dp)
             .padding(30.dp)
     ) {
@@ -73,7 +79,7 @@ fun LoginForm(navController: NavController, context: Context){
                 .fillMaxHeight(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(painter = painterResource(id = R.drawable.logo), contentDescription = "BackPack")
+            Image(painter = painterResource(id = R.drawable.logo_backpack), contentDescription = "BackPack", modifier = Modifier.width(70.dp))
             Text(
                 text = "BACKPACK",
                 fontFamily = FontFamily(Font(R.font.poppins_bold)),
@@ -96,7 +102,7 @@ fun LoginForm(navController: NavController, context: Context){
 
                 TextField(
                     value = emailState.value,
-                    onValueChange = { emailState.value = it},
+                    onValueChange = { emailState.value = it },
                     modifier = Modifier
                         .padding(top = 20.dp)
                         .background(Color(0xFFF7F7F8)),
@@ -105,7 +111,7 @@ fun LoginForm(navController: NavController, context: Context){
                     ),
                     singleLine = true,
                     leadingIcon = {
-                        Image(painter = painterResource(id =  R.drawable.ic_email), contentDescription = "Email icon")
+                        Image(painter = painterResource(id = R.drawable.ic_email), contentDescription = "Email icon")
                     },
                     colors = TextFieldDefaults.textFieldColors(
                         unfocusedLabelColor = Color(0xFF333333),
@@ -118,7 +124,8 @@ fun LoginForm(navController: NavController, context: Context){
                         focusedIndicatorColor = Color.Transparent,
                         containerColor = Color(0xFFF7F7F8),
                         focusedTextColor = Color(0xFF333333),
-                        unfocusedIndicatorColor = Color.Transparent),
+                        unfocusedIndicatorColor = Color.Transparent
+                    ),
                     shape = RoundedCornerShape(10.dp)
                 )
 
@@ -192,7 +199,8 @@ fun LoginForm(navController: NavController, context: Context){
                         shape = RoundedCornerShape(10.dp),
                         colors = ButtonDefaults.buttonColors(Color(0xFF4C72F5)),
                         onClick = {
-                            navController.navigate(AppScreens.AppController.route)
+                            val loginModel = LoginModel(emailState.value, passwordState.value)
+                            viewModel.login(loginModel)
                         }
                     ) {
                         Image(painter = painterResource(id = R.drawable.ic_next_log), contentDescription = "Login")
@@ -210,6 +218,22 @@ fun LoginForm(navController: NavController, context: Context){
                     ) {
                         Image(painter = painterResource(id = R.drawable.ico_register), contentDescription = "Register")
                     }
+                }
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                when (uiState) {
+                    is UiState.Loading -> {
+                        CircularProgressIndicator()
+                    }
+                    is UiState.Success -> {
+                        Text(text = "Login Successful!", color = Color.Green, textAlign = TextAlign.Center, fontWeight = FontWeight.Bold, modifier = Modifier.fillMaxWidth())
+                        navController.navigate(AppScreens.AppController.route)
+                    }
+                    is UiState.Error -> {
+                        Text(text = "Login Failed!", color = Color.Red, textAlign = TextAlign.Center, fontWeight = FontWeight.Bold, modifier = Modifier.fillMaxWidth())
+                    }
+                    else -> {}
                 }
             }
         }
