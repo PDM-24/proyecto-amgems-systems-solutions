@@ -22,14 +22,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.alvarado.backpack.R
+import com.alvarado.backpack.domain.model.PostModel
 
 @Composable
-fun PostComponent(navController: NavController) {
+fun PostComponent(navController: NavController, post: PostModel) {
     val likeAPost = remember { mutableStateOf(false) }
 
     Surface (
@@ -71,12 +71,12 @@ fun PostComponent(navController: NavController) {
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Text (
-                    text = "[CLASE] - Desarrollo de Integrales",
+                    text = "[CLASE] - ${post.title}",
                     maxLines = 2,
                     fontSize = 16.sp
                 )
                 Text(
-                    text = "Desarrollo de la clase donde vemos intregales y....",
+                    text = "Documento PDF",
                     maxLines = 3,
                     fontSize = 12.sp,
                     color = Color.Gray
@@ -86,13 +86,13 @@ fun PostComponent(navController: NavController) {
                         .fillMaxWidth()
                 ) {
                     Text(
-                        text = "Fecha: 07/10/2023",
+                        text = "Año: ${post.publicationYear}",
                         fontSize = 12.sp,
                         color = Color.Gray
                     )
-                    Spacer(modifier = Modifier.width(30.dp))
+                    Spacer(modifier = Modifier.width(10.dp))
                     Text(
-                        text = "Ciclo: 01",
+                        text = "Ciclo: 0${post.publicationCycle}",
                         fontSize = 12.sp,
                         color = Color.Gray
                     )

@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.alvarado.backpack.R
+import com.alvarado.backpack.navigate.AppScreens
 
 @Composable
 fun ViewMaterialScreen(navController: NavController) {
@@ -40,8 +41,7 @@ fun ViewMaterialScreen(navController: NavController) {
 
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .background(Color(0xFF4C72F5)),
+                .fillMaxWidth(),
             horizontalAlignment = Alignment.Start
         ) {
             Row(
@@ -50,16 +50,9 @@ fun ViewMaterialScreen(navController: NavController) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(
-                    text = "Material",
-                    fontFamily = FontFamily(Font(R.font.poppins_semibold)),
-                    modifier = Modifier
-                        .padding(start = 30.dp)
-                    ,
-                    color = Color.White,
-                    fontSize = 30.sp,
-                )
-                Box(modifier = Modifier.padding(start = 0.dp, end = 10.dp, top = 20.dp, bottom = 20.dp)){
+                Image(painter = painterResource(id = R.drawable.img_bubble_blue_top), contentDescription = "Bubble blue")
+
+                Box(modifier = Modifier.padding(start = 0.dp, end = 30.dp)){
                     Button(
                         colors = ButtonDefaults.buttonColors(Color.White),
                         modifier = Modifier
@@ -74,16 +67,29 @@ fun ViewMaterialScreen(navController: NavController) {
                 }
             }
         }
-
-        Spacer(modifier = Modifier.padding(10.dp))
+        
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(500.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Button(
+                onClick = {
+                
+                }
+            ) {
+                Text(text = "Descargar")
+            }
+        }
 
         Column(
             modifier = Modifier
                 .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            horizontalAlignment = Alignment.End
         ) {
-
+            Image(painter = painterResource(id = R.drawable.img_bubble_blue_bottom), contentDescription = "Bubble blue")
         }
     }
 }

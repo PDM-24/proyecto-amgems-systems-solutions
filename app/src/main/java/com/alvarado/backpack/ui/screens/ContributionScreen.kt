@@ -1,48 +1,39 @@
 package com.alvarado.backpack.ui.screens
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddCircle
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.alvarado.backpack.R
+import com.alvarado.backpack.MainViewModel
 import com.alvarado.backpack.ui.components.PostComponent
 import com.alvarado.backpack.ui.components.SearchComponent
 import com.alvarado.backpack.ui.components.navBar.NavBarComponent
+import kotlinx.coroutines.launch
+
 
 @Composable
-fun ContributionScreen(navController: NavController) {
+fun ContributionScreen(navController: NavController, viewModel: MainViewModel) {
+    val postList = viewModel.postList.collectAsState().value
+
+    LaunchedEffect(Unit) {
+        viewModel.getAllPosts()
+    }
 
     Scaffold(
-        topBar = {
-
-        },
+        topBar = {},
         bottomBar = {
             BottomAppBar {
                 NavBarComponent(navController)
@@ -57,7 +48,7 @@ fun ContributionScreen(navController: NavController) {
                 Icon(Icons.Default.AddCircle, contentDescription = "Add")
             }
         }
-    ) {  innerPadding ->
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxHeight()
@@ -66,21 +57,19 @@ fun ContributionScreen(navController: NavController) {
             SearchComponent(
                 modifier = Modifier
                     .weight(3f),
-                title="Contribution",
+                title = "Contribution",
                 subTitle = "What you were looking for"
             )
 
-            LazyColumn (
+            LazyColumn(
                 modifier = Modifier
                     .weight(9f)
                     .padding(innerPadding)
             ) {
-                itemsIndexed(listOf(1, 2, 3, 4,5, 6, 7, 8, 9, 10)) { index, item ->
-                    PostComponent(navController)
+                items(postList) { post ->
+                    PostComponent(navController, post)
                 }
             }
-
-    }
+        }
     }
 }
-

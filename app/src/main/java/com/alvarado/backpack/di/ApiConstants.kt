@@ -38,7 +38,7 @@ class ApiConstants {
 
         const val POST_ID_PARAM = "_id"
         const val POST_TITLE_PARAM = "title"
-        const val POST_URL_PARAM = "url"
+        const val POST_URL_PARAM = "document"
         const val POST_PUBLICATION_YEAR_PARAM = "publication_year"
         const val POST_PUBLICATION_CYCLE_PARAM = "publication_cycle"
         const val POST_SUBJECT_PARAM = "subject"
