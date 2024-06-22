@@ -45,7 +45,6 @@ fun CourseCard(image: Painter, title: String, subtitle: String, navController: N
                 contentDescription = null,
                 modifier = Modifier
                     .size(60.dp)
-                    .background(Color.LightGray, shape = CircleShape)
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(

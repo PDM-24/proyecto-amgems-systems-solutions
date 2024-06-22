@@ -27,7 +27,7 @@ import com.alvarado.backpack.ui.components.navBar.NavBarComponent
 @Composable
 fun HomeScreen(navController: NavController){
 
-    val image: Painter = painterResource(id = R.drawable.movil)
+    val image: Painter = painterResource(id = R.drawable.books)
 
     Scaffold(
         topBar = {

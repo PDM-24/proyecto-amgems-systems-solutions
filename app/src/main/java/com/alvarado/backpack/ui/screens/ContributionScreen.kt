@@ -57,7 +57,7 @@ fun ContributionScreen(navController: NavController, viewModel: MainViewModel) {
             SearchComponent(
                 modifier = Modifier
                     .weight(3f),
-                title = "Contribution",
+                title = "Contributions",
                 subTitle = "What you were looking for"
             )
 

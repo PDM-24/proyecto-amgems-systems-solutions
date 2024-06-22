@@ -80,6 +80,9 @@ dependencies {
     // DataStore
     implementation("androidx.datastore:datastore-preferences:1.1.0")
 
+    //Download Files
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

@@ -5,9 +5,11 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.alvarado.backpack.MainViewModel
 import com.alvarado.backpack.ui.screens.AddMaterialScreen
 import com.alvarado.backpack.ui.screens.ContributionScreen
@@ -122,14 +124,16 @@ fun NavBarNavigation(){
 
             composable(
                 route = NavScreens.ViewMaterial.route,
+                arguments = listOf(navArgument("postUrl") { type = NavType.StringType }),
                 enterTransition = {
                     slideIntoContainer(towards = AnimatedContentTransitionScope.SlideDirection.Start, animationSpec = tween(500))
                 },
                 exitTransition = {
                     slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.End, animationSpec = tween(500))
                 }
-            ){
-                ViewMaterialScreen(navController)
+            ) { backStackEntry ->
+                val postUrl = backStackEntry.arguments?.getString("postUrl") ?: ""
+                ViewMaterialScreen(navController, postUrl)
             }
 
             composable(

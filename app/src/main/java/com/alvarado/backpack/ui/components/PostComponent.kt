@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.alvarado.backpack.R
 import com.alvarado.backpack.domain.model.PostModel
+import com.alvarado.backpack.navigate.NavScreens
 
 @Composable
 fun PostComponent(navController: NavController, post: PostModel) {
@@ -38,7 +39,7 @@ fun PostComponent(navController: NavController, post: PostModel) {
             .fillMaxWidth()
             .height(125.dp)
             .clickable {
-                       navController.navigate("view_material")
+                navController.navigate(NavScreens.ViewMaterial.createRoute(post.url))
             },
         shadowElevation = 4.dp,
         shape = RoundedCornerShape(8.dp),
