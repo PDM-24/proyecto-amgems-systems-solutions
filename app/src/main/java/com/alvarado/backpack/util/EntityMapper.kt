@@ -26,7 +26,8 @@ fun convertToSubjectModel(subject : SubjectResponse) : SubjectModel {
     return SubjectModel(
         id = subject.id,
         code = subject.code,
-        name = subject.name
+        name = subject.name,
+        image = subject.image
     )
 }
 
@@ -37,6 +38,7 @@ fun convertToUserModel(user : UserResponse) : UserModel {
         name = user.name,
         lastname = user.lastname,
         email = user.email,
-        degree = user.degree
+        degree = user.degree,
+        savedPosts = user.savedPosts ?: emptyList()
     )
 }

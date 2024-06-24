@@ -31,6 +31,7 @@ class ApiModule {
     fun provideApiClient(retrofit: Retrofit) : ApiClient {
         return retrofit.create(ApiClient::class.java)
     }
+
     private val Context.dataStore by preferencesDataStore(name = "settings")
 
     @Provides

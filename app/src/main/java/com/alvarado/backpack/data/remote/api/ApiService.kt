@@ -7,6 +7,7 @@ import com.alvarado.backpack.data.remote.model.PostListResponse
 import com.alvarado.backpack.data.remote.model.PostResponse
 import com.alvarado.backpack.data.remote.model.RegisterData
 import com.alvarado.backpack.data.remote.model.RegisterResponse
+import com.alvarado.backpack.data.remote.model.SubjectListResponse
 import com.alvarado.backpack.data.remote.model.UserResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -49,6 +50,17 @@ class ApiService @Inject constructor(
     suspend fun getPostsBySubject(token : String, subjectId : String) : PostListResponse {
         return withContext(Dispatchers.IO) {
             api.getPostsBySubject(token, subjectId)
+        }
+    }
+    suspend fun favoritePost(token : String, postId : String) : PostResponse {
+        return withContext(Dispatchers.IO) {
+            api.favoritePost(token, postId)
+        }
+    }
+
+    suspend fun getSubjectsByDegree(token : String) : SubjectListResponse {
+        return withContext(Dispatchers.IO) {
+            api.getSubjectByDegree(token)
         }
     }
 }

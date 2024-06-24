@@ -47,15 +47,16 @@ import com.alvarado.backpack.R
 
 @Composable
 fun ProfileInfoComponent(navController: NavController, viewModel: MainViewModel) {
-    val email = remember { mutableStateOf("example@example.com") }
-    val career = remember { mutableStateOf("Computing Student") }
-    val name = remember { mutableStateOf("Alicia Flores") }
-    var showDialog by remember { mutableStateOf(false) }
 
+    var showDialog by remember { mutableStateOf(false) }
     val user by viewModel.user.collectAsState()
+    val savedPost by viewModel.postListFavorite.collectAsState()
+    val ownPost by viewModel.postListOwn.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.whoami()
+        viewModel.getSavedPosts()
+        viewModel.getOwnPosts()
     }
 
 
@@ -213,7 +214,7 @@ fun ProfileInfoComponent(navController: NavController, viewModel: MainViewModel)
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(
-                            "20",
+                            text = savedPost.size.toString(),
                             color = Color.White,
                             fontSize = 15.sp,
                             textAlign = TextAlign.Center,
@@ -243,7 +244,7 @@ fun ProfileInfoComponent(navController: NavController, viewModel: MainViewModel)
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(
-                            "12",
+                            text = ownPost.size.toString(),
                             color = Color.White,
                             fontSize = 15.sp,
                             textAlign = TextAlign.Center,

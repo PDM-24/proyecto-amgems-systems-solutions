@@ -3,8 +3,11 @@ package com.alvarado.backpack.data.remote.api
 import com.alvarado.backpack.data.remote.model.LoginData
 import com.alvarado.backpack.data.remote.model.LoginResponse
 import com.alvarado.backpack.data.remote.model.PostListResponse
+import com.alvarado.backpack.data.remote.model.PostResponse
 import com.alvarado.backpack.data.remote.model.RegisterData
 import com.alvarado.backpack.data.remote.model.RegisterResponse
+import com.alvarado.backpack.data.remote.model.SubjectListResponse
+import com.alvarado.backpack.data.remote.model.SubjectResponse
 import com.alvarado.backpack.data.remote.model.UserResponse
 import com.alvarado.backpack.di.ApiConstants
 import okhttp3.MultipartBody
@@ -14,6 +17,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.Multipart
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
@@ -74,5 +78,15 @@ interface ApiClient {
         @Part(ApiConstants.POST_CATEGORY_PARAM) category: RequestBody,
         @Part(ApiConstants.POST_SUBJECT_PARAM) subject: RequestBody
     )
-    // comentario
+
+    @PATCH(value = ApiConstants.API_PATH + ApiConstants.POST_FAVORITE_PATH + "/{identifier}")
+    suspend fun favoritePost(
+        @Header(value = "authorization") token : String,
+        @Path(value = "identifier") postId : String
+    ) : PostResponse
+
+    @GET(value = ApiConstants.API_PATH + ApiConstants.SUBJECT_DEGREE_PATH)
+    suspend fun getSubjectByDegree(
+        @Header(value = "authorization") token : String
+    ) : SubjectListResponse
 }

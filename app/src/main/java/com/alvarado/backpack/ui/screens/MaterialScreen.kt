@@ -4,19 +4,36 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.alvarado.backpack.MainViewModel
 import com.alvarado.backpack.ui.components.PostComponent
 import com.alvarado.backpack.ui.components.SearchComponent
 import com.alvarado.backpack.ui.components.navBar.NavBarComponent
 
 @Composable
-fun MaterialScreen(navController: NavController) {
+fun MaterialScreen(
+    navController : NavController,
+    viewModel : MainViewModel
+) {
+
+    val subjectId = viewModel.getSubjectSelected()
+    val postList by viewModel.postListByDegree.collectAsState()
+    val user = viewModel.user.collectAsState().value
+
+    LaunchedEffect(Unit) {
+        viewModel.whoami()
+        viewModel.getPostBySubject(subjectId)
+    }
 
     Scaffold(
         bottomBar = {
@@ -41,12 +58,14 @@ fun MaterialScreen(navController: NavController) {
                     .weight(8f)
                     .padding(innerPadding)
             ) {
-                itemsIndexed(listOf(1, 2, 3, 4,)) { index, item ->
-
+                items(postList) { post ->
+                    if (user.savedPosts.contains(post.id)) {
+                        PostComponent(navController, post, viewModel, true)
+                    } else {
+                        PostComponent(navController, post, viewModel, false)
+                    }
                 }
             }
-
         }
     }
-
 }

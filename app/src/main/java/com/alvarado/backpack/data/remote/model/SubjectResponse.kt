@@ -10,4 +10,6 @@ data class SubjectResponse(
     var code : String,
     @SerializedName(value = ApiConstants.SUBJECT_NAME_PARAM)
     var name : String,
+    @SerializedName(value = ApiConstants.SUBJECT_IMAGE_PARAM)
+    val image : String
 )

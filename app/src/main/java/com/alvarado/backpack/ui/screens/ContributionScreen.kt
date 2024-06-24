@@ -25,11 +25,16 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun ContributionScreen(navController: NavController, viewModel: MainViewModel) {
-    val postList = viewModel.postList.collectAsState().value
+fun ContributionScreen(
+    navController: NavController,
+    viewModel: MainViewModel
+) {
+    val postList = viewModel.postListAll.collectAsState().value
+    val user = viewModel.user.collectAsState().value
 
     LaunchedEffect(Unit) {
         viewModel.getAllPosts()
+        viewModel.whoami()
     }
 
     Scaffold(
@@ -67,7 +72,11 @@ fun ContributionScreen(navController: NavController, viewModel: MainViewModel) {
                     .padding(innerPadding)
             ) {
                 items(postList) { post ->
-                    PostComponent(navController, post)
+                    if (user.savedPosts.contains(post.id)) {
+                        PostComponent(navController, post, viewModel, true)
+                    } else {
+                        PostComponent(navController, post, viewModel, false)
+                    }
                 }
             }
         }

@@ -47,7 +47,7 @@ fun NavBarNavigation(){
                     )
                 }
             ) {
-              HomeScreen(navController)
+              HomeScreen(navController, viewModel)
             }
 
             composable(
@@ -71,7 +71,7 @@ fun NavBarNavigation(){
                     slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.End, animationSpec = tween(500))
                 }
             ){
-                FavoriteScreen(navController)
+                FavoriteScreen(navController, viewModel)
             }
 
             composable(
@@ -119,7 +119,7 @@ fun NavBarNavigation(){
                     slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.End, animationSpec = tween(500))
                 }
             ){
-                MaterialScreen(navController)
+                MaterialScreen(navController, viewModel)
             }
 
             composable(

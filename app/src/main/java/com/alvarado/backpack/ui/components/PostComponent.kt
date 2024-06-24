@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,13 +26,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.alvarado.backpack.MainViewModel
 import com.alvarado.backpack.R
 import com.alvarado.backpack.domain.model.PostModel
 import com.alvarado.backpack.navigate.NavScreens
+import kotlinx.coroutines.launch
 
 @Composable
-fun PostComponent(navController: NavController, post: PostModel) {
-    val likeAPost = remember { mutableStateOf(false) }
+fun PostComponent(
+    navController: NavController,
+    post: PostModel,
+    viewModel : MainViewModel,
+    isFavorite : Boolean = true
+) {
+    val coroutineScope = rememberCoroutineScope()
+    val likeAPostValue = remember { mutableStateOf(isFavorite) }
 
     Surface (
         modifier = Modifier
@@ -72,7 +81,7 @@ fun PostComponent(navController: NavController, post: PostModel) {
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Text (
-                    text = "[CLASE] - ${post.title}",
+                    text = "[${post.category}] - ${post.title}",
                     maxLines = 2,
                     fontSize = 16.sp
                 )
@@ -108,13 +117,17 @@ fun PostComponent(navController: NavController, post: PostModel) {
             ) {
                 Box (
                     modifier = Modifier
-                        .clickable { likeAPost.value = !likeAPost.value }
+                        .clickable {
+                            likeAPostValue.value = !likeAPostValue.value
+                            coroutineScope.launch{
+                                viewModel.favoritePost(post.id)
+                            }
+                        }
                 ) {
-                    if (!likeAPost.value) {
+                    if (!likeAPostValue.value) {
                         Image (
                             painter = painterResource(id = R.drawable.ic_heart_gray),
                             contentDescription = "Like count"
-
                         )
                     } else {
                         Image (

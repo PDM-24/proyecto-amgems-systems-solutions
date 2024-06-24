@@ -15,5 +15,7 @@ data class UserResponse(
     @SerializedName(value = ApiConstants.WHOAMI_EMAIL_PARAM)
     var email : String,
     @SerializedName(value = ApiConstants.WHOAMI_DEGREE_PARAM)
-    var degree : String
+    var degree : String,
+    @SerializedName(value = ApiConstants.WHOAMI_SAVED_POSTS_PARAM)
+    var savedPosts : List<String>
 )

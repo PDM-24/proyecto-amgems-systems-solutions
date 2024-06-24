@@ -6,7 +6,8 @@ data class UserModel(
     var name : String,
     var lastname : String,
     var email : String,
-    var degree : String
+    var degree : String,
+    var savedPosts : List<String>
 ) {
-    constructor() : this("", "", "", "", "", "")
+    constructor() : this("", "", "", "", "", "", listOf())
 }

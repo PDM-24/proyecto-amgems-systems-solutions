@@ -1,20 +1,21 @@
 package com.alvarado.backpack
 
-import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.alvarado.backpack.domain.FavoritePostUseCase
 import com.alvarado.backpack.domain.GetAllPostsUseCase
 import com.alvarado.backpack.domain.GetOwnPostsUseCase
 import com.alvarado.backpack.domain.GetPostsBySubjectUseCase
 import com.alvarado.backpack.domain.GetSavedPostsUseCase
+import com.alvarado.backpack.domain.GetSubjectByDegreeUseCase
 import com.alvarado.backpack.domain.LoginUseCase
 import com.alvarado.backpack.domain.RegisterUseCase
 import com.alvarado.backpack.domain.WhoamiUseCase
 import com.alvarado.backpack.domain.model.LoginModel
 import com.alvarado.backpack.domain.model.PostModel
 import com.alvarado.backpack.domain.model.RegisterModel
+import com.alvarado.backpack.domain.model.SubjectModel
 import com.alvarado.backpack.domain.model.UserModel
 import com.alvarado.backpack.util.TokenManager
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,7 +34,9 @@ class MainViewModel @Inject constructor(
     private val getAllPostsUseCase : GetAllPostsUseCase,
     private val getOwnPostsUseCase : GetOwnPostsUseCase,
     private val getSavedPostsUseCase : GetSavedPostsUseCase,
-    private val getPostsBySubject : GetPostsBySubjectUseCase,
+    private val getPostsBySubjectUseCase : GetPostsBySubjectUseCase,
+    private val favoritePostUseCase : FavoritePostUseCase,
+    private val getSubjectByDegreeUseCase : GetSubjectByDegreeUseCase,
     private val tokenManager : TokenManager
 ) : ViewModel() {
 
@@ -43,9 +46,30 @@ class MainViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<UiState>(UiState.Ready)
     val uiState : StateFlow<UiState> = _uiState
 
-    private val _postList = MutableStateFlow(listOf<PostModel>())
-    val postList = _postList.asStateFlow()
+    private val _postListAll = MutableStateFlow(listOf<PostModel>())
+    val postListAll = _postListAll.asStateFlow()
 
+    private val _postListFavorite = MutableStateFlow(listOf<PostModel>())
+    val postListFavorite = _postListFavorite.asStateFlow()
+
+    private val _postListOwn = MutableStateFlow(listOf<PostModel>())
+    val postListOwn = _postListOwn.asStateFlow()
+
+    private val _postListByDegree = MutableStateFlow(listOf<PostModel>())
+    val postListByDegree = _postListByDegree.asStateFlow()
+
+    private val _subjectList = MutableStateFlow(listOf<SubjectModel>())
+    val subjectList = _subjectList.asStateFlow()
+
+    private val subjectSelected = MutableStateFlow("")
+
+    fun getSubjectSelected() : String {
+        return subjectSelected.value
+    }
+
+    fun setSubjectSelected(subject : String) {
+        subjectSelected.value = subject
+    }
 
     fun setStateToReady() {
         _uiState.value = UiState.Ready
@@ -101,7 +125,7 @@ class MainViewModel @Inject constructor(
             try {
                 _uiState.value = UiState.Loading
                 tokenManager.token.collect { token ->
-                    _postList.value = getAllPostsUseCase.invoke("Bearer $token")
+                    _postListAll.value = getAllPostsUseCase.invoke("Bearer $token")
                     _uiState.value = UiState.Success("Bearer $token")
                 }
             } catch (e : HttpException) {
@@ -111,12 +135,12 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun getSavedPosts(token : String) {
+    fun getSavedPosts() {
         viewModelScope.launch {
             try {
                 _uiState.value = UiState.Loading
                 tokenManager.token.collect { token ->
-                    _postList.value = getSavedPostsUseCase.invoke("Bearer $token")
+                    _postListFavorite.value = getSavedPostsUseCase.invoke("Bearer $token")
                     _uiState.value = UiState.Success("Bearer $token")
                 }
             } catch (e : HttpException) {
@@ -126,12 +150,12 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun getOwnPosts(token : String) {
+    fun getOwnPosts() {
         viewModelScope.launch {
             try {
                 _uiState.value = UiState.Loading
                 tokenManager.token.collect { token ->
-                    _postList.value = getOwnPostsUseCase.invoke("Bearer $token")
+                    _postListAll.value = getOwnPostsUseCase.invoke("Bearer $token")
                     _uiState.value = UiState.Success("Bearer $token")
                 }
             } catch (e : HttpException) {
@@ -146,7 +170,37 @@ class MainViewModel @Inject constructor(
             try {
                 _uiState.value = UiState.Loading
                 tokenManager.token.collect { token ->
-                    _postList.value = getPostsBySubject.invoke("Bearer $token", subjectId)
+                    _postListByDegree.value = getPostsBySubjectUseCase.invoke("Bearer $token", subjectId)
+                    _uiState.value = UiState.Success("Bearer $token")
+                }
+            } catch (e : HttpException) {
+                Log.d("viewModel", "Error! ${e.message()}")
+                _uiState.value = UiState.Error(e.code())
+            }
+        }
+    }
+
+    fun favoritePost(postId : String) {
+        viewModelScope.launch {
+            try {
+                _uiState.value = UiState.Loading
+                tokenManager.token.collect { token ->
+                    favoritePostUseCase.invoke("Bearer $token", postId)
+                    _uiState.value = UiState.Success("Bearer $token")
+                }
+            } catch (e : HttpException) {
+                Log.d("viewModel", "Error! ${e.message()}")
+                _uiState.value = UiState.Error(e.code())
+            }
+        }
+    }
+    
+    fun getSubjectByDegree() {
+        viewModelScope.launch {
+            try {
+                _uiState.value = UiState.Loading
+                tokenManager.token.collect { token ->
+                    _subjectList.value = getSubjectByDegreeUseCase.invoke("Bearer $token")
                     _uiState.value = UiState.Success("Bearer $token")
                 }
             } catch (e : HttpException) {

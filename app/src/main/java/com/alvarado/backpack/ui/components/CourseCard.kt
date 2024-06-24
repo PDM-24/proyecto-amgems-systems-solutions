@@ -19,15 +19,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.alvarado.backpack.MainViewModel
+import com.alvarado.backpack.domain.model.SubjectModel
 
 @Composable
-fun CourseCard(image: Painter, title: String, subtitle: String, navController: NavController) {
+fun CourseCard(
+    subject : SubjectModel,
+    image : Painter,
+    navController: NavController,
+    viewModel : MainViewModel
+) {
     Card(
         modifier = Modifier
             .size(180.dp)
             .padding(8.dp)
             .clickable {
                 navController.navigate("material")
+                viewModel.setSubjectSelected(subject.id)
             },
         shape = MaterialTheme.shapes.medium,
         elevation = CardDefaults.cardElevation(4.dp),
@@ -48,12 +56,12 @@ fun CourseCard(image: Painter, title: String, subtitle: String, navController: N
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = title,
+                text = subject.name,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = subtitle,
+                text = subject.code,
                 fontSize = 14.sp,
                 color = Color.Gray
             )

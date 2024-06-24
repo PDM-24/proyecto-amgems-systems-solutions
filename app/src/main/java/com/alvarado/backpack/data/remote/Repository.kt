@@ -7,8 +7,10 @@ import com.alvarado.backpack.data.remote.model.RegisterResponse
 import com.alvarado.backpack.domain.model.LoginModel
 import com.alvarado.backpack.domain.model.PostModel
 import com.alvarado.backpack.domain.model.RegisterModel
+import com.alvarado.backpack.domain.model.SubjectModel
 import com.alvarado.backpack.domain.model.UserModel
 import com.alvarado.backpack.util.convertToPostModel
+import com.alvarado.backpack.util.convertToSubjectModel
 import com.alvarado.backpack.util.convertToUserModel
 import javax.inject.Inject
 
@@ -36,8 +38,8 @@ class Repository @Inject constructor(
     }
 
     suspend fun whoami(token : String) : UserModel {
-        val whoAmIResponse = api.whoami(token)
-        val userModel = convertToUserModel(whoAmIResponse)
+        val response = api.whoami(token)
+        val userModel = convertToUserModel(response)
         return userModel
     }
 
@@ -63,5 +65,15 @@ class Repository @Inject constructor(
         val response = api.getPostsBySubject(token, subjectId)
         val postModelList = response.posts.map{ convertToPostModel(it) }.toMutableList()
         return postModelList
+    }
+
+    suspend fun favoritePost(token : String, postId : String) : String {
+        val response = api.favoritePost(token, postId)
+        return "Okey"
+    }
+    suspend fun getSubjectByDegree(token : String) : MutableList<SubjectModel> {
+        val response = api.getSubjectsByDegree(token)
+        val subjectModelList = response.subjects.map{ convertToSubjectModel(it) }.toMutableList()
+        return subjectModelList
     }
 }

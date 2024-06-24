@@ -2,7 +2,7 @@ package com.alvarado.backpack.di
 
 class ApiConstants {
     companion object {
-        const val BASE_URL = "http://192.168.1.9:3500"
+        const val BASE_URL = "http://192.168.0.15:3500"
         const val API_PATH = "/api"
 
         const val LOGIN_PATH = "/auth/login"
@@ -29,12 +29,14 @@ class ApiConstants {
         const val WHOAMI_EMAIL_PARAM = "email"
         const val WHOAMI_DEGREE_PARAM = "degree"
         const val WHOAMI_ROLES_PARAM = "roles"
+        const val WHOAMI_SAVED_POSTS_PARAM = "savedPosts"
 
         const val POST_SAVE_PATH = "/post"
         const val POST_ALL_PATH = "/post"
         const val POST_SUBJECT_PATH = "/post/subject"
         const val POST_OWNER_PATH = "/post/own"
         const val POST_SAVED_PATH = "/post/saved"
+        const val POST_FAVORITE_PATH = "/post/save"
 
         const val POST_ID_PARAM = "_id"
         const val POST_TITLE_PARAM = "title"
@@ -49,8 +51,11 @@ class ApiConstants {
         const val POST_LIST_PARAM = "posts"
 
         const val SUBJECT_PATH = "/subject"
+        const val SUBJECT_DEGREE_PATH = "/subject/degree"
         const val SUBJECT_ID_PARAM = "_id"
         const val SUBJECT_CODE_PARAM = "code"
         const val SUBJECT_NAME_PARAM = "name"
+        const val SUBJECT_IMAGE_PARAM = "image"
+        const val SUBJECT_LIST_PARAM = "subjects"
     }
 }
