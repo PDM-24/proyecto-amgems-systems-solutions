@@ -12,6 +12,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -32,9 +34,15 @@ fun ContributionScreen(
     val postList = viewModel.postListAll.collectAsState().value
     val user = viewModel.user.collectAsState().value
 
+    val searchQuery = remember { mutableStateOf("") }
+
     LaunchedEffect(Unit) {
         viewModel.getAllPosts()
         viewModel.whoami()
+    }
+
+    val filteredPostList = postList.filter { post ->
+        post.title.contains(searchQuery.value, ignoreCase = true)
     }
 
     Scaffold(
@@ -63,7 +71,8 @@ fun ContributionScreen(
                 modifier = Modifier
                     .weight(3f),
                 title = "Contributions",
-                subTitle = "What you were looking for"
+                subTitle = "What you were looking for",
+                onSearch = { query -> searchQuery.value = query }
             )
 
             LazyColumn(
@@ -71,7 +80,7 @@ fun ContributionScreen(
                     .weight(9f)
                     .padding(innerPadding)
             ) {
-                items(postList) { post ->
+                items(filteredPostList) { post ->
                     if (user.savedPosts.contains(post.id)) {
                         PostComponent(navController, post, viewModel, true)
                     } else {

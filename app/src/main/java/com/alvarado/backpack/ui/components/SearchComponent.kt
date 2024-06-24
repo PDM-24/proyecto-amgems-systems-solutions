@@ -33,14 +33,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.alvarado.backpack.R
-
 @Composable
-fun SearchComponent(modifier: Modifier = Modifier, title: String, subTitle: String) {
-    val search = remember {
-        mutableStateOf("")
-    }
+fun SearchComponent(
+    modifier: Modifier = Modifier,
+    title: String,
+    subTitle: String,
+    onSearch: (String) -> Unit
+) {
+    val search = remember { mutableStateOf("") }
 
-    Surface (
+    Surface(
         modifier = modifier
             .padding(vertical = 8.dp)
             .fillMaxWidth(),
@@ -48,14 +50,14 @@ fun SearchComponent(modifier: Modifier = Modifier, title: String, subTitle: Stri
         shape = RoundedCornerShape(20.dp),
         color = Color(0xFF4C72F5)
     ) {
-        Column (
+        Column(
             modifier = Modifier
                 .padding(15.dp),
         ) {
-            Row (
+            Row(
                 modifier = Modifier
                     .weight(4f)
-            ){
+            ) {
 
                 Column {
                     Text(
@@ -74,22 +76,25 @@ fun SearchComponent(modifier: Modifier = Modifier, title: String, subTitle: Stri
                         fontWeight = FontWeight(300)
                     )
                 }
-                
+
             }
             Spacer(modifier = Modifier.weight(1f))
             TextField(
-                value = search.value, 
-                onValueChange = { search.value = it },
+                value = search.value,
+                onValueChange = {
+                    search.value = it
+                    onSearch(it)
+                },
                 modifier = Modifier
                     .fillMaxWidth(),
                 label = { Text(text = "Search") },
                 leadingIcon = {
-                    Icon (
+                    Icon(
                         imageVector = Icons.Default.Search,
                         contentDescription = null
                     )
                 },
-                shape = RoundedCornerShape(50.dp) ,
+                shape = RoundedCornerShape(50.dp),
                 colors = TextFieldDefaults.colors(
                     focusedTextColor = Color.Black,
                     unfocusedTextColor = Color.Black,
@@ -138,5 +143,3 @@ fun SearchComponent(modifier: Modifier = Modifier, title: String, subTitle: Stri
         }
     }
 }
-
-

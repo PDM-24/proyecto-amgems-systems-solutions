@@ -2,7 +2,7 @@ package com.alvarado.backpack.di
 
 class ApiConstants {
     companion object {
-        const val BASE_URL = "http://192.168.0.15:3500"
+        const val BASE_URL = "http://192.168.1.9:3500"
         const val API_PATH = "/api"
 
         const val LOGIN_PATH = "/auth/login"

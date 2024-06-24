@@ -12,6 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -22,17 +24,23 @@ import com.alvarado.backpack.ui.components.navBar.NavBarComponent
 
 @Composable
 fun MaterialScreen(
-    navController : NavController,
-    viewModel : MainViewModel
+    navController: NavController,
+    viewModel: MainViewModel
 ) {
 
     val subjectId = viewModel.getSubjectSelected()
     val postList by viewModel.postListByDegree.collectAsState()
     val user = viewModel.user.collectAsState().value
+    val searchQuery = remember { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
         viewModel.whoami()
         viewModel.getPostBySubject(subjectId)
+    }
+
+    val filteredPostList = postList.filter { post ->
+        post.title.contains(searchQuery.value, ignoreCase = true) ||
+                post.category.contains(searchQuery.value, ignoreCase = true)
     }
 
     Scaffold(
@@ -41,24 +49,26 @@ fun MaterialScreen(
                 NavBarComponent(navController)
             }
         }
-    ) {  innerPadding ->
-        Column (
+    ) { innerPadding ->
+        Column(
             modifier = Modifier
                 .fillMaxHeight()
                 .padding(vertical = 10.dp, horizontal = 15.dp)
         ) {
-            SearchComponent (
+            SearchComponent(
                 modifier = Modifier
                     .weight(3f),
-                title="Programación de dispositivos móviles",
-                subTitle = "Ciclo 01 - 2024"
+                title = "Programación de dispositivos móviles",
+                subTitle = "Ciclo 01 - 2024",
+                onSearch = { query -> searchQuery.value = query }
             )
-            LazyColumn (
+
+            LazyColumn(
                 modifier = Modifier
                     .weight(8f)
                     .padding(innerPadding)
             ) {
-                items(postList) { post ->
+                items(filteredPostList) { post ->
                     if (user.savedPosts.contains(post.id)) {
                         PostComponent(navController, post, viewModel, true)
                     } else {
@@ -69,3 +79,4 @@ fun MaterialScreen(
         }
     }
 }
+

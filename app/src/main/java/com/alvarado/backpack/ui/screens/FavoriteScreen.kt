@@ -11,6 +11,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -31,6 +33,13 @@ fun FavoriteScreen(
 
     val postList = viewModel.postListFavorite.collectAsState().value
 
+    val searchQuery = remember { mutableStateOf("") }
+
+    val filteredPostList = postList.filter { post ->
+        post.title.contains(searchQuery.value, ignoreCase = true) ||
+                post.publicationCycle.contains(searchQuery.value, ignoreCase = true)
+    }
+
     Scaffold(
         topBar = {
 
@@ -50,14 +59,15 @@ fun FavoriteScreen(
                 modifier = Modifier
                     .weight(3f),
                 title="Favorites",
-                subTitle = "Your favorites documents"
+                subTitle = "Your favorites documents",
+                onSearch = { query -> searchQuery.value = query }
             )
             LazyColumn (
                 modifier = Modifier
                     .weight(8f)
                     .padding(innerPadding)
             ) {
-                items(postList) { post ->
+                items(filteredPostList) { post ->
                     PostComponent(navController, post, viewModel)
                 }
             }

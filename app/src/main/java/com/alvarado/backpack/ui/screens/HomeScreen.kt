@@ -17,6 +17,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
@@ -37,11 +39,16 @@ fun HomeScreen(
 
     val image: Painter = painterResource(id = R.drawable.books)
 
+    val subjectList by viewModel.subjectList.collectAsState()
+    val searchQuery = remember { mutableStateOf("") }
+
+    val filteredSubjectList = subjectList.filter { subject ->
+        subject.name.contains(searchQuery.value, ignoreCase = true)
+    }
+
     LaunchedEffect(Unit) {
         viewModel.getSubjectByDegree()
     }
-
-    val subjectList by viewModel.subjectList.collectAsState()
 
     Scaffold(
         topBar = {
@@ -62,7 +69,8 @@ fun HomeScreen(
                 modifier = Modifier
                     .weight(3f),
                 title="Hello",
-                subTitle = "We are going to learn"
+                subTitle = "We are going to learn",
+                onSearch = { query -> searchQuery.value = query }
             )
 
             LazyVerticalGrid(
@@ -72,7 +80,7 @@ fun HomeScreen(
                     .weight(9f)
                     .padding(innerPadding)
             ) {
-                items(subjectList) { subject ->
+                items(filteredSubjectList) { subject ->
                     CourseCard(subject, image, navController, viewModel)
                 }
             }
