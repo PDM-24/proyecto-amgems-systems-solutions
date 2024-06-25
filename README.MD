@@ -33,7 +33,9 @@ Bienvenido a la documentación de la aplicación BackPack. A continuación, se p
 ## Manual de usuario
 
 Para instalar nuestra aplicación debes ingresar al siguiente enlace: Enlace de descarga. Este enlace te dirigirá al sitio donde puedes instalar el APK de la aplicación BackPack.
-##Welcome
+
+## Welcome
+
 El apartado de bienvenida le muestra al usuario una introducción a BackPack. Aquí, los usuarios nuevos pueden comenzar a familiarizarse con la aplicación.
 
 ## Remember
@@ -99,7 +101,9 @@ Esta herramienta contiene cuatro iconos:
 #### Usos
 
 Obtener todos los post
+
 <pre>GET http://domain/api/post/</pre>
+
 Respuesta:
 
  <pre>[
@@ -146,14 +150,14 @@ Respuesta:
 ]
 </pre>
 
-###Crear post
+### Crear post
 
 <pre>POST http://domain/api/post/
 Content-Type: application/json
 Authorization: Bearer <token>
 </pre>
 
-####Cuerpo de solicitud:
+#### Cuerpo de solicitud:
 
 <pre>{
     "title": "Nuevo post",
@@ -172,15 +176,17 @@ Respuesta:
 }
 </pre>
 
-###User
-| Endpoint | Functionality | Entity | Endpoint Type | Method |
-|---------------------------------|---------------------------|--------|------------------------|--------|
-| http://domain/api/auth/register | Registrarse | User | Creación y Mantenimiento | POST |
-| http://domain/api/auth/login | Inicio de sesión | User | Creación y Mantenimiento | POST |
-| http://domain/api/auth/whoami | Obtener datos de usuario | User | Consumo | GET |
+### User
 
-##Ejemplos de uso:
-###Registrarse:
+| Endpoint                        | Functionality            | Entity | Endpoint Type            | Method |
+| ------------------------------- | ------------------------ | ------ | ------------------------ | ------ |
+| http://domain/api/auth/register | Registrarse              | User   | Creación y Mantenimiento | POST   |
+| http://domain/api/auth/login    | Inicio de sesión         | User   | Creación y Mantenimiento | POST   |
+| http://domain/api/auth/whoami   | Obtener datos de usuario | User   | Consumo                  | GET    |
+
+## Ejemplos de uso:
+
+### Registrarse:
 
 <pre>POST http://domain/api/auth/register
 Content-Type: application/json
@@ -203,7 +209,7 @@ Respuesta:
 }
 </pre>
 
-###Inicio de sesion:
+### Inicio de sesion:
 
 <pre>POST http://domain/api/auth/login
 Content-Type: application/json
@@ -226,14 +232,16 @@ Respuesta:
 }
 </pre>
 
-###Materias
-| Endpoint | Functionality | Entity | Endpoint Type | Method |
-|-------------------------------|----------------------------------|----------|------------------------|--------|
-| http://domain/api/subject/ | Obtener todas las materias | Materias | Consumo | GET |
-| http://domain/api/subject/degree | Obtener las materias por carrera | Materias | Consumo | GET |
-| http://domain/api/subject/ | Guardar/Crear una materia | Materias | Creación y Mantenimiento | POST |
+### Materias
 
-###Ejemplos de uso:
+| Endpoint                         | Functionality                    | Entity   | Endpoint Type            | Method |
+| -------------------------------- | -------------------------------- | -------- | ------------------------ | ------ |
+| http://domain/api/subject/       | Obtener todas las materias       | Materias | Consumo                  | GET    |
+| http://domain/api/subject/degree | Obtener las materias por carrera | Materias | Consumo                  | GET    |
+| http://domain/api/subject/       | Guardar/Crear una materia        | Materias | Creación y Mantenimiento | POST   |
+
+### Ejemplos de uso:
+
 Obtener todas las materias:
 
 <pre>GET http://domain/api/subject/</pre>
@@ -273,7 +281,8 @@ Respuesta:
 }
 </pre>
 
-##Solicitudes PATCCH:
+## Solicitudes PATCCH:
+
 Marcar post como favorito:
 
 <pre>PATCH http://domain/api/post/save/10
@@ -290,7 +299,7 @@ Authorization: Bearer <token>
 
 Para usar cualquiera de estos endpoints, debes realizar solicitudes HTTP a las URLs indicadas con los métodos HTTP apropiados (GET, POST, PATCH o DELETE). Asegúrate de incluir cualquier parámetro necesario tal como se especifica en la descripción del endpoint.
 
-###Importante
+### Importante
 
 - Asegúrate de tener la autenticación adecuada para acceder a los endpoints protegidos.
 - Reemplaza :identifier con los identificadores reales al usar los endpoints.
