@@ -7,8 +7,8 @@ import java.io.File
 data class PostData(
     var title : String,
     var category : String,
-    var subject : SubjectResponse,
+    var subject : String,
     var publicationYear : Int,
-    var publicationCycle : String,
-    var topics : ArrayList<String>
+    var publicationCycle : Int,
+    var topics : String
 )

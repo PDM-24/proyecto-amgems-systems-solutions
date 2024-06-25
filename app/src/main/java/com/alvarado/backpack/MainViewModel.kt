@@ -1,6 +1,9 @@
 package com.alvarado.backpack
 
+import android.net.Uri
 import android.util.Log
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alvarado.backpack.domain.FavoritePostUseCase
@@ -14,9 +17,11 @@ import com.alvarado.backpack.domain.RegisterUseCase
 import com.alvarado.backpack.domain.SaveReportUseCase
 import com.alvarado.backpack.domain.WhoamiUseCase
 import com.alvarado.backpack.domain.model.LoginModel
+import com.alvarado.backpack.domain.model.PostDataModel
 import com.alvarado.backpack.domain.model.PostModel
 import com.alvarado.backpack.domain.model.RegisterModel
 import com.alvarado.backpack.domain.model.ReportModel
+import com.alvarado.backpack.domain.SavePostUseCase
 import com.alvarado.backpack.domain.model.SubjectModel
 import com.alvarado.backpack.domain.model.UserModel
 import com.alvarado.backpack.util.TokenManager
@@ -25,7 +30,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 import retrofit2.HttpException
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
@@ -40,6 +47,7 @@ class MainViewModel @Inject constructor(
     private val favoritePostUseCase : FavoritePostUseCase,
     private val getSubjectByDegreeUseCase : GetSubjectByDegreeUseCase,
     private val saveReportUseCase : SaveReportUseCase,
+    private val savePostUseCase : SavePostUseCase,
     private val tokenManager : TokenManager
 ) : ViewModel() {
 
@@ -68,6 +76,8 @@ class MainViewModel @Inject constructor(
 
     private val postSelected = MutableStateFlow("")
 
+    var selectedFileUri = mutableStateOf<Uri?>(null)
+    var selectedFileName = mutableStateOf("")
     fun getPostSelected() : String {
         return postSelected.value
     }
@@ -223,12 +233,27 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun saveReport(report : ReportModel) {
+    fun saveReport(data : ReportModel) {
         viewModelScope.launch {
             try {
                 _uiState.value = UiState.Loading
                 tokenManager.token.collect { token ->
-                    saveReportUseCase.invoke("Bearer $token", report)
+                    saveReportUseCase.invoke("Bearer $token", data)
+                    _uiState.value = UiState.Success("Bearer $token")
+                }
+            } catch (e : HttpException) {
+                Log.d("viewModel", "Error! ${e.message()}")
+                _uiState.value = UiState.Error(e.code())
+            }
+        }
+    }
+
+    fun savePost(data : PostDataModel, file : MultipartBody.Part) {
+        viewModelScope.launch {
+            try {
+                _uiState.value = UiState.Loading
+                tokenManager.token.collect { token ->
+                    savePostUseCase.invoke("Bearer $token", data, file)
                     _uiState.value = UiState.Success("Bearer $token")
                 }
             } catch (e : HttpException) {

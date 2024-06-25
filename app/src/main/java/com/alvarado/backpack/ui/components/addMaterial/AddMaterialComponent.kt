@@ -1,8 +1,11 @@
 package com.alvarado.backpack.ui.components.addMaterial
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -17,40 +20,70 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
+import com.alvarado.backpack.MainViewModel
+import android.Manifest
+import android.content.pm.PackageManager
+import androidx.documentfile.provider.DocumentFile
 import com.alvarado.backpack.R
+import com.alvarado.backpack.domain.model.PostDataModel
+import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddMaterial() {
-
-    val titleState: MutableState<String> = remember { mutableStateOf("") }
-    val dateState: MutableState<String> = remember { mutableStateOf("") }
-    val cicleState: MutableState<String> = remember { mutableStateOf("") }
-    val descriptionState: MutableState<String> = remember { mutableStateOf("") }
+fun AddMaterial(viewModel: MainViewModel) {
+    val titleState = remember { mutableStateOf("") }
+    val dateState = remember { mutableStateOf("") }
+    val cicleState = remember { mutableStateOf("") }
+    val descriptionState = remember { mutableStateOf("") }
     val selectedFileName = remember { mutableStateOf("") }
+    val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
 
+    // Launcher para seleccionar archivos
     val filePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             result.data?.data?.let { uri: Uri ->
+                viewModel.selectedFileUri.value = uri
                 selectedFileName.value = uri.lastPathSegment ?: "Unknown file"
+                Log.d("AddMaterial", "Selected file URI: $uri")
             }
         }
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-    ) {
-        Spacer(modifier = Modifier.height(10.dp))
+    // Launcher para solicitar permisos
+    val requestPermissionsLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        val granted = permissions.entries.all { it.value }
+        if (granted) {
+            val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+                type = "*/*"
+            }
+            filePickerLauncher.launch(intent)
+        } else {
+            // Manejar el caso donde los permisos no son concedidos
+            Log.e("AddMaterial", "Permisos no concedidos")
+        }
+    }
 
+    Column(modifier = Modifier.fillMaxSize()) {
+        Spacer(modifier = Modifier.height(10.dp))
         Column(
             modifier = Modifier
                 .padding(10.dp)
@@ -73,7 +106,6 @@ fun AddMaterial() {
                     fontSize = 24.sp
                 )
                 Spacer(modifier = Modifier.weight(1f))
-
                 Image(
                     painter = painterResource(id = R.drawable.ic_addcircle),
                     contentDescription = "Add icon",
@@ -82,7 +114,6 @@ fun AddMaterial() {
                         .padding(top = 10.dp)
                 )
             }
-
             Text(
                 text = "Teach the world your knowledge",
                 fontSize = 15.sp,
@@ -91,8 +122,6 @@ fun AddMaterial() {
                 fontWeight = FontWeight(300)
             )
         }
-
-
         Column(
             modifier = Modifier
                 .padding(16.dp)
@@ -121,16 +150,13 @@ fun AddMaterial() {
                         )
                     }
                 },
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = Color.White
-                ),
+                colors = TextFieldDefaults.textFieldColors(containerColor = Color.White),
                 modifier = Modifier
                     .shadow(10.dp)
                     .height(55.dp)
                     .clip(RoundedCornerShape(10.dp))
             )
             Spacer(modifier = Modifier.height(18.dp))
-
             TextField(
                 value = dateState.value,
                 onValueChange = { dateState.value = it },
@@ -151,9 +177,7 @@ fun AddMaterial() {
                         )
                     }
                 },
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = Color.White
-                ),
+                colors = TextFieldDefaults.textFieldColors(containerColor = Color.White),
                 modifier = Modifier
                     .shadow(10.dp)
                     .height(55.dp)
@@ -180,9 +204,7 @@ fun AddMaterial() {
                         )
                     }
                 },
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = Color.White
-                ),
+                colors = TextFieldDefaults.textFieldColors(containerColor = Color.White),
                 modifier = Modifier
                     .shadow(10.dp)
                     .height(55.dp)
@@ -214,7 +236,6 @@ fun AddMaterial() {
                                         .align(Alignment.Center)
                                 )
                             }
-
                             Text(
                                 text = "   Description",
                                 fontFamily = FontFamily(Font(R.font.poppins_semibold)),
@@ -245,10 +266,18 @@ fun AddMaterial() {
             ) {
                 Button(
                     onClick = {
-                        val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
-                            type = "*/*"
+                        val permissions = arrayOf(
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        )
+                        if (permissions.all { ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED }) {
+                            val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+                                type = "*/*"
+                            }
+                            filePickerLauncher.launch(intent)
+                        } else {
+                            requestPermissionsLauncher.launch(permissions)
                         }
-                        filePickerLauncher.launch(intent)
                     },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp),
@@ -284,7 +313,33 @@ fun AddMaterial() {
                 .padding(16.dp)
         ) {
             Button(
-                onClick = {},
+                onClick = {
+                    val uri = viewModel.selectedFileUri.value
+                    if (uri != null) {
+                        coroutineScope.launch {
+                            try {
+                                val file = getFileFromUri(uri, context)
+                                Log.d("AddMaterial", "File path: ${file.path}")
+                                val filePdf: MultipartBody.Part = MultipartBody.Part.createFormData(
+                                    "file",
+                                    file.name,
+                                    file.asRequestBody("application/pdf".toMediaTypeOrNull())
+                                )
+                                val postDataModel = PostDataModel(
+                                    title = titleState.value,
+                                    publicationYear = dateState.value.toInt(),
+                                    publicationCycle = cicleState.value.toInt(),
+                                    subject = "66760dc7be21b5654599467f",
+                                    topics = "Algebra",
+                                    category = "Parcial"
+                                )
+                                viewModel.savePost(postDataModel, filePdf)
+                            } catch (e: Exception) {
+                                Log.e("AddMaterial", "Error uploading file", e)
+                            }
+                        }
+                    }
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
@@ -299,4 +354,24 @@ fun AddMaterial() {
             }
         }
     }
+}
+
+@SuppressLint("Recycle")
+fun getFileFromUri(uri: Uri, context: Context): File {
+    val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+    val documentFile = DocumentFile.fromSingleUri(context, uri)
+    val fileName = documentFile?.name ?: "tempFile"
+    val file = File(context.cacheDir, fileName)
+
+    inputStream?.use { input ->
+        FileOutputStream(file).use { output ->
+            val buffer = ByteArray(4 * 1024)
+            var read: Int
+            while (input.read(buffer).also { read = it } != -1) {
+                output.write(buffer, 0, read)
+            }
+            output.flush()
+        }
+    }
+    return file
 }

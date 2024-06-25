@@ -2,6 +2,7 @@ package com.alvarado.backpack.data.remote.api
 
 import com.alvarado.backpack.data.remote.model.LoginData
 import com.alvarado.backpack.data.remote.model.LoginResponse
+import com.alvarado.backpack.data.remote.model.MessgeOk
 import com.alvarado.backpack.data.remote.model.PostListResponse
 import com.alvarado.backpack.data.remote.model.PostResponse
 import com.alvarado.backpack.data.remote.model.RegisterData
@@ -72,14 +73,14 @@ interface ApiClient {
     @POST(value = ApiConstants.API_PATH + ApiConstants.POST_SAVE_PATH)
     suspend fun savePost(
         @Header(value = "authorization") token : String,
-        @Part file: MultipartBody.Part,
+        @Part file : MultipartBody.Part? = null,
         @Part(ApiConstants.POST_TITLE_PARAM) title: RequestBody,
         @Part(ApiConstants.POST_TOPICS_PARAM) topics: RequestBody,
         @Part(ApiConstants.POST_PUBLICATION_YEAR_PARAM) publicationYear: RequestBody,
         @Part(ApiConstants.POST_PUBLICATION_CYCLE_PARAM) publicationCycle: RequestBody,
         @Part(ApiConstants.POST_CATEGORY_PARAM) category: RequestBody,
         @Part(ApiConstants.POST_SUBJECT_PARAM) subject: RequestBody
-    )
+    ) : MessgeOk
 
     @PATCH(value = ApiConstants.API_PATH + ApiConstants.POST_FAVORITE_PATH + "/{identifier}")
     suspend fun favoritePost(
