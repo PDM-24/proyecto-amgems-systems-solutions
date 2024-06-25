@@ -52,7 +52,6 @@ fun AddMaterialScreen(
             modifier = Modifier
                 .fillMaxHeight()
                 .padding(vertical = 10.dp, horizontal = 15.dp)
-
         ) {
             LazyColumn (
                 modifier = Modifier
@@ -60,10 +59,9 @@ fun AddMaterialScreen(
                     .padding(innerPadding)
             ) {
                 itemsIndexed(listOf(1)) { index, item ->
-                    AddMaterial(viewModel)
+                    AddMaterial(viewModel, subjectList)
                 }
             }
         }
-
-        }
     }
+}

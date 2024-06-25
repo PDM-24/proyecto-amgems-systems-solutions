@@ -31,9 +31,13 @@ import androidx.core.content.ContextCompat
 import com.alvarado.backpack.MainViewModel
 import android.Manifest
 import android.content.pm.PackageManager
+import androidx.compose.foundation.clickable
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.documentfile.provider.DocumentFile
 import com.alvarado.backpack.R
 import com.alvarado.backpack.domain.model.PostDataModel
+import com.alvarado.backpack.domain.model.SubjectModel
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -44,14 +48,16 @@ import java.io.InputStream
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddMaterial(viewModel: MainViewModel) {
+fun AddMaterial(viewModel: MainViewModel, subjectList: List<SubjectModel>) {
     val titleState = remember { mutableStateOf("") }
     val dateState = remember { mutableStateOf("") }
     val cicleState = remember { mutableStateOf("") }
-    val descriptionState = remember { mutableStateOf("") }
     val selectedFileName = remember { mutableStateOf("") }
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
+
+    // Estado para el elemento seleccionado en el menú desplegable
+    val selectedSubject = remember { mutableStateOf(subjectList.firstOrNull()?.name ?: "") }
 
     // Launcher para seleccionar archivos
     val filePickerLauncher = rememberLauncherForActivityResult(
@@ -210,53 +216,47 @@ fun AddMaterial(viewModel: MainViewModel) {
                     .height(55.dp)
                     .clip(RoundedCornerShape(10.dp))
             )
-            Spacer(modifier = Modifier.height(18.dp))
 
-            Box {
-                Column {
-                    Card(
-                        colors = CardDefaults.cardColors(containerColor = Color.Black),
-                        modifier = Modifier.width(280.dp)
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .size(50.dp)
-                                    .fillMaxWidth()
-                                    .padding(15.dp)
-                            ) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.ic_des),
-                                    contentDescription = "Description icon",
-                                    tint = Color.White,
-                                    modifier = Modifier
-                                        .size(24.dp)
-                                        .align(Alignment.Center)
-                                )
-                            }
-                            Text(
-                                text = "   Description",
-                                fontFamily = FontFamily(Font(R.font.poppins_semibold)),
-                                color = Color.White
-                            )
-                        }
-                    }
-                    TextField(
-                        value = descriptionState.value,
-                        onValueChange = { descriptionState.value = it },
-                        label = { Text("Add a description to the material...") },
-                        modifier = Modifier.size(width = 280.dp, height = 120.dp),
-                        colors = TextFieldDefaults.textFieldColors(
-                            containerColor = Color.White,
-                            focusedIndicatorColor = Color.Transparent,
-                            unfocusedIndicatorColor = Color.Transparent
+            Spacer(modifier = Modifier.height(18.dp))
+            // Dropdown Menu
+            Text("Select Subject")
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp)
+            ) {
+                var expanded by remember { mutableStateOf(false) }
+                OutlinedTextField(
+                    value = selectedSubject.value,
+                    onValueChange = {},
+                    label = { Text("Subject") },
+                    readOnly = true,
+                    trailingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.ArrowDropDown,
+                            contentDescription = "Dropdown icon",
+                            Modifier.clickable { expanded = true }
                         )
-                    )
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { expanded = true }
+                )
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    subjectList.forEach { subject ->
+                        DropdownMenuItem(
+                            text = { Text(subject.name) }, // Asegúrate de usar la propiedad correcta del SubjectModel
+                            onClick = {
+                                selectedSubject.value = subject.id // Actualiza con el nombre del sujeto
+                                expanded = false
+                            }
+                        )
+                    }
                 }
             }
-
             Spacer(modifier = Modifier.height(14.dp))
             Column(
                 modifier = Modifier
@@ -329,7 +329,7 @@ fun AddMaterial(viewModel: MainViewModel) {
                                     title = titleState.value,
                                     publicationYear = dateState.value.toInt(),
                                     publicationCycle = cicleState.value.toInt(),
-                                    subject = "66760dc7be21b5654599467f",
+                                    subject = selectedSubject.value,
                                     topics = "Algebra",
                                     category = "Parcial"
                                 )
@@ -375,3 +375,4 @@ fun getFileFromUri(uri: Uri, context: Context): File {
     }
     return file
 }
+
