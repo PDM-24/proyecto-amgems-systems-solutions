@@ -4,9 +4,11 @@ import com.alvarado.backpack.data.remote.api.ApiService
 import com.alvarado.backpack.data.remote.model.LoginData
 import com.alvarado.backpack.data.remote.model.RegisterData
 import com.alvarado.backpack.data.remote.model.RegisterResponse
+import com.alvarado.backpack.data.remote.model.ReportData
 import com.alvarado.backpack.domain.model.LoginModel
 import com.alvarado.backpack.domain.model.PostModel
 import com.alvarado.backpack.domain.model.RegisterModel
+import com.alvarado.backpack.domain.model.ReportModel
 import com.alvarado.backpack.domain.model.SubjectModel
 import com.alvarado.backpack.domain.model.UserModel
 import com.alvarado.backpack.util.convertToPostModel
@@ -75,5 +77,14 @@ class Repository @Inject constructor(
         val response = api.getSubjectsByDegree(token)
         val subjectModelList = response.subjects.map{ convertToSubjectModel(it) }.toMutableList()
         return subjectModelList
+    }
+
+    suspend fun saveReport(token : String, data : ReportModel) : String {
+        val reportData = ReportData(
+            data.reason,
+            data.post
+        )
+        val response = api.saveReport(token, reportData)
+        return response.message
     }
 }

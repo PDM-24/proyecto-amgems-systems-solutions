@@ -11,10 +11,12 @@ import com.alvarado.backpack.domain.GetSavedPostsUseCase
 import com.alvarado.backpack.domain.GetSubjectByDegreeUseCase
 import com.alvarado.backpack.domain.LoginUseCase
 import com.alvarado.backpack.domain.RegisterUseCase
+import com.alvarado.backpack.domain.SaveReportUseCase
 import com.alvarado.backpack.domain.WhoamiUseCase
 import com.alvarado.backpack.domain.model.LoginModel
 import com.alvarado.backpack.domain.model.PostModel
 import com.alvarado.backpack.domain.model.RegisterModel
+import com.alvarado.backpack.domain.model.ReportModel
 import com.alvarado.backpack.domain.model.SubjectModel
 import com.alvarado.backpack.domain.model.UserModel
 import com.alvarado.backpack.util.TokenManager
@@ -37,6 +39,7 @@ class MainViewModel @Inject constructor(
     private val getPostsBySubjectUseCase : GetPostsBySubjectUseCase,
     private val favoritePostUseCase : FavoritePostUseCase,
     private val getSubjectByDegreeUseCase : GetSubjectByDegreeUseCase,
+    private val saveReportUseCase : SaveReportUseCase,
     private val tokenManager : TokenManager
 ) : ViewModel() {
 
@@ -201,6 +204,21 @@ class MainViewModel @Inject constructor(
                 _uiState.value = UiState.Loading
                 tokenManager.token.collect { token ->
                     _subjectList.value = getSubjectByDegreeUseCase.invoke("Bearer $token")
+                    _uiState.value = UiState.Success("Bearer $token")
+                }
+            } catch (e : HttpException) {
+                Log.d("viewModel", "Error! ${e.message()}")
+                _uiState.value = UiState.Error(e.code())
+            }
+        }
+    }
+
+    fun saveReport(report : ReportModel) {
+        viewModelScope.launch {
+            try {
+                _uiState.value = UiState.Loading
+                tokenManager.token.collect { token ->
+                    saveReportUseCase.invoke("Bearer $token", report)
                     _uiState.value = UiState.Success("Bearer $token")
                 }
             } catch (e : HttpException) {

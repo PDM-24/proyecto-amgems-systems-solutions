@@ -57,5 +57,11 @@ class ApiConstants {
         const val SUBJECT_NAME_PARAM = "name"
         const val SUBJECT_IMAGE_PARAM = "image"
         const val SUBJECT_LIST_PARAM = "subjects"
+
+        const val REPORT_PATH = "/report"
+        const val REPORT_POST_PARAM = "post"
+        const val REPORT_REASON_PARAM = "reportCause"
+        const val REPORT_RESPONSE_MESSAGE = "message"
+        const val REPORT_RESPONSE_ERROR = "error"
     }
 }
