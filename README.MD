@@ -1,4 +1,4 @@
-# BackPack
+# BackPack 📚🎒
 
 Bienvenido a la documentación de la aplicación BackPack. A continuación, se proporciona el manual de usuario de la aplicación, así como una guía detallada sobre su uso y un enlace para su instalación. También se explican detalladamente los endpoints de la API, sus funcionalidades, tipos de entidad y métodos. Además, se incluyen ejemplos para facilitar la implementación de cada endpoint.
 
@@ -6,16 +6,16 @@ Bienvenido a la documentación de la aplicación BackPack. A continuación, se p
 
 ##### Manual de usuario
 
-- Welcome page
-- Remember page
-- Login
-- Register
-- Homepage
-- Profile
-- Favorites
-- Report
-- Add material
-- Nav bar
+- 🏠 Welcome page
+- 📜 Remember page
+- 🔑 Login
+- 📝 Register
+- 🏠 Homepage
+- 👤 Profile
+- ⭐ Favorites
+- ⚠️ Report
+- 📤 Add material
+- 🚀 Nav bar
 
 ##### Post
 
@@ -25,63 +25,63 @@ Bienvenido a la documentación de la aplicación BackPack. A continuación, se p
 
 ##### Usos de Endpoints
 
-- GET
-- POST
-- PATCH
-- DELETE
+- 🔍 GET
+- ➕ POST
+- 🛠️ PATCH
+- 🗑️ DELETE
 
-## Manual de usuario
+## Manual de usuario 📘
 
 Para instalar nuestra aplicación debes ingresar al siguiente enlace: Enlace de descarga. Este enlace te dirigirá al sitio donde puedes instalar el APK de la aplicación BackPack.
 
-## Welcome
+## 🏠 Welcome
 
 El apartado de bienvenida le muestra al usuario una introducción a BackPack. Aquí, los usuarios nuevos pueden comenzar a familiarizarse con la aplicación.
 
-## Remember
+## 📜 Remember
 
 Este apartado le muestra al usuario de qué consta BackPack y cómo puede ser útil para sus necesidades educativas y de gestión de materiales.
 
-## Login
+## 🔑 Login
 
 En este apartado, debes iniciar sesión en BackPack. Si no tienes una cuenta, tendrás que registrarte proporcionando la información precisa que te pida el formulario.
 
-## Register
+## 📝 Register
 
 En este apartado, debes rellenar cada campo del formulario con la información necesaria. Cuando te hayas asegurado de que la información es correcta, encontrarás un botón con un icono de "+" para registrarte en BackPack y otro botón con el icono de un basurero para borrar todo el formulario si es necesario.
 
-## Homepage
+## 🏠 Homepage
 
 En la parte superior de la pantalla, hay un buscador donde puedes filtrar las materias que aparecen por su nombre. A continuación, verás un mosaico con las categorías disponibles (materias).
 
-## Profile
+## 👤 Profile
 
 En este apartado, el usuario verá su foto de perfil y la información personal que completó en el formulario de registro. Aquí aparecerán el nombre, carrera, número de materiales marcados como favoritos, contribuciones, correo electrónico y carrera. También hay un botón para desvincular la cuenta del usuario de la aplicación.
 
-## Favorites
+## ⭐ Favorites
 
 En este apartado, también hay una sección de búsqueda donde el usuario puede filtrar la información por materia. En la página principal de favoritos, solo aparecerán las publicaciones que el usuario haya marcado con un corazón.
 
-## Report
+## ⚠️ Report
 
 En este apartado, la parte superior proporciona la información necesaria para identificar la publicación que el usuario está reportando. Luego, aparecerá un formulario con textos que el usuario puede seleccionar según considere que la publicación incumple. Finalmente, debe presionar el botón enviar para hacer la petición de reporte.
 
-## Add material
+## 📤 Add material
 
 En este apartado, el usuario debe rellenar cuatro campos para validar la subida del archivo: título del material, año del material, ciclo del material y una breve descripción del contenido del documento. Al presionar "Select file", se abrirá el explorador de archivos para seleccionar el archivo a subir. Después de seleccionar el archivo, el usuario debe presionar el botón de "Subir publicación" para que su publicación sea visible al público.
 
-# Nav bar
+# 🚀 Nav bar
 
 Esta herramienta contiene cuatro iconos:
 
-:fa-home: : Redirige a la Home Page.
-:fa-comment:: Contiene los materiales que el usuario ha subido.
-:fa-star:: Redirige a la pantalla donde están las publicaciones marcadas como favoritas.
-:fa-user:: Redirige a la pantalla donde se puede visualizar el perfil de usuario.
+- 🏠: Redirige a la Home Page.
+- 📝: Contiene los materiales que el usuario ha subido.
+- ⭐: Redirige a la pantalla donde están las publicaciones marcadas como favoritas.
+- 👤: Redirige a la pantalla donde se puede visualizar el perfil de usuario.
 
-# API End points
+# API End points 🌐
 
-### Post
+### Post 📝
 
 | Endpoint                                      | Funcionalidad                    | Entidad | Tipo de Endpoint           | Método |
 | --------------------------------------------- | -------------------------------- | ------- | -------------------------- | ------ |
@@ -150,7 +150,7 @@ Respuesta:
 ]
 </pre>
 
-### Crear post
+### Crear post ➕
 
 <pre>POST http://domain/api/post/
 Content-Type: application/json
@@ -176,7 +176,7 @@ Respuesta:
 }
 </pre>
 
-### User
+### User 👤
 
 | Endpoint                        | Functionality            | Entity | Endpoint Type            | Method |
 | ------------------------------- | ------------------------ | ------ | ------------------------ | ------ |
@@ -186,7 +186,7 @@ Respuesta:
 
 ## Ejemplos de uso:
 
-### Registrarse:
+### Registrarse 📝
 
 <pre>POST http://domain/api/auth/register
 Content-Type: application/json
@@ -209,7 +209,7 @@ Respuesta:
 }
 </pre>
 
-### Inicio de sesion:
+### Inicio de sesion 🔑
 
 <pre>POST http://domain/api/auth/login
 Content-Type: application/json
@@ -232,7 +232,7 @@ Respuesta:
 }
 </pre>
 
-### Materias
+### Materias 📚
 
 | Endpoint                         | Functionality                    | Entity   | Endpoint Type            | Method |
 | -------------------------------- | -------------------------------- | -------- | ------------------------ | ------ |
