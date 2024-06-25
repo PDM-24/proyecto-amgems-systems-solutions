@@ -17,12 +17,6 @@ Bienvenido a la documentación de la aplicación BackPack. A continuación, se p
 - 📤 Add material
 - 🚀 Nav bar
 
-##### Post
-
-##### User
-
-##### Materias
-
 ##### Usos de Endpoints
 
 - 🔍 GET
