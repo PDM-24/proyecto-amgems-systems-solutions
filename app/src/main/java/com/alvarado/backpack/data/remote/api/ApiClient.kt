@@ -6,6 +6,8 @@ import com.alvarado.backpack.data.remote.model.PostListResponse
 import com.alvarado.backpack.data.remote.model.PostResponse
 import com.alvarado.backpack.data.remote.model.RegisterData
 import com.alvarado.backpack.data.remote.model.RegisterResponse
+import com.alvarado.backpack.data.remote.model.ReportData
+import com.alvarado.backpack.data.remote.model.ReportResponse
 import com.alvarado.backpack.data.remote.model.SubjectListResponse
 import com.alvarado.backpack.data.remote.model.SubjectResponse
 import com.alvarado.backpack.data.remote.model.UserResponse
@@ -89,4 +91,10 @@ interface ApiClient {
     suspend fun getSubjectByDegree(
         @Header(value = "authorization") token : String
     ) : SubjectListResponse
+
+    @POST(value = ApiConstants.API_PATH + ApiConstants.SUBJECT_PATH)
+    suspend fun saveReport(
+        @Header(value = "authorization") token : String,
+        @Body data : ReportData
+    ) : ReportResponse
 }
