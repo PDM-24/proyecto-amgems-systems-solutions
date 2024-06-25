@@ -139,7 +139,10 @@ fun PostComponent(
 
                 Box(
                     modifier = Modifier
-                        .clickable { navController.navigate("reporting") }
+                        .clickable {
+                            navController.navigate("reporting")
+                            viewModel.setPostSelected(post.id)
+                        }
                 ){
 
                     Image (

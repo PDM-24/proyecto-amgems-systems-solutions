@@ -92,7 +92,7 @@ interface ApiClient {
         @Header(value = "authorization") token : String
     ) : SubjectListResponse
 
-    @POST(value = ApiConstants.API_PATH + ApiConstants.SUBJECT_PATH)
+    @POST(value = ApiConstants.API_PATH + ApiConstants.REPORT_PATH)
     suspend fun saveReport(
         @Header(value = "authorization") token : String,
         @Body data : ReportData

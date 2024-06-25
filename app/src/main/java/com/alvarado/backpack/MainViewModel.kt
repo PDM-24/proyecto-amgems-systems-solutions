@@ -66,6 +66,16 @@ class MainViewModel @Inject constructor(
 
     private val subjectSelected = MutableStateFlow("")
 
+    private val postSelected = MutableStateFlow("")
+
+    fun getPostSelected() : String {
+        return postSelected.value
+    }
+
+    fun setPostSelected(post : String) {
+        postSelected.value = post
+    }
+
     fun getSubjectSelected() : String {
         return subjectSelected.value
     }
@@ -197,7 +207,7 @@ class MainViewModel @Inject constructor(
             }
         }
     }
-    
+
     fun getSubjectByDegree() {
         viewModelScope.launch {
             try {

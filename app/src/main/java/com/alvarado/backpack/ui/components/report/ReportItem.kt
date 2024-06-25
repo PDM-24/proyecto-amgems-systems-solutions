@@ -1,7 +1,6 @@
 package com.alvarado.backpack.ui.components.report
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.alvarado.backpack.R
@@ -27,12 +25,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import com.alvarado.backpack.MainViewModel
+import com.alvarado.backpack.domain.model.ReportModel
 
 @SuppressLint("MutableCollectionMutableState")
 @Composable
-fun ReportReasons(modifier: Modifier) {
+fun ReportReasons(modifier: Modifier, viewModel: MainViewModel) {
     val reasons = listOf(
         "Contenido perjudicial",
         "Spam",
@@ -43,7 +42,7 @@ fun ReportReasons(modifier: Modifier) {
         "Violación de privacidad"
     )
     val selectedReasons = remember { mutableStateOf(listOf<String>()) }
-    val submittedReasons = remember { mutableStateOf(listOf<String>()) } // keep reasons selected
+    val submittedReasons = remember { mutableStateOf(listOf<String>()) }
 
     Column(
         modifier = Modifier
@@ -52,18 +51,19 @@ fun ReportReasons(modifier: Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         reasons.forEach { reason ->
-            Card(colors = CardDefaults.cardColors(
-                containerColor = if (selectedReasons.value.contains(reason)) Color(0xFF0E0B24) else Color.White
-            ),
+            Card(
+                colors = CardDefaults.cardColors(
+                    containerColor = if (selectedReasons.value.contains(reason)) Color(0xFF0E0B24) else Color.White
+                ),
                 modifier = Modifier
                     .padding(8.dp)
                     .size(330.dp, 47.dp)
                     .shadow(10.dp)
                     .clickable {
                         if (selectedReasons.value.contains(reason)) {
-                            selectedReasons.value -= reason // creates new list without reasons
+                            selectedReasons.value = selectedReasons.value - reason
                         } else {
-                            selectedReasons.value += reason // creates new list with reasons
+                            selectedReasons.value = selectedReasons.value + reason
                         }
                     }) {
                 Box(contentAlignment = Alignment.Center) {
@@ -78,12 +78,18 @@ fun ReportReasons(modifier: Modifier) {
             }
         }
         Spacer(modifier = Modifier.padding(3.dp))
-        // buttom
+
         Box() {
             Button(
                 onClick = {
-                    submittedReasons.value = selectedReasons.value
+                    val postSelected = viewModel.getPostSelected()
+                    val report = ReportModel(
+                        post = postSelected,
+                        reason = ArrayList(selectedReasons.value)
+                    )
+                    viewModel.saveReport(report)
                 },
+                enabled = selectedReasons.value.isNotEmpty(),
                 modifier = Modifier
                     .size(330.dp, 60.dp),
                 colors = ButtonDefaults.buttonColors(Color(0xFF4C72F5)),
@@ -100,10 +106,4 @@ fun ReportReasons(modifier: Modifier) {
     }
 
     Spacer(modifier = Modifier.padding(10.dp))
-}
-
-@Composable
-@Preview(showBackground = true, showSystemUi = true)
-fun PreviewReportReasons() {
-    ReportReasons(modifier = Modifier)
 }
