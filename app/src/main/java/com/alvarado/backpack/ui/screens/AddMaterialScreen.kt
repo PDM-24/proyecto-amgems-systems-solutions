@@ -59,7 +59,7 @@ fun AddMaterialScreen(
                     .padding(innerPadding)
             ) {
                 itemsIndexed(listOf(1)) { index, item ->
-                    AddMaterial(viewModel, subjectList)
+                    AddMaterial(viewModel, subjectList, navController)
                 }
             }
         }

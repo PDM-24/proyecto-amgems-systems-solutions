@@ -35,6 +35,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.documentfile.provider.DocumentFile
+import androidx.navigation.NavController
 import com.alvarado.backpack.R
 import com.alvarado.backpack.domain.model.PostDataModel
 import com.alvarado.backpack.domain.model.SubjectModel
@@ -48,7 +49,11 @@ import java.io.InputStream
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddMaterial(viewModel: MainViewModel, subjectList: List<SubjectModel>) {
+fun AddMaterial(
+    viewModel: MainViewModel,
+    subjectList: List<SubjectModel>,
+    navController : NavController
+) {
     val titleState = remember { mutableStateOf("") }
     val dateState = remember { mutableStateOf("") }
     val cicleState = remember { mutableStateOf("") }
@@ -58,6 +63,7 @@ fun AddMaterial(viewModel: MainViewModel, subjectList: List<SubjectModel>) {
 
     // Estado para el elemento seleccionado en el menú desplegable
     val selectedSubject = remember { mutableStateOf(subjectList.firstOrNull()?.name ?: "") }
+    val subjectId = remember { mutableStateOf("") }
 
     // Launcher para seleccionar archivos
     val filePickerLauncher = rememberLauncherForActivityResult(
@@ -250,7 +256,8 @@ fun AddMaterial(viewModel: MainViewModel, subjectList: List<SubjectModel>) {
                         DropdownMenuItem(
                             text = { Text(subject.name) }, // Asegúrate de usar la propiedad correcta del SubjectModel
                             onClick = {
-                                selectedSubject.value = subject.id // Actualiza con el nombre del sujeto
+                                selectedSubject.value = subject.name // Actualiza con el nombre del sujeto
+                                subjectId.value = subject.id
                                 expanded = false
                             }
                         )
@@ -329,7 +336,7 @@ fun AddMaterial(viewModel: MainViewModel, subjectList: List<SubjectModel>) {
                                     title = titleState.value,
                                     publicationYear = dateState.value.toInt(),
                                     publicationCycle = cicleState.value.toInt(),
-                                    subject = selectedSubject.value,
+                                    subject = subjectId.value,
                                     topics = "Algebra",
                                     category = "Parcial"
                                 )
@@ -339,6 +346,7 @@ fun AddMaterial(viewModel: MainViewModel, subjectList: List<SubjectModel>) {
                             }
                         }
                     }
+                    navController.navigate("Home_Screen")
                 },
                 modifier = Modifier
                     .fillMaxWidth()
