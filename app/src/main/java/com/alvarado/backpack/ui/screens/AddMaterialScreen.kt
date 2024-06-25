@@ -13,6 +13,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.alvarado.backpack.ui.components.PostComponent
@@ -23,6 +24,7 @@ import com.alvarado.backpack.ui.components.profile.ProfileInfoComponent
 
 @Composable
 fun AddMaterialScreen(navController: NavController){
+
 
     Scaffold(
         topBar = {

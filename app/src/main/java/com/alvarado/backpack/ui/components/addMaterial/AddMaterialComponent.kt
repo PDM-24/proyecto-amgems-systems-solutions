@@ -1,15 +1,17 @@
 package com.alvarado.backpack.ui.components.addMaterial
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,12 +21,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.alvarado.backpack.R
-import kotlin.math.round
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,6 +33,17 @@ fun AddMaterial() {
     val dateState: MutableState<String> = remember { mutableStateOf("") }
     val cicleState: MutableState<String> = remember { mutableStateOf("") }
     val descriptionState: MutableState<String> = remember { mutableStateOf("") }
+    val selectedFileName = remember { mutableStateOf("") }
+
+    val filePickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            result.data?.data?.let { uri: Uri ->
+                selectedFileName.value = uri.lastPathSegment ?: "Unknown file"
+            }
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -93,7 +103,7 @@ fun AddMaterial() {
             Spacer(modifier = Modifier.height(15.dp))
             TextField(
                 value = titleState.value,
-                onValueChange = {titleState.value = it},
+                onValueChange = { titleState.value = it },
                 label = { Text("Title for the material") },
                 leadingIcon = {
                     Box(
@@ -111,11 +121,9 @@ fun AddMaterial() {
                         )
                     }
                 },
-                // color (focused - unfocused)
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.White, unfocusedContainerColor = Color.White
+                colors = TextFieldDefaults.textFieldColors(
+                    containerColor = Color.White
                 ),
-                // la sombra
                 modifier = Modifier
                     .shadow(10.dp)
                     .height(55.dp)
@@ -125,8 +133,8 @@ fun AddMaterial() {
 
             TextField(
                 value = dateState.value,
-                onValueChange = {dateState.value = it},
-                label = { Text("Material year")},
+                onValueChange = { dateState.value = it },
+                label = { Text("Material year") },
                 leadingIcon = {
                     Box(
                         modifier = Modifier
@@ -135,7 +143,7 @@ fun AddMaterial() {
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_date),
-                            contentDescription = "date icon",
+                            contentDescription = "Date icon",
                             tint = Color.White,
                             modifier = Modifier
                                 .size(24.dp)
@@ -143,11 +151,9 @@ fun AddMaterial() {
                         )
                     }
                 },
-                // color (focused - unfocused)
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.White, unfocusedContainerColor = Color.White
+                colors = TextFieldDefaults.textFieldColors(
+                    containerColor = Color.White
                 ),
-                // la sombra
                 modifier = Modifier
                     .shadow(10.dp)
                     .height(55.dp)
@@ -156,7 +162,7 @@ fun AddMaterial() {
             Spacer(modifier = Modifier.height(18.dp))
             TextField(
                 value = cicleState.value,
-                onValueChange = {cicleState.value = it},
+                onValueChange = { cicleState.value = it },
                 label = { Text("Material cycle") },
                 leadingIcon = {
                     Box(
@@ -166,7 +172,7 @@ fun AddMaterial() {
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_cycle),
-                            contentDescription = "cycle icon",
+                            contentDescription = "Cycle icon",
                             tint = Color.White,
                             modifier = Modifier
                                 .size(24.dp)
@@ -174,28 +180,25 @@ fun AddMaterial() {
                         )
                     }
                 },
-                // color (focused - unfocused)
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.White, unfocusedContainerColor = Color.White
+                colors = TextFieldDefaults.textFieldColors(
+                    containerColor = Color.White
                 ),
-                // la sombra
                 modifier = Modifier
                     .shadow(10.dp)
                     .height(55.dp)
                     .clip(RoundedCornerShape(10.dp))
             )
             Spacer(modifier = Modifier.height(18.dp))
-            // description
-            Box() {
+
+            Box {
                 Column {
                     Card(
                         colors = CardDefaults.cardColors(containerColor = Color.Black),
                         modifier = Modifier.width(280.dp)
                     ) {
-                        Row (
+                        Row(
                             verticalAlignment = Alignment.CenterVertically
-
-                        ){
+                        ) {
                             Box(
                                 modifier = Modifier
                                     .size(50.dp)
@@ -218,11 +221,10 @@ fun AddMaterial() {
                                 color = Color.White
                             )
                         }
-
                     }
                     TextField(
                         value = descriptionState.value,
-                        onValueChange = {descriptionState.value = it},
+                        onValueChange = { descriptionState.value = it },
                         label = { Text("Add a description to the material...") },
                         modifier = Modifier.size(width = 280.dp, height = 120.dp),
                         colors = TextFieldDefaults.textFieldColors(
@@ -230,7 +232,6 @@ fun AddMaterial() {
                             focusedIndicatorColor = Color.Transparent,
                             unfocusedIndicatorColor = Color.Transparent
                         )
-
                     )
                 }
             }
@@ -243,7 +244,12 @@ fun AddMaterial() {
                     .padding(5.dp)
             ) {
                 Button(
-                    onClick = {},
+                    onClick = {
+                        val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+                            type = "*/*"
+                        }
+                        filePickerLauncher.launch(intent)
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
@@ -260,6 +266,14 @@ fun AddMaterial() {
                             fontFamily = FontFamily(Font(R.font.poppins_regular))
                         )
                     }
+                }
+                if (selectedFileName.value.isNotEmpty()) {
+                    Text(
+                        text = "Selected file: ${selectedFileName.value}",
+                        color = Color.Gray,
+                        fontSize = 12.sp,
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
                 }
             }
         }
@@ -285,11 +299,4 @@ fun AddMaterial() {
             }
         }
     }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewAddMaterial() {
-    AddMaterial()
 }
