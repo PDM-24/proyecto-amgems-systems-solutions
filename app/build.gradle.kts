@@ -55,6 +55,8 @@ android {
 dependencies {
 
     implementation(libs.androidx.benchmark.common)
+    implementation(libs.androidx.media3.common)
+    implementation(libs.androidx.documentfile)
     val lifecycle_version = "2.8.1"
     val retrofit_version = "2.11.0"
     val dagger_version = "2.48"

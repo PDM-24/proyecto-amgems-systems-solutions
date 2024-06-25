@@ -2,10 +2,12 @@ package com.alvarado.backpack.data.remote
 
 import com.alvarado.backpack.data.remote.api.ApiService
 import com.alvarado.backpack.data.remote.model.LoginData
+import com.alvarado.backpack.data.remote.model.PostData
 import com.alvarado.backpack.data.remote.model.RegisterData
 import com.alvarado.backpack.data.remote.model.RegisterResponse
 import com.alvarado.backpack.data.remote.model.ReportData
 import com.alvarado.backpack.domain.model.LoginModel
+import com.alvarado.backpack.domain.model.PostDataModel
 import com.alvarado.backpack.domain.model.PostModel
 import com.alvarado.backpack.domain.model.RegisterModel
 import com.alvarado.backpack.domain.model.ReportModel
@@ -14,6 +16,8 @@ import com.alvarado.backpack.domain.model.UserModel
 import com.alvarado.backpack.util.convertToPostModel
 import com.alvarado.backpack.util.convertToSubjectModel
 import com.alvarado.backpack.util.convertToUserModel
+import okhttp3.MultipartBody
+import java.io.File
 import javax.inject.Inject
 
 class Repository @Inject constructor(
@@ -85,6 +89,19 @@ class Repository @Inject constructor(
             data.post
         )
         val response = api.saveReport(token, reportData)
+        return response.message
+    }
+
+    suspend fun savePost(token : String, data : PostDataModel, file : MultipartBody.Part? = null) : String {
+        val postData = PostData(
+            data.title,
+            data.category,
+            data.subject,
+            data.publicationYear,
+            data.publicationCycle,
+            data.topics
+        )
+        val response = api.savePost(token, postData, file)
         return response.message
     }
 }
